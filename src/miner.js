@@ -8,17 +8,19 @@ const mine = (block) => {
     block.nonce = 0;
   }
 
-  const hash = hasher(`${block.index}${block.nonce}${block.data}${block.prevHash}`);
+  while (!block.hash) {
+    const hash = hasher(`${block.index}${block.nonce}${block.data}${block.prevHash}`);
 
-  if (hash.substr(0, config.difficulty) === pattern) {
-    block.hash = hash;
+    if (hash.substr(0, config.difficulty) === pattern) {
+      block.hash = hash;
 
-    return block;
+      break;
+    }
+
+    block.nonce++;
   }
 
-  block.nonce++;
-
-  return mine(block);
+  return block;
 };
 
 module.exports = mine;

@@ -11,10 +11,10 @@ describe('miner', function() {
 
     expect(mined).to.deep.equal({
       index: 1,
+      nonce: 58140,
       data: 'foo',
       prevHash: '0000000000000000000000000000000000000000000000000000000000000000',
-      nonce: 4786,
-      hash: '000cc5e9884848c326f3fae612251c58a39217a724c23437a46ea45a1de05dfa',
+      hash: '00002670f07a29a95d6847d24f3958924161d79b94776e5aa81240bce6fbd211',
     });
   });
 });
