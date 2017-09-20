@@ -8,7 +8,7 @@ const mine = (block) => {
     block.nonce = 0;
   }
 
-  const hash = hasher(`${block.index}${block.nonce}${block.data}`);
+  const hash = hasher(`${block.index}${block.nonce}${block.data}${block.prevHash}`);
 
   if (hash.substr(0, config.difficulty) === pattern) {
     block.hash = hash;

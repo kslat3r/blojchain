@@ -6,8 +6,9 @@ describe('verifier', function() {
     const verified = verifier({
       index: 1,
       data: 'foo',
-      nonce: 487,
-      hash: '00093c9e5a82442f736e26876b26189c47bff578910684852934fd1cbdc7cb6c',
+      prevHash: '0000000000000000000000000000000000000000000000000000000000000000',
+      nonce: 4786,
+      hash: '000cc5e9884848c326f3fae612251c58a39217a724c23437a46ea45a1de05dfa',
     });
 
     expect(verified).to.be.true;
