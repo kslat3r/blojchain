@@ -3,7 +3,7 @@ const hasher = require('./hasher');
 
 const pattern = '0'.repeat(config.difficulty);
 
-const mine = (block) => {
+module.exports = (block) => {
   if (!block.nonce) {
     block.nonce = 0;
   }
@@ -22,5 +22,3 @@ const mine = (block) => {
 
   return block;
 };
-
-module.exports = mine;
