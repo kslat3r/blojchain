@@ -28,8 +28,6 @@
     "no-console": 0
   },
   "globals": {
-    "$": true,
-    "document": true,
-    "alert": true
+    "Promise": true
   }
 }
