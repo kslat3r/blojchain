@@ -19,9 +19,11 @@ module.exports = (peer) => {
       return done(e);
     }
 
-    logger.info(`Block ${block.index} was mined`);
+    chain.add(mined);
 
-    return done(null, block);
+    logger.info(`Block ${mined.index} was mined`);
+
+    return done(null, mined);
   };
 
   // block added event
