@@ -1,21 +1,10 @@
-const net = require('net');
-const logger = require('./logger');
-const nodes = require('./nodes');
+const p2p = require('p2p');
+const knownPeers = require('../config/known-peers');
 
 module.exports = (host, port) => {
-  return new Promise((resolve) => {
-    const client = new net.Socket();
-
-    client.connect(port, host, () => {
-      logger.info(`Client connected to: ${host}:${port}`);
-
-      nodes.add(host, port, client);
-
-      return resolve();
-    });
-
-    client.on('data', (data) => {
-      console.log(data);
-    });
+  return p2p.peer({
+    host,
+    port,
+    wellKnownPeers: knownPeers,
   });
 };
