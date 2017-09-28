@@ -6,33 +6,35 @@ const verifier = require('./verifier');
 module.exports = (peer) => {
   // mine event
 
-  peer.handle.mine = (payload, done) => {
-    logger.info(`Block received to be mined: ${JSON.stringify(payload)}`);
+  peer.handle.mine = (block, done) => {
+    logger.info(`Block received to be mined: ${JSON.stringify(block)}`);
 
     let mined;
 
     try {
-      mined = miner(payload);
+      mined = miner(block);
     } catch (e) {
-      logger.info(`Failed to mine block ${mined.index}: ${JSON.stringify(e)}`);
+      logger.info(`Failed to mine block ${block.index}: ${JSON.stringify(e)}`);
 
       return done(e);
     }
 
-    logger.info(`Block ${mined.index} was mined`);
+    logger.info(`Block ${block.index} was mined`);
 
-    return done(null, mined);
+    return done(null, block);
   };
 
   // block added event
 
-  peer.handle.blockAdded = (payload, done) => {
-    logger.info(`Block received to be added: ${JSON.stringify(payload)}`);
+  peer.handle.blockAdded = (block, done) => {
+    logger.info(`Block received to be added: ${JSON.stringify(block)}`);
 
-    if (verifier(payload)) {
+    if (verifier(block)) {
+      chain.add(block);
+
       return done();
     }
 
-    return done(new Error(`Could not verify block ${payload.index}`));
+    return done(new Error(`Could not verify block ${block.index}`));
   };
 };

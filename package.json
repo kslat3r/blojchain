@@ -1,5 +1,5 @@
 {
-  "name": "blockchain.js",
+  "name": "blockchainj",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kslat3r/blockchain.js.git"
+    "url": "git+https://github.com/kslat3r/blockchainj.git"
   },
   "author": "Ed Kelly",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kslat3r/blockchain.js/issues"
+    "url": "https://github.com/kslat3r/blockchainj/issues"
   },
-  "homepage": "https://github.com/kslat3r/blockchain.js#readme",
+  "homepage": "https://github.com/kslat3r/blockchainj#readme",
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^4.6.1",
