@@ -10,13 +10,14 @@ const menu = () => {
     choices: [
       'View the blojchainj',
       'Add a bloj',
-      'Reset',
+      'Reset the blojchainj',
     ],
   })
   .then((answers) => {
     switch (answers.menu) {
       case 'View the blojchainj':
         logger.info(chain.get());
+
         menu();
 
         break;
@@ -28,14 +29,18 @@ const menu = () => {
           message: 'Enter your dataj to add to the blojchainj',
         })
         .then((answers) => {
-          chain.add(answers.data);
+          chain.add({
+            data: answers.data,
+          });
+
           menu();
-        })
+        });
 
         break;
 
-      case 'Reset':
+      case 'Reset the blojchainj':
         chain.reset();
+
         menu();
 
         break;

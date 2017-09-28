@@ -1,3 +1,4 @@
 {
-    "name": "chain"
+    "name": "chain",
+    "collection": "blocks"
 }
