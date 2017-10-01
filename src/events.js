@@ -3,44 +3,54 @@ const miner = require('./miner');
 const chain = require('./chain');
 const verifier = require('./verifier');
 
-module.exports = (peer) => {
-  // mine event
+module.exports = {
+  bind: (peer) => {
+    // mine event
 
-  peer.handle.mine = (block, done) => {
-    logger.debug(`Block received to be mined: ${JSON.stringify(block)}`);
+    peer.handle.mineBlock = (block, done) => {
+      logger.debug(`Bloj received to be mined: ${JSON.stringify(block)}`);
 
-    let mined;
+      let mined;
 
-    try {
-      mined = miner(block);
-    } catch (e) {
-      logger.debug(`Failed to mine block ${block.index}: ${JSON.stringify(e)}`);
+      try {
+        mined = miner(block);
+      } catch (e) {
+        logger.debug(`Failed to mine bloj ${block.index}: ${JSON.stringify(e)}`);
 
-      return done(e);
-    }
+        return done(e);
+      }
 
-    chain.add(mined);
+      chain.add(mined);
 
-    logger.debug(`Block ${mined.index} was mined`);
+      logger.debug(`Bloj ${mined.index} was mined`);
 
-    return done(null, mined);
-  };
+      return done(null, mined);
+    };
 
-  // block added event
+    // block added event
 
-  peer.handle.blockAdded = (block, done) => {
-    logger.debug(`Block received to be added: ${JSON.stringify(block)}`);
+    peer.handle.blockAdded = (block, done) => {
+      logger.debug(`Bloj received to be added: ${JSON.stringify(block)}`);
 
-    if (verifier(block)) {
-      chain.add(block);
+      if (verifier(block)) {
+        chain.add(block);
 
-      logger.debug(`Block added to chain: ${block.index}`);
+        logger.debug(`Bloj added to chain: ${block.index}`);
 
-      return done();
-    }
+        return done();
+      }
 
-    logger.debug(`Block could not be verified: ${block.index}`);
+      logger.debug(`Bloj could not be verified: ${block.index}`);
 
-    return done(new Error(`Could not verify block ${block.index}`));
-  };
+      return done(new Error(`Could not verify bloj ${block.index}`));
+    };
+
+    // get blocks
+
+    peer.handle.getBlocks = (payload, done) => {
+      logger.debug('Request to get all blojs');
+
+      return done(null, chain.get())
+    };
+  },
 };
