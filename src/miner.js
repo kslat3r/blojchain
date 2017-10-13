@@ -3,34 +3,34 @@ const hasher = require('./hasher');
 
 const pattern = '0'.repeat(config.difficulty);
 
-module.exports = (block) => {
-  if (!block.index) {
-    throw new Error('Block is missing index');
+module.exports = (bloj) => {
+  if (!bloj.index) {
+    throw new Error('Bloj is missing index');
   }
 
-  if (!block.data) {
-    throw new Error('Block is missing data');
+  if (!bloj.data) {
+    throw new Error('Bloj is missing data');
   }
 
-  if (!block.prevHash) {
-    throw new Error('Block is missing prevHash');
+  if (!bloj.prevHash) {
+    throw new Error('Bloj is missing prevHash');
   }
 
-  if (!block.nonce) {
-    block.nonce = 0;
+  if (!bloj.nonce) {
+    bloj.nonce = 0;
   }
 
-  while (!block.hash) {
-    const hash = hasher(`${block.index}${block.nonce}${block.data}${block.prevHash}`);
+  while (!bloj.hash) {
+    const hash = hasher(`${bloj.index}${bloj.nonce}${bloj.data}${bloj.prevHash}`);
 
     if (hash.substr(0, config.difficulty) === pattern) {
-      block.hash = hash;
+      bloj.hash = hash;
 
       break;
     }
 
-    block.nonce++;
+    bloj.nonce++;
   }
 
-  return block;
+  return bloj;
 };

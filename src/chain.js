@@ -7,20 +7,27 @@ module.exports = {
       .value();
   },
 
-  populate: (blocks) => {
-    db.set(dbConfig.collection, blocks)
+  getLast: () => {
+    const blojs = db.get(dbConfig.collection)
+      .value();
+
+    return blojs[blojs.length - 1] ? blojs[blojs.length - 1] : null;
+  },
+
+  populate: (blojs) => {
+    db.set(dbConfig.collection, blojs)
       .write();
   },
 
-  add: (block) => {
+  add: (bloj) => {
     db.get(dbConfig.collection)
-      .push(block)
+      .push(bloj)
       .write();
   },
 
-  remove: (block) => {
+  remove: (bloj) => {
     db.get(dbConfig.collection)
-      .remove({ index: block.index })
+      .remove({ index: bloj.index })
       .write();
   },
 

@@ -5,8 +5,7 @@ module.exports = new winston.Logger({
     new winston.transports.Console({
       prettyPrint: true,
       colorize: true,
-      silent: false,
-      timestamp: false,
+      timestamp: true,
     }),
   ],
 });

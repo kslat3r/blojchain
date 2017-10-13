@@ -1,8 +1,9 @@
 const inquirer = require('inquirer');
 const logger = require('./logger');
 const chain = require('./chain');
+const blojMine = require('./requests/bloj-mine');
 
-const menu = () => {
+const menu = (peer) => {
   inquirer.prompt({
     type: 'list',
     name: 'menu',
@@ -18,7 +19,7 @@ const menu = () => {
       case 'View the blojchainj':
         logger.info(chain.get());
 
-        menu();
+        menu(peer);
 
         break;
 
@@ -29,11 +30,9 @@ const menu = () => {
           message: 'Enter your dataj to add to the blojchainj',
         })
         .then((answers) => {
-          chain.add({
-            data: answers.data,
-          });
+          blojMine(peer, JSON.parse(answers.data));
 
-          menu();
+          menu(peer);
         });
 
         break;
@@ -41,7 +40,7 @@ const menu = () => {
       case 'Reset the blojchainj':
         chain.reset();
 
-        menu();
+        menu(peer);
 
         break;
     }
