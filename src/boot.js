@@ -5,11 +5,8 @@ const blojsGetAll = require('./requests/blojs-get-all');
 const menu = require('./menu');
 
 new Server({ port: process.env.PORT || 53645 });
+const client = new Client();
 
-setTimeout(() => {
-  const client = new Client();
-}, 1000);
-
-// events(client);
-// blojsGetAll(client);
-// menu(client);
+events(client);
+blojsGetAll(client);
+menu(client);

@@ -1,12 +1,13 @@
 const http = require('http');
-const io = require('socket.io');
+const socketio = require('socket.io');
 
 const Server = function (opts) {
-  const server = http.createServer().listen(opts.port);
+  const server = http.createServer();
+  const io = socketio(server);
 
-  this.socket = io.listen(server);
+  server.listen(opts.port);
 
-  this.socket.on('connection', () => {
+  io.on('connection', () => {
     console.log(true);
   });
 };
