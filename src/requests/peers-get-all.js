@@ -1,7 +1,7 @@
 const logger = require('../logger');
 
 module.exports = (node) => {
-  logger.info('REQUEST blojs:getAll');
+  logger.info('REQUEST peers:getAll');
 
-  node.emit('blojs:getAll');
+  node.emit('peers:getAll');
 };

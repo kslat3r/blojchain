@@ -2,8 +2,8 @@ const logger = require('../logger');
 const chain = require('../chain');
 const verifier = require('../verifier');
 
-module.exports = (peer) => {
-  peer.on('bloj:add', (json) => {
+module.exports = (node) => {
+  node.on('bloj:add', (json) => {
     logger.info('EVENT bloj:add');
 
     let bloj;

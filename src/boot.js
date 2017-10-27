@@ -1,12 +1,6 @@
-const Server = require('./server');
-const Client = require('./client');
-const events = require('./events');
-const blojsGetAll = require('./requests/blojs-get-all');
-const menu = require('./menu');
+const Node = require('./node');
 
-new Server({ port: process.env.PORT || 53645 });
-const client = new Client();
-
-events(client);
-blojsGetAll(client);
-menu(client);
+new Node({
+  host: process.env.HOST || '127.0.0.1',
+  port: process.env.PORT || 53645
+});
