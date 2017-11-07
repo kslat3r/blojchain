@@ -4,9 +4,11 @@ const swaggerJSDoc = require('swagger-jsdoc');
 module.exports = swaggerUi.setup(swaggerJSDoc({
   swaggerDefinition: {
     info: {
-      title: 'Blojchainj',
+      title: 'Blojchainj API Explorer',
       version: '1.0.0',
     },
   },
-  apis: ['../routes/*.js'],
+  apis: [
+    `${__dirname}/../routes/*.js`,
+  ],
 }));
