@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const loggerMiddleware = require('./middleware/logger');
 const swaggerUIMiddleware = require('./middleware/swagger-ui');
 const swaggerDocumentMiddleware = require('./middleware/swagger-document');
-const pageNotFoundMiddleware = require('./middleware/pageNotFound');
+const pageNotFoundMiddleware = require('./middleware/page-not-found');
 const errorMiddleware = require('./middleware/error');
 
 const blojsRoute = require('./routes/blojs');
