@@ -1,6 +1,6 @@
 const app = require('./app');
 const http = require('http');
-const logger = require('../logger');
+const logger = require('../lib/logger');
 
 const Server = function (opts) {
   this.opts = opts;

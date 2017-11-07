@@ -1,7 +1,7 @@
 const logger = require('./logger');
 const Gossipmonger = require('gossipmonger');
 const uniqid = require('uniqid');
-const seeds = require('../config/seeds.json');
+const seeds = require('../../config/seeds.json');
 
 class Peer {
   constructor(opts) {

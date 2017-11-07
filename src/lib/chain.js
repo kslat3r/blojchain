@@ -1,5 +1,5 @@
 const db = require('./db');
-const dbConfig = require('../config/db')
+const dbConfig = require('../../config/db.json')
 
 module.exports = {
   get: () => {

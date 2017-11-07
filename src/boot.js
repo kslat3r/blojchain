@@ -1,4 +1,4 @@
-const Peer = require('./peer');
+const Peer = require('./lib/peer');
 const Server = require('./server');
 
 new Peer({

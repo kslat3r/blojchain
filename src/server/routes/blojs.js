@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const chain = require('../../chain');
+const chain = require('../../lib/chain');
 
 /**
  * @swagger
