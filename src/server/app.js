@@ -7,7 +7,7 @@ const loggerMiddleware = require('./middleware/logger');
 const pageNotFoundMiddleware = require('./middleware/pageNotFound');
 const errorMiddleware = require('./middleware/error');
 
-const indexRoute = require('./routes/index');
+const blojsRoute = require('./routes/blojs');
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRoute);
+app.use('/blojs', blojsRoute);
 
 app.use(pageNotFoundMiddleware);
 app.use(errorMiddleware);
