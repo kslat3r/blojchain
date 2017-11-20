@@ -1,4 +1,4 @@
-const config = require('../config/miner.json');
+const config = require('../../config/miner.json');
 const hasher = require('./hasher');
 
 const pattern = '0'.repeat(config.difficulty);

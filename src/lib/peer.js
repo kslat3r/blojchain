@@ -59,6 +59,10 @@ class Peer {
     });
   }
 
+  getPeers() {
+    return this.peers;
+  }
+
   start() {
     this.connection.transport.listen(() => {
       logger.info(`PEER listening on ${this.opts.host}:${this.opts.port}`);
@@ -68,4 +72,7 @@ class Peer {
   }
 }
 
-module.exports = Peer;
+module.exports = new Peer({
+  host: process.env.PEER_HOST || '127.0.0.1',
+  port: process.env.PEER_PORT || 53645,
+});
