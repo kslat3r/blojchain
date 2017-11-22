@@ -1,0 +1,42 @@
+version: "2"
+
+services:
+  a.blojchainj.nll:
+    build: ./
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - DB_NAME=chain1
+    command: npm run dev
+
+  b.blojchainj.nll:
+    build: ./
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - DB_NAME=chain2
+    command: npm run dev
+
+  c.blojchainj.nll:
+    build: ./
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - DB_NAME=chain3
+    command: npm run dev
+
+  d.blojchainj.nll:
+    build: ./
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - DB_NAME=chain4
+    command: npm run dev
+
+  e.blojchainj.nll:
+    build: ./
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - DB_NAME=chain5
+    command: npm run dev

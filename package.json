@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node src/boot.js",
     "test": "mocha specs/**/*.spec.js",
-    "peer1": "DB_NAME=chain1 nodemon src/boot.js -i data/",
-    "peer2": "DB_NAME=chain2 SERVER_PORT=3001 NODE_PORT=53646 nodemon src/boot.js -i data/"
+    "dev": "nodemon src/boot.js -i data/"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,8 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^4.6.1",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.0",
+    "nodemon": "^1.12.1"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
