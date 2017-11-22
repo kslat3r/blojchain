@@ -3,7 +3,7 @@ const Gossipmonger = require('gossipmonger');
 const uniqid = require('uniqid');
 const seeds = require('../../config/seeds.json');
 
-class Peer {
+class Node {
   constructor(opts) {
     this.id = uniqid();
     this.opts = opts;
@@ -19,7 +19,7 @@ class Peer {
       seeds,
     });
 
-    logger.info(`PEER creating instance ${this.id}`);
+    logger.info(`Node creating instance ${this.id}`);
 
     this.onError();
     this.onNewPeer();
@@ -29,7 +29,7 @@ class Peer {
 
   onError() {
     this.connection.on('error', () => {
-      // logger.error('PEER', error);
+      // logger.error('NODE', error);
     });
   }
 
@@ -41,7 +41,7 @@ class Peer {
         });
 
         if (!existingPeer && newPeer.id !== this.id) {
-          logger.info(`PEER new peer connected (${event}) ${newPeer.id}`);
+          logger.info(`NODE new peer connected (${event}) ${newPeer.id}`);
 
           this.peers.push(newPeer);
         }
@@ -51,7 +51,7 @@ class Peer {
 
   onPeerDead() {
     this.connection.on('peer dead', (deadPeer) => {
-      logger.info(`PEER peer disconnected ${deadPeer.id}`);
+      logger.info(`NODE peer disconnected ${deadPeer.id}`);
 
       this.peers = this.peers.filter((peer) => {
         return peer.id !== deadPeer.id;
@@ -65,14 +65,11 @@ class Peer {
 
   start() {
     this.connection.transport.listen(() => {
-      logger.info(`PEER listening on ${this.opts.host}:${this.opts.port}`);
+      logger.info(`NODE listening on ${this.opts.host}:${this.opts.port}`);
     });
 
     this.connection.gossip();
   }
 }
 
-module.exports = new Peer({
-  host: process.env.PEER_HOST || '127.0.0.1',
-  port: process.env.PEER_PORT || 53645,
-});
+module.exports = Node;

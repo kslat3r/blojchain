@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const logger = require('../../lib/logger');
-const peer = require('../../lib/peer');
+const logger = require('../../logger');
+const instance = require('../../instance');
 
 /**
  * @swagger
@@ -17,7 +17,7 @@ const peer = require('../../lib/peer');
 router.get('/', function(req, res) {
   logger.info('EVENT peers:getAll');
 
-  res.send(peer.getPeers());
+  res.send(instance.getNode().getPeers());
 });
 
 module.exports = router;

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const logger = require('../../lib/logger');
-const chain = require('../../lib/chain');
-const verifier = require('../../lib/verifier');
-const minerConfig = require('../../../config/miner.json');
-const miner = require('../../lib/miner');
+const logger = require('../../logger');
+const chain = require('../../chain');
+const verifier = require('../../verifier');
+const minerConfig = require('../../../../config/miner.json');
+const miner = require('../../miner');
 
 /**
  * @swagger

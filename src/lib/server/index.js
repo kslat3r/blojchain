@@ -1,6 +1,6 @@
 const app = require('./app');
 const http = require('http');
-const logger = require('../lib/logger');
+const logger = require('../logger');
 
 class Server {
   constructor(opts) {
@@ -50,7 +50,4 @@ class Server {
   }
 }
 
-module.exports = new Server({
-  host: process.env.SERVER_HOST || '127.0.0.1',
-  port: process.env.SERVER_PORT || 3000,
-});
+module.exports = Server;

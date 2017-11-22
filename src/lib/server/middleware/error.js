@@ -1,4 +1,4 @@
-const logger = require('../../lib/logger');
+const logger = require('../../logger');
 
 module.exports = (err, req, res, next) => {
   logger.error(err.message);
