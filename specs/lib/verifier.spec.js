@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const verifier = require('../src/verifier');
+const verifier = require('../../src/lib/verifier');
 
-describe('verifier', function() {
+describe('verifier', () => {
   it('should verify a block is correct', () => {
     const verified = verifier({
       index: 1,

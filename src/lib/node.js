@@ -5,21 +5,26 @@ const seeds = require('../../config/seeds.json');
 
 class Node {
   constructor(opts) {
-    this.id = uniqid();
     this.opts = opts;
+
+    this.id = uniqid();
+
     this.peers = [];
+    this.hasFirstPeerConnected = false;
 
     this.connection = new Gossipmonger({
       id: this.id,
       transport: {
         host: this.opts.host,
         port: this.opts.port,
+        serverHost: this.opts.serverHost,
+        serverPort: this.opts.serverPort,
       },
     }, {
       seeds,
     });
 
-    logger.info(`Node creating instance ${this.id}`);
+    logger.info(`NODE creating instance ${this.id}`);
 
     this.onError();
     this.onNewPeer();
@@ -44,6 +49,14 @@ class Node {
           logger.info(`NODE new peer connected (${event}) ${newPeer.id}`);
 
           this.peers.push(newPeer);
+
+          if (!this.hasFirstPeerConnected) {
+            if (this.opts.onFirstPeerConnect) {
+              this.opts.onFirstPeerConnect();
+            }
+
+            this.hasFirstPeerConnected = true;
+          }
         }
       });
     });

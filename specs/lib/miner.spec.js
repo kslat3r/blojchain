@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const miner = require('../src/miner');
+const miner = require('../../src/lib/miner');
 
-describe('miner', function() {
+describe('miner', () => {
   it('should mine the correct nonce/hash', () => {
     const mined = miner({
       index: 1,
