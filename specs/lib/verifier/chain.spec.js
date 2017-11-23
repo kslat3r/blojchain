@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const chainVerifier = require('../../src/lib/verifier/chain');
+const chainVerifier = require('../../../src/lib/verifier/chain');
 
 describe('chainVerifier', function() {
   it('is a function', () => {
