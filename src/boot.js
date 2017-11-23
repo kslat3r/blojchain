@@ -1,7 +1,7 @@
 const instance = require('./lib/instance');
 const logger = require('./lib/logger');
 const chain = require('./lib/chain');
-const blojsRequests = require('./lib/requests/blojs');
+const blojsRequest = require('./lib/request/blojs');
 const mergeChains = require('./helpers/merge-chains');
 
 instance.createServer();

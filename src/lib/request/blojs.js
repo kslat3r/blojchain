@@ -1,6 +1,6 @@
-const Requests = require('./');
+const Request = require('./');
 
-class Blojs extends Requests {
+class Blojs extends Request {
   async getFromPeer (peer) {
     try {
       return await super.get(`http://${peer.transport.serverHost}:${peer.transport.serverPort}/blojs`);
