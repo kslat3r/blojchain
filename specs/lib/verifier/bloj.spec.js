@@ -1,9 +1,9 @@
 const expect = require('chai').expect;
-const verifier = require('../../src/lib/verifier');
+const blojVerifier = require('../../src/lib/verifier/bloj');
 
 describe('verifier', () => {
   it('should verify a block is correct', () => {
-    const verified = verifier({
+    const verified = blojVerifier({
       index: 1,
       nonce: 4786,
       data: 'foo',

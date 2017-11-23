@@ -8,10 +8,7 @@ class Node {
     this.opts = opts;
 
     this.id = uniqid();
-
     this.peers = [];
-    this.hasFirstPeerConnected = false;
-
     this.connection = new Gossipmonger({
       id: this.id,
       transport: {
@@ -50,12 +47,8 @@ class Node {
 
           this.peers.push(newPeer);
 
-          if (!this.hasFirstPeerConnected) {
-            if (this.opts.onFirstPeerConnect) {
-              this.opts.onFirstPeerConnect();
-            }
-
-            this.hasFirstPeerConnected = true;
+          if (this.opts.onPeerConnect) {
+            this.opts.onPeerConnect(newPeer);
           }
         }
       });

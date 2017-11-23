@@ -7,6 +7,8 @@ services:
       - ./:/usr/src/app
     environment:
       - DB_NAME=chain1
+    ports:
+      - "4001:3000"
     command: npm run dev
 
   b.blojchainj.nll:
@@ -15,6 +17,8 @@ services:
       - ./:/usr/src/app
     environment:
       - DB_NAME=chain2
+    ports:
+      - "4002:3000"
     command: npm run dev
 
   c.blojchainj.nll:
@@ -23,6 +27,8 @@ services:
       - ./:/usr/src/app
     environment:
       - DB_NAME=chain3
+    ports:
+      - "4003:3000"
     command: npm run dev
 
   d.blojchainj.nll:
@@ -31,6 +37,8 @@ services:
       - ./:/usr/src/app
     environment:
       - DB_NAME=chain4
+    ports:
+      - "4004:3000"
     command: npm run dev
 
   e.blojchainj.nll:
@@ -39,4 +47,6 @@ services:
       - ./:/usr/src/app
     environment:
       - DB_NAME=chain5
+    ports:
+      - "4005:3000"
     command: npm run dev

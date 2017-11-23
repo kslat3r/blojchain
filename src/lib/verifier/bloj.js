@@ -1,4 +1,4 @@
-const hasher = require('./hasher');
+const hasher = require('../hasher');
 
 module.exports = (bloj) => {
   const hash = hasher(`${bloj.index}${bloj.nonce}${bloj.data}${bloj.prevHash}`);

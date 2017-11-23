@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
 const chain = require('../../chain');
-const verifier = require('../../verifier');
-const minerConfig = require('../../../../config/miner.json');
+const blojVerifier = require('../../verifier/bloj');
 const miner = require('../../miner');
 
 /**
@@ -48,14 +47,12 @@ router.post('/', function(req, res) {
 
   // sanity check
 
-  if (bloj.prevHash !== minerConfig.genesisHash) {
-    if (bloj.index !== (lastBloj.index + 1)) {
-      throw new Error('Bloj received does not increment last index by 1');
-    }
+  if (bloj.index !== (lastBloj.index + 1)) {
+    throw new Error('Bloj received does not increment last index by 1');
+  }
 
-    if (lastBloj.hash !== bloj.prevHash) {
-      throw new Error('Bloj received does not match last bloj hash');
-    }
+  if (lastBloj.hash !== bloj.prevHash) {
+    throw new Error('Bloj received does not match last bloj hash');
   }
 
   // needs verifying?
@@ -63,7 +60,7 @@ router.post('/', function(req, res) {
   if (bloj.hash && bloj.nonce) {
     logger.info('EVENT blojs:verify');
 
-    if (!verifier(bloj)) {
+    if (!blojVerifier(bloj)) {
       throw new Error('Bloj could not be verified');
     }
 
