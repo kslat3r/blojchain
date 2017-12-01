@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const blojVerifier = require('../../../src/lib/verifiers/bloj');
 
 describe('verifier', () => {
-  it('should verify a block is correct', () => {
+  it('should verify a blojs is correct', () => {
     const verified = blojVerifier({
       index: 1,
       nonce: 4786,
