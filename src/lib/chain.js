@@ -1,6 +1,7 @@
 const db = require('./db');
 const dbConfig = require('../../config/db.json')
 const chainConfig = require('../../config/chain.json');
+const hasher = require('./hasher');
 
 const chain = {
   get: () => {
@@ -20,6 +21,13 @@ const chain = {
       .value();
 
     return blojs[blojs.length - 1] ? blojs[blojs.length - 1] : null;
+  },
+
+  getHash: () => {
+    const blojs = db.get(dbConfig.collection)
+      .value();
+
+    return hasher(JSON.stringify(blojs));
   },
 
   populate: (blojs) => {

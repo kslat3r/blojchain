@@ -4,9 +4,14 @@ services:
   a.blojchainj.nll:
     build: ./
     volumes:
+      - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - SEED=true
+      - NODE_HOST=a.blojchainj.nll
+      - SERVER_HOST=a.blojchainj.nll
       - DB_NAME=chain1
+      - LOG_LEVEL=debug
     ports:
       - "4001:3000"
     command: npm run dev
@@ -14,39 +19,63 @@ services:
   b.blojchainj.nll:
     build: ./
     volumes:
+      - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - NODE_HOST=b.blojchainj.nll
+      - SERVER_HOST=b.blojchainj.nll
       - DB_NAME=chain2
+      - LOG_LEVEL=debug
     ports:
       - "4002:3000"
+    depends_on:
+      - a.blojchainj.nll
     command: npm run dev
 
   c.blojchainj.nll:
     build: ./
     volumes:
+      - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - NODE_HOST=c.blojchainj.nll
+      - SERVER_HOST=c.blojchainj.nll
       - DB_NAME=chain3
+      - LOG_LEVEL=debug
     ports:
       - "4003:3000"
+    depends_on:
+      - a.blojchainj.nll
     command: npm run dev
 
   d.blojchainj.nll:
     build: ./
     volumes:
+      - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - NODE_HOST=d.blojchainj.nll
+      - SERVER_HOST=d.blojchainj.nll
       - DB_NAME=chain4
+      - LOG_LEVEL=debug
     ports:
       - "4004:3000"
+    depends_on:
+      - a.blojchainj.nll
     command: npm run dev
 
   e.blojchainj.nll:
     build: ./
     volumes:
+      - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - NODE_HOST=e.blojchainj.nll
+      - SERVER_HOST=e.blojchainj.nll
       - DB_NAME=chain5
+      - LOG_LEVEL=debug
     ports:
       - "4005:3000"
+    depends_on:
+      - a.blojchainj.nll
     command: npm run dev

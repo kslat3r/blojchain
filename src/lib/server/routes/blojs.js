@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
 const chain = require('../../chain');
-const blojVerifier = require('../../verifier/bloj');
+const hasher = require('../../hasher');
+const blojVerifier = require('../../verifiers/bloj');
 const miner = require('../../miner');
+const blojsRequests = require('../../requests/blojs');
 
 /**
  * @swagger
@@ -20,6 +22,23 @@ router.get('/', function(req, res) {
   logger.info('EVENT blojs:get');
 
   res.send(chain.get());
+});
+
+/**
+ * @swagger
+ * /blojs/hash:
+ *   get:
+ *     description: Get the hash of all blojs
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Hash
+ */
+router.get('/hash', function(req, res) {
+  logger.info('EVENT blojs:get:hash');
+
+  res.send(hasher(JSON.stringify(chain.get())));
 });
 
 /**
@@ -47,7 +66,7 @@ router.post('/', function(req, res) {
 
   // sanity check
 
-  if (bloj.index !== (lastBloj.index + 1)) {
+  if (bloj.index > lastBloj.index + 1) {
     throw new Error('Bloj received does not increment last index by 1');
   }
 
@@ -87,6 +106,8 @@ router.post('/', function(req, res) {
 
     chain.add(mined);
     res.send(mined);
+
+    blojsRequests.postToPeers(require('../../instance').getNode().getPeers(), bloj);
   }
 });
 

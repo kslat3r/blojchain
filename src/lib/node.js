@@ -1,80 +1,61 @@
 const logger = require('./logger');
-const Gossipmonger = require('gossipmonger');
+const Swim = require('swim');
+const SwimError = require('swim/lib/error');
 const uniqid = require('uniqid');
 const seeds = require('../../config/seeds.json');
 
 class Node {
   constructor(opts) {
     this.opts = opts;
-
     this.id = uniqid();
-    this.peers = [];
-    this.connection = new Gossipmonger({
-      id: this.id,
-      transport: {
-        host: this.opts.host,
-        port: this.opts.port,
-        serverHost: this.opts.serverHost,
-        serverPort: this.opts.serverPort,
-      },
-    }, {
-      seeds,
-    });
 
-    logger.info(`NODE creating instance ${this.id}`);
-
-    this.onError();
-    this.onNewPeer();
-    this.onPeerDead();
     this.start();
   }
 
-  onError() {
-    this.connection.on('error', () => {
-      // logger.error('NODE', error);
+  start() {
+    logger.info(`NODE creating instance ${this.id}`);
+
+    this.connection = new Swim({
+      local: {
+        host: `${this.opts.host}:${this.opts.port}`,
+        meta: {
+          id: this.id,
+          serverHost: this.opts.serverHost,
+          serverPort: this.opts.serverPort,
+        },
+      },
+      interval: 1000,
+      joinTimeout: 10000,
+    });
+
+    this.connection.bootstrap(!process.env.SEED ? seeds : []);
+
+    this.connection.on(Swim.EventType.Error, (err) => {
+      this.onError(err);
+    });
+
+    this.connection.on(Swim.EventType.Ready, () => {
+      if (this.opts.onReady) {
+        this.opts.onReady(this.getPeers());
+      }
     });
   }
 
-  onNewPeer() {
-    ['new peer', 'peer live'].forEach((event) => {
-      this.connection.on(event, (newPeer) => {
-        const existingPeer = this.peers.find((peer) => {
-          return peer.id === newPeer.id;
-        });
-
-        if (!existingPeer && newPeer.id !== this.id) {
-          logger.info(`NODE new peer connected (${event}) ${newPeer.id}`);
-
-          this.peers.push(newPeer);
-
-          if (this.opts.onPeerConnect) {
-            this.opts.onPeerConnect(newPeer);
-          }
-        }
-      });
-    });
+  stop() {
+    this.connection.leave();
   }
 
-  onPeerDead() {
-    this.connection.on('peer dead', (deadPeer) => {
-      logger.info(`NODE peer disconnected ${deadPeer.id}`);
+  onError(err) {
+    logger.error(`NODE error`, err);
 
-      this.peers = this.peers.filter((peer) => {
-        return peer.id !== deadPeer.id;
-      });
-    });
+    if (err instanceof SwimError.JoinFailedError) {
+      this.stop();
+      this.start();
+    }
   }
 
   getPeers() {
-    return this.peers;
-  }
-
-  start() {
-    this.connection.transport.listen(() => {
-      logger.info(`NODE listening on ${this.opts.host}:${this.opts.port}`);
-    });
-
-    this.connection.gossip();
+    return this.connection.members();
   }
 }
 

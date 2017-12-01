@@ -1,6 +1,6 @@
 const request = require('request-promise');
 
-class Request {
+class Requests {
   async get (url, params) {
     return await this.request('GET', url, undefined, params);
   }
@@ -33,4 +33,4 @@ class Request {
   }
 }
 
-module.exports = Request;
+module.exports = Requests;

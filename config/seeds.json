@@ -1,37 +1,4 @@
 [
-  {
-    "id": "a",
-    "transport": {
-      "host": "a.blojchainj.nll",
-      "port": 53645
-    }
-  },
-  {
-    "id": "b",
-    "transport": {
-      "host": "b.blojchainj.nll",
-      "port": 53645
-    }
-  },
-  {
-    "id": "c",
-    "transport": {
-      "host": "c.blojchainj.nll",
-      "port": 53645
-    }
-  },
-  {
-    "id": "d",
-    "transport": {
-      "host": "d.blojchainj.nll",
-      "port": 53645
-    }
-  },
-  {
-    "id": "e",
-    "transport": {
-      "host": "e.blojchainj.nll",
-      "port": 53645
-    }
-  }
+  "a.blojchainj.nll:53645",
+  "b.blojchainj.nll:53645"
 ]
