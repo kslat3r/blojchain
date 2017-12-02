@@ -12,5 +12,5 @@ RUN npm install
 
 # Run
 EXPOSE 3000
-EXPOSE 53645
+EXPOSE 4000
 CMD [ "npm", "start" ]
