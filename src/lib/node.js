@@ -24,8 +24,6 @@ class Node {
           serverPort: this.opts.serverPort,
         },
       },
-      interval: 1000,
-      joinTimeout: 10000,
     });
 
     this.connection.bootstrap(!process.env.SEED ? seeds : []);

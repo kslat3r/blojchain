@@ -6,3 +6,7 @@ instance.createServer();
 instance.createNode({
   onReady,
 });
+
+setInterval(() => {
+  logger.info(instance.getNode().getPeers());
+}, 10000);
