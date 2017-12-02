@@ -14,7 +14,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3001:3000"
-      - "4001:4000"
     command: npm run dev
 
   b.blojchainj.nll:
@@ -29,7 +28,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3002:3000"
-      - "4002:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
@@ -46,7 +44,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3003:3000"
-      - "4003:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
@@ -63,7 +60,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3004:3000"
-      - "4004:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
@@ -80,7 +76,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3005:3000"
-      - "4005:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev

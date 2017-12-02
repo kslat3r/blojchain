@@ -4,7 +4,7 @@ const Node = require('./node');
 const serverHost = process.env.SERVER_HOST || '127.0.0.1';
 const serverPort = process.env.SERVER_PORT || 3000;
 const nodeHost = process.env.NODE_HOST || '127.0.0.1';
-const nodePort = process.env.NODE_PORT || 4000;
+const nodePort = process.env.NODE_PORT || 55356;
 
 let server;
 let node;
