@@ -13,7 +13,8 @@ services:
       - DB_NAME=chain1
       - LOG_LEVEL=debug
     ports:
-      - "4001:3000"
+      - "3001:3000"
+      - "4001:4000"
     command: npm run dev
 
   b.blojchainj.nll:
@@ -27,7 +28,8 @@ services:
       - DB_NAME=chain2
       - LOG_LEVEL=debug
     ports:
-      - "4002:3000"
+      - "3002:3000"
+      - "4002:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
@@ -43,7 +45,8 @@ services:
       - DB_NAME=chain3
       - LOG_LEVEL=debug
     ports:
-      - "4003:3000"
+      - "3003:3000"
+      - "4003:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
@@ -59,7 +62,8 @@ services:
       - DB_NAME=chain4
       - LOG_LEVEL=debug
     ports:
-      - "4004:3000"
+      - "3004:3000"
+      - "4004:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
@@ -75,7 +79,8 @@ services:
       - DB_NAME=chain5
       - LOG_LEVEL=debug
     ports:
-      - "4005:3000"
+      - "3005:3000"
+      - "4005:4000"
     depends_on:
       - a.blojchainj.nll
     command: npm run dev
