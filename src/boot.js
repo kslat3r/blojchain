@@ -1,5 +1,5 @@
-const instance = require('./lib/instance');
-const onReady = require('./lib/events/on-ready');
+const instance = require('./instance');
+const onReady = require('./events/on-ready');
 
 instance.createServer();
 instance.createNode({

@@ -2,7 +2,7 @@ const logger = require('./logger');
 const Swim = require('swim');
 const SwimError = require('swim/lib/error');
 const uniqid = require('uniqid');
-const seeds = require('../../config/seeds.json');
+const seeds = require('../config/seeds.json');
 
 class Node {
   constructor(opts) {

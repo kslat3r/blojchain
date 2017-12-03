@@ -1,6 +1,6 @@
 const db = require('./db');
-const dbConfig = require('../../config/db.json')
-const chainConfig = require('../../config/chain.json');
+const dbConfig = require('../config/db.json')
+const chainConfig = require('../config/chain.json');
 const hasher = require('./hasher');
 
 const chain = {

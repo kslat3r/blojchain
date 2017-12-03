@@ -31,16 +31,28 @@ class Blojs extends Requests {
     }));
   }
 
-  async postToPeer(peer, bloj) {
+  async mineByPeer(peer, bloj) {
     try {
-      return await super.post(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs`, bloj);
+      return await super.post(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs/mine`, bloj);
     } catch (e) {
-      logger.error('REQUESTS blojs:postToPeer', e);
+      logger.error('REQUESTS blojs:mineByPeer', e);
     }
   }
 
-  async postToPeers(peers, bloj) {
-    return await Promise.all(peers.map(async (peer) => await this.postToPeer(peer, bloj)));
+  async mineByPeers(peers, bloj) {
+    return await Promise.all(peers.map(async (peer) => await this.mineByPeer(peer, bloj)));
+  }
+
+  async verifyByPeer(peer, bloj) {
+    try {
+      return await super.post(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs/verify`, bloj);
+    } catch (e) {
+      logger.error('REQUESTS blojs:verifyByPeer', e);
+    }
+  }
+
+  async verifyByPeers(peers, bloj) {
+    return await Promise.all(peers.map(async (peer) => await this.verifyByPeer(peer, bloj)));
   }
 }
 

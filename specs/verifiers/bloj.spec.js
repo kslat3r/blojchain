@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const blojVerifier = require('../../../src/lib/verifiers/bloj');
+const blojVerifier = require('../../src/verifiers/bloj');
 
 describe('verifier', () => {
   it('should verify a blojs is correct', () => {

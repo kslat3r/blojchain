@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const hasher = require('../../src/lib/hasher');
+const hasher = require('../src/hasher');
 
 describe('hasher', () => {
   it('should create the correct hash', () => {

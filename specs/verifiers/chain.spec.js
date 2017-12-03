@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
-const chainVerifier = require('../../../src/lib/verifiers/chain');
-const validChain = require('../../stubs/valid-chain.json');
-const invalidChain = require('../../stubs/invalid-chain.json')
+const chainVerifier = require('../../src/verifiers/chain');
+const validChain = require('../stubs/valid-chain.json');
+const invalidChain = require('../stubs/invalid-chain.json')
 
 describe('chainVerifier', function() {
   it('is a function', () => {

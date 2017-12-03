@@ -65,7 +65,7 @@ router.post('/verify', function(req, res) {
 
   // sanity check
 
-  if (bloj.index > lastBloj.index + 1) {
+  if (bloj.index <= lastBloj.index) {
     throw new Error('Bloj received does not increment last index');
   }
 
@@ -108,7 +108,7 @@ router.post('/mine', function(req, res) {
 
   // sanity check
 
-  if (bloj.index > lastBloj.index + 1) {
+  if (bloj.index <= lastBloj.index) {
     throw new Error('Bloj received does not increment last index');
   }
 

@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const miner = require('../../src/lib/miner');
+const miner = require('../src/miner');
 
 describe('miner', () => {
   it('should mine the correct nonce/hash', () => {
