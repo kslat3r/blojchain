@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+  a.blojchainj.nll:
+    environment:
+      - NODE_HOST=a.blojchainj.nll
+      - SERVER_HOST=a.blojchainj.com
+      - SERVER_PORT=3001
+
+  b.blojchainj.nll:
+    environment:
+      - NODE_HOST=b.blojchainj.nll
+      - SERVER_HOST=b.blojchainj.com
+      - SERVER_PORT=3002
+
+  c.blojchainj.nll:
+    environment:
+      - NODE_HOST=c.blojchainj.nll
+      - SERVER_HOST=c.blojchainj.com
+      - SERVER_PORT=3003
+
+  d.blojchainj.nll:
+    environment:
+      - NODE_HOST=d.blojchainj.nll
+      - SERVER_HOST=d.blojchainj.com
+      - SERVER_PORT=3004
+
+  e.blojchainj.nll:
+    environment:
+      - NODE_HOST=e.blojchainj.nll
+      - SERVER_HOST=e.blojchainj.com
+      - SERVER_PORT=3005
