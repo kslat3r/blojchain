@@ -1,0 +1,21 @@
+.node {
+  background-color: #fff;
+  width: 98%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 1%;
+  color: #1a78c2;
+}
+
+.node h1,
+.node h2 {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 90%;
+}
+
+.node .bloj-list {
+  overflow-x: scroll;
+  display: flex;
+  justify-content: space-between;  
+}

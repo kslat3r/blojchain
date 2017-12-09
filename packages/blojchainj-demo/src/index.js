@@ -1,8 +1,19 @@
+import dotenv from 'dotenv'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { default as registerServiceWorker }  from './registerServiceWorker';
+import { configureStore } from './store';
+import { Provider } from 'react-redux';
+import App from './containers/App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+dotenv.config()
 registerServiceWorker();
+
+const store = configureStore();
+
+ReactDOM.render((
+  <Provider store={store}>
+    <App />
+  </Provider>
+), document.getElementById('root'));
+

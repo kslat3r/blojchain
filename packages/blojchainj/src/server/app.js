@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const loggerMiddleware = require('./middleware/logger');
 const swaggerUIMiddleware = require('./middleware/swagger-ui');
@@ -14,6 +15,7 @@ const peersRoute = require('./routes/peers');
 const app = express();
 
 app.use(loggerMiddleware);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

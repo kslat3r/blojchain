@@ -9,10 +9,11 @@ services:
     environment:
       - NODE_HOST=a.blojchainj.nll
       - SERVER_HOST=a.blojchainj.nll
+      - SERVER_PORT=3001
       - DB_NAME=chain1
       - LOG_LEVEL=debug
     ports:
-      - "3001:3000"
+      - "3001:3001"
     depends_on:
       - b.blojchainj.nll
     command: npm run dev
@@ -26,10 +27,11 @@ services:
       - SEED=true
       - NODE_HOST=b.blojchainj.nll
       - SERVER_HOST=b.blojchainj.nll
+      - SERVER_PORT=3002
       - DB_NAME=chain2
       - LOG_LEVEL=debug
     ports:
-      - "3002:3000"
+      - "3002:3002"
     command: npm run dev
 
   c.blojchainj.nll:
@@ -40,10 +42,11 @@ services:
     environment:
       - NODE_HOST=c.blojchainj.nll
       - SERVER_HOST=c.blojchainj.nll
+      - SERVER_PORT=3003
       - DB_NAME=chain3
       - LOG_LEVEL=debug
     ports:
-      - "3003:3000"
+      - "3003:3003"
     depends_on:
       - b.blojchainj.nll
     command: npm run dev
@@ -56,10 +59,11 @@ services:
     environment:
       - NODE_HOST=d.blojchainj.nll
       - SERVER_HOST=d.blojchainj.nll
+      - SERVER_PORT=3004
       - DB_NAME=chain4
       - LOG_LEVEL=debug
     ports:
-      - "3004:3000"
+      - "3004:3004"
     depends_on:
       - b.blojchainj.nll
     command: npm run dev
@@ -72,10 +76,11 @@ services:
     environment:
       - NODE_HOST=e.blojchainj.nll
       - SERVER_HOST=e.blojchainj.nll
+      - SERVER_PORT=3005
       - DB_NAME=chain5
       - LOG_LEVEL=debug
     ports:
-      - "3005:3000"
+      - "3005:3005"
     depends_on:
       - b.blojchainj.nll
     command: npm run dev

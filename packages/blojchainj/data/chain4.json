@@ -4,6 +4,27 @@
       "hash": "0000000000000000000000000000000000000000000000000000000000000000",
       "index": 1,
       "data": "Genesis bloj"
+    },
+    {
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "index": 2,
+      "data": "Second bloj",
+      "nonce": 69099,
+      "hash": "0000059a07cdfeea05a2bd935142e42c9cd2a771afc4026064d3eb51edfe4614"
+    },
+    {
+      "prevHash": "0000059a07cdfeea05a2bd935142e42c9cd2a771afc4026064d3eb51edfe4614",
+      "index": 3,
+      "data": "Third bloj",
+      "nonce": 3284,
+      "hash": "0000cd4ba08c61a27b9ab2ddd045835414d585958cf0c330c83d43450718534c"
+    },
+    {
+      "prevHash": "0000cd4ba08c61a27b9ab2ddd045835414d585958cf0c330c83d43450718534c",
+      "index": 4,
+      "data": "Fourth bloj",
+      "nonce": 176133,
+      "hash": "0000f5dc8e95d4f4156cb34144c0cea55c631b6d88f394fd6354bfa66710205a"
     }
   ]
 }
