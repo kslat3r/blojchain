@@ -11,24 +11,30 @@ class App extends Component {
   static propTypes = {
     getNodes: PropTypes.func.isRequired,
 
-    error: PropTypes.object,
-    nodes: PropTypes.array.isRequired,
+    nodes: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    this.props.getNodes(this.props.nodes[0]);
+    const nodes = this.props.nodes.toJS();
+    const seed = nodes.items[0];
+
+    this.props.getNodes(seed);
   }
 
   render() {
-    if (this.props.error) {
+    const nodes = this.props.nodes.toJS();
+    const error = nodes.error;
+    const items = nodes.items;
+
+    if (error) {
       return <Error />
     }
 
-    if (!this.props.nodes.length) {
+    if (!items.length) {
       return <Loading />
     }
 
-    return this.props.nodes.map((node, i) => (
+    return items.map((node, i) => (
       <Node
         key={i}
         node={node}
@@ -38,8 +44,7 @@ class App extends Component {
 }
 
 export default connect((state) => ({
-  error: state.nodes.toJS().error,
-  nodes: state.nodes.toJS().items,
+  nodes: state.nodes,
 }), {
   getNodes,
 })(App);

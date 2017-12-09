@@ -6,25 +6,25 @@
       "data": "Genesis bloj"
     },
     {
+      "index": "2",
       "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
-      "index": 2,
-      "data": "Second bloj",
-      "nonce": 69099,
-      "hash": "0000059a07cdfeea05a2bd935142e42c9cd2a771afc4026064d3eb51edfe4614"
+      "data": "Test",
+      "nonce": 211149,
+      "hash": "000047aac4e901a916806ae4e7694302585fc8921f0ae9e1e71383e8ef1b3ee5"
     },
     {
-      "prevHash": "0000059a07cdfeea05a2bd935142e42c9cd2a771afc4026064d3eb51edfe4614",
-      "index": 3,
-      "data": "Third bloj",
-      "nonce": 3284,
-      "hash": "0000cd4ba08c61a27b9ab2ddd045835414d585958cf0c330c83d43450718534c"
+      "index": "3",
+      "prevHash": "000047aac4e901a916806ae4e7694302585fc8921f0ae9e1e71383e8ef1b3ee5",
+      "data": "Foo",
+      "nonce": 101358,
+      "hash": "0000ce5be4598cfa9540e8d7abf5ebf8777167f48eafd40b4827525b2ebee013"
     },
     {
-      "prevHash": "0000cd4ba08c61a27b9ab2ddd045835414d585958cf0c330c83d43450718534c",
-      "index": 4,
-      "data": "Fourth bloj",
-      "nonce": 176133,
-      "hash": "0000f5dc8e95d4f4156cb34144c0cea55c631b6d88f394fd6354bfa66710205a"
+      "index": "4",
+      "prevHash": "0000ce5be4598cfa9540e8d7abf5ebf8777167f48eafd40b4827525b2ebee013",
+      "data": "Test",
+      "nonce": 163673,
+      "hash": "0000c2c17cf699a5cb12dcdc25ecb3e41c60720c12187c259747694463757209"
     }
   ]
 }

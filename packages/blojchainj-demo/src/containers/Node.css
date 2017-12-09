@@ -17,5 +17,5 @@
 .node .bloj-list {
   overflow-x: scroll;
   display: flex;
-  justify-content: space-between;  
+  justify-content: flex-start;
 }

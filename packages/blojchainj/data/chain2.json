@@ -4,6 +4,27 @@
       "hash": "0000000000000000000000000000000000000000000000000000000000000000",
       "index": 1,
       "data": "Genesis bloj"
+    },
+    {
+      "index": "2",
+      "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "data": "Test",
+      "nonce": 211149,
+      "hash": "000047aac4e901a916806ae4e7694302585fc8921f0ae9e1e71383e8ef1b3ee5"
+    },
+    {
+      "index": "3",
+      "prevHash": "000047aac4e901a916806ae4e7694302585fc8921f0ae9e1e71383e8ef1b3ee5",
+      "data": "Testtest",
+      "nonce": 6910,
+      "hash": "0000d8d6b52af97a28b9e103b704da23c4c08bb5eada95f5727bf9daf609bf23"
+    },
+    {
+      "index": "4",
+      "prevHash": "0000d8d6b52af97a28b9e103b704da23c4c08bb5eada95f5727bf9daf609bf23",
+      "data": "Poopoo",
+      "nonce": 36411,
+      "hash": "0000aee5d73a91a68118114a58e2bf4b79853a6ce44a71fad6e29852bf72c912"
     }
   ]
 }

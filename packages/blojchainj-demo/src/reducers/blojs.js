@@ -1,5 +1,5 @@
 import Immutable from 'immutable';
-import { BLOJS_GET_SUCCEEDED, BLOJS_GET_FAILED } from '../actions/blojs';
+import { BLOJS_GET_SUCCEEDED, BLOJS_GET_FAILED, BLOJS_CREATE_SUCCEEDED, BLOJS_CREATE_FAILED } from '../actions/blojs';
 
 const initialState = Immutable.Map({});
 
@@ -26,6 +26,17 @@ export default function(state = initialState, action) {
       
       return Immutable.Map(currentState);
     }
+
+    case BLOJS_CREATE_SUCCEEDED: {
+      const currentState = state.toJS();
+
+      currentState[action.node.meta.id].items.push(action.data);
+    
+      return Immutable.Map(currentState);
+    }
+
+    case BLOJS_CREATE_FAILED:
+      return state;
 
     default:
       return state;

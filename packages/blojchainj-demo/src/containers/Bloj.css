@@ -2,7 +2,10 @@
   color: #1a78c2;
   border: 1px solid #1a78c2;
   width: 22%;
+  min-width: 22%;
   padding: 1%;
+  margin-right: 2%;
+  border-radius: 5px;
 }
 
 .bloj > div:after {
@@ -25,4 +28,20 @@
   float: left;
   padding: 1%;
   margin-bottom: 10px;
+  border: 1px solid #1a78c2;
+  border-radius: 5px;
+}
+
+.bloj input[type="submit"] {
+  float: right;
+  width: 65%;
+  background-color: #53a630;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 2%;
+  margin-bottom: 0;
+  margin-right: 1%;
+  border-radius: 5px;
+  border: 0;
 }

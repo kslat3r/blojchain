@@ -11,8 +11,7 @@ class Node extends Component {
   static propTypes = {
     getBlojs: PropTypes.func.isRequired,
 
-    error: PropTypes.object,
-    blojs: PropTypes.array.isRequired,
+    blojs: PropTypes.object.isRequired,
     node: PropTypes.object.isRequired,
   };
 
@@ -21,35 +20,45 @@ class Node extends Component {
   }
 
   render() {
+    const node = this.props.node;
+    const blojs = this.props.blojs.toJS();
+
+    const items = blojs[node.meta.id] ? blojs[node.meta.id].items : []; 
+    const error = blojs[node.meta.id] ? blojs[node.meta.id].error : null;
+
     return (
       <div className="node">
-        <h1>{this.props.node.meta.id}</h1>
-        <h2>{this.props.node.meta.serverHost}:{this.props.node.meta.serverPort}</h2>
+        <h1>{node.meta.id}</h1>
+        <h2>{node.meta.serverHost}:{node.meta.serverPort}</h2>
 
         <div className="bloj-list">
-          {this.props.error && (
+          {error && (
             <Error />
           )}
 
-          {!this.props.blojs.length && (
+          {!items.length && (
             <Loading />
           )}
 
-          {this.props.blojs.map((bloj, i) => (
+          {items.map((bloj, i) => (
             <Bloj
               key={i}
+              node={node}
               bloj={bloj}
             />
           ))}
+
+          <Bloj
+            node={node}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default connect((state, ownProps) => ({
-  error: state.blojs.toJS()[ownProps.node.meta.id] ?  state.blojs.toJS()[ownProps.node.meta.id].error : null,
-  blojs: state.blojs.toJS()[ownProps.node.meta.id] ?  state.blojs.toJS()[ownProps.node.meta.id].items : [],
+export default connect((state) => ({
+  blojs: state.blojs,
 }), {
   getBlojs,
 })(Node);
