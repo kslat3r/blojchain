@@ -7,6 +7,7 @@ services:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - SEED=b.blojchainj.nll:55356
       - NODE_HOST=a.blojchainj.nll
       - SERVER_HOST=a.blojchainj.nll
       - SERVER_PORT=3001
@@ -14,8 +15,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3001:3001"
-    depends_on:
-      - b.blojchainj.nll
     command: npm run dev
 
   b.blojchainj.nll:
@@ -24,7 +23,7 @@ services:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
-      - SEED=true
+      - SEED=a.blojchainj.nll:55356
       - NODE_HOST=b.blojchainj.nll
       - SERVER_HOST=b.blojchainj.nll
       - SERVER_PORT=3002
@@ -40,6 +39,7 @@ services:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - SEED=a.blojchainj.nll:55356
       - NODE_HOST=c.blojchainj.nll
       - SERVER_HOST=c.blojchainj.nll
       - SERVER_PORT=3003
@@ -47,8 +47,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3003:3003"
-    depends_on:
-      - b.blojchainj.nll
     command: npm run dev
 
   d.blojchainj.nll:
@@ -57,6 +55,7 @@ services:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - SEED=a.blojchainj.nll:55356
       - NODE_HOST=d.blojchainj.nll
       - SERVER_HOST=d.blojchainj.nll
       - SERVER_PORT=3004
@@ -64,8 +63,6 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3004:3004"
-    depends_on:
-      - b.blojchainj.nll
     command: npm run dev
 
   e.blojchainj.nll:
@@ -74,6 +71,7 @@ services:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
+      - SEED=a.blojchainj.nll:55356
       - NODE_HOST=e.blojchainj.nll
       - SERVER_HOST=e.blojchainj.nll
       - SERVER_PORT=3005
@@ -81,6 +79,4 @@ services:
       - LOG_LEVEL=debug
     ports:
       - "3005:3005"
-    depends_on:
-      - b.blojchainj.nll
     command: npm run dev

@@ -3,9 +3,9 @@ import { NODES_GET, NODES_GET_SUCCEEDED, NODES_GET_FAILED } from '../actions/nod
 import * as nodesService from '../services/nodes';
 
 export function* getNodes() {
-  yield takeLatest(NODES_GET, function* (action) {
+  yield takeLatest(NODES_GET, function* () {
     try {
-      const data = yield call(nodesService.get, action.seed);
+      const data = yield call(nodesService.get);
 
       yield put({
         type: NODES_GET_SUCCEEDED,

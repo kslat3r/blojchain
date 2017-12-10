@@ -15,10 +15,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const nodes = this.props.nodes.toJS();
-    const seed = nodes.items[0];
-
-    this.props.getNodes(seed);
+    this.props.getNodes();
   }
 
   render() {

@@ -9,6 +9,9 @@ module.exports = async (peers) => {
   const currentHash = chain.getHash();
   const peerHashes = await blojsRequests.getHashesFromPeers(peers);
 
+  logger.info(currentHash);
+  logger.info(peerHashes);
+
   const mismatchedPeers = peerHashes.filter(peerHash => peerHash.hash !== currentHash)
     .map((peerHash) => {
       return peerHash.peer;

@@ -1,5 +1,6 @@
 const app = require('./app');
 const http = require('http');
+const socketIo = require('socket.io');
 const logger = require('../logger');
 
 class Server {
@@ -15,6 +16,9 @@ class Server {
 
     const server = http.createServer(app);
     server.listen(port);
+
+    const io = socketIo(server);
+    app.set('io', io);
 
     server.on('error', (error) => {
       if (error.syscall !== 'listen') {

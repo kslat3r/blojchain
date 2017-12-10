@@ -14,7 +14,8 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "socket.io-client": "^2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

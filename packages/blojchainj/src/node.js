@@ -7,7 +7,9 @@ const seeds = require('../config/seeds.json');
 class Node {
   constructor(opts) {
     this.opts = opts;
+
     this.id = uniqid();
+    this.seeds = [process.env.SEED] || seeds;
 
     this.start();
   }
@@ -28,7 +30,7 @@ class Node {
       joinTimeout: 10000,
     });
 
-    this.connection.bootstrap(!process.env.SEED ? seeds : []);
+    this.connection.bootstrap(this.seeds);
 
     this.connection.on(Swim.EventType.Error, (err) => {
       this.onError(err);
@@ -55,7 +57,7 @@ class Node {
   }
 
   getPeers() {
-    return this.connection.members();
+    return this.connection.members(true);
   }
 }
 

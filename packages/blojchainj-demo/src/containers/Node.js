@@ -1,6 +1,7 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 import { getBlojs } from '../actions/blojs';
 import Error from '../components/Error';
 import Loading from '../components/Loading';
@@ -15,8 +16,20 @@ class Node extends Component {
     node: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      socket: null,
+    };
+  }
+
   componentDidMount() {
     this.props.getBlojs(this.props.node);
+
+    this.setState({
+      socket: io(`http://${this.props.node.meta.serverHost}:${this.props.node.meta.serverPort}`),
+    });
   }
 
   render() {

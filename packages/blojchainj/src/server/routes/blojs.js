@@ -21,6 +21,9 @@ router.get('/', function(req, res) {
   logger.info('EVENT blojs:get');
 
   res.send(chain.get());
+
+  const io = req.app.get('io');
+  io.emit('hello')
 });
 
 /**

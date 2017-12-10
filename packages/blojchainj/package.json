@@ -37,6 +37,7 @@
     "recursive-readdir-sync": "^1.0.6",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
+    "socket.io": "^2.0.4",
     "swagger-jsdoc": "^1.9.7",
     "swagger-ui-express": "^2.0.9",
     "swim": "^0.5.0",

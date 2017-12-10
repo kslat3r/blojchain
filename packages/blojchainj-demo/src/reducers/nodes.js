@@ -2,13 +2,7 @@ import Immutable from 'immutable';
 import { NODES_GET_SUCCEEDED, NODES_GET_FAILED } from '../actions/nodes';
 
 const initialState = Immutable.Map({
-  items: [{
-    meta: {
-      id: 'seed',
-      serverHost: process.env.REACT_APP_SEED_HOST,
-      serverPort: process.env.REACT_APP_SEED_PORT,
-    },
-  }],
+  items: [],
   error: null,
 });
 
@@ -16,7 +10,7 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case NODES_GET_SUCCEEDED:
       return Immutable.Map({
-        items: state.toJS().items.concat(action.data),
+        items: action.data,
         error: null,
       });
 

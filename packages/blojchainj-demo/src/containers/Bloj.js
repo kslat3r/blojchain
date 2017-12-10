@@ -1,12 +1,14 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createBloj } from '../actions/blojs';
+import io from 'socket.io-client';
+import { createBloj, updateBloj } from '../actions/blojs';
 import './Bloj.css';
 
 class Bloj extends Component {
   static propTypes = {
     createBloj: PropTypes.func.isRequired,
+    updateBloj: PropTypes.func.isRequired,
 
     node: PropTypes.object.isRequired,
     bloj: PropTypes.object,
@@ -19,34 +21,47 @@ class Bloj extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      newBloj: {
+      bloj: props.bloj || {
         index: '',
         prevHash: '',
         data: '',
-      },
+      }, 
+      socket: null,
     };
   }
 
+  componentDidMount() {
+    if (this.state.bloj.hash) {
+      this.setState({
+        socket: io(`http://${this.props.node.meta.serverHost}:${this.props.node.meta.serverPort}`),
+      });
+    }
+  }
+
   onChange(key, value) {
-    const newBloj = Object.assign({}, this.state.newBloj, {
+    const bloj = Object.assign({}, this.state.bloj, {
       [key]: value
     });
 
-    this.setState({ newBloj });
+    this.setState({ bloj });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    this.props.createBloj(this.state.newBloj, this.props.node);
-    
-    this.setState({
-      newBloj: {
-        index: '',
-        prevHash: '',
-        data: '',
-      }
-    });
+    if (this.state.bloj.hash) {
+      this.props.updateBloj(this.state.bloj, this.props.node);
+    } else {  
+      this.props.createBloj(this.state.bloj, this.props.node);
+        
+      this.setState({
+        bloj: {
+          index: '',
+          prevHash: '',
+          data: '',
+        }
+      });
+    }
   }
 
   render() {
@@ -61,8 +76,7 @@ class Bloj extends Component {
             <label>Index</label>
             <input 
               type="text" 
-              value={(this.props.bloj && this.props.bloj.index) || this.state.newBloj.index} 
-              readOnly={this.props.bloj}
+              value={this.state.bloj.index} 
               onChange={e => this.onChange('index', e.target.value)}
             />
           </div>
@@ -71,29 +85,29 @@ class Bloj extends Component {
             <label>Previous hash</label>
             <input
               type="text"
-              value={(this.props.bloj && this.props.bloj.prevHash) || this.state.newBloj.prevHash}
+              value={this.state.bloj.prevHash}
               onChange={e => this.onChange('prevHash', e.target.value)}
             />
           </div>
           
-          {this.props.bloj && (
+          {this.state.bloj.nonce && (
             <div>
               <label>Nonce</label>
               <input
                 type="text"
-                value={this.props.bloj && this.props.bloj.nonce}
-                readOnly
+                value={this.state.bloj.nonce}
+                onChange={e => this.onChange('nonce', e.target.value)}
               />
             </div>
           )}
           
-          {this.props.bloj && (
+          {this.state.bloj.hash && (
             <div>
               <label>Hash</label>
               <input
                 type="text"
-                value={this.props.bloj && this.props.bloj.hash}
-                readOnly
+                value={this.state.bloj.hash}
+                onChange={e => this.onChange('hash', e.target.value)}
               />
             </div>
           )}
@@ -102,20 +116,17 @@ class Bloj extends Component {
             <label>Data</label>
             <input
               type="text"
-              value={(this.props.bloj && this.props.bloj.data) || this.state.newBloj.data}
-              readOnly={this.props.bloj}
+              value={this.state.bloj.data}
               onChange={e => this.onChange('data', e.target.value)}
             />
           </div>
 
-          {!this.props.bloj && (
-            <div>
-              <input
-                type="submit"
-                value="Create"
-              />
-            </div>
-          )}
+          <div>
+            <input
+              type="submit"
+              value={this.state.bloj.hash ? 'Update' : 'Create'}
+            />
+          </div>
         </form>
       </div>
     );
@@ -124,4 +135,5 @@ class Bloj extends Component {
 
 export default connect(() => ({}), {
   createBloj,
+  updateBloj,
 })(Bloj);
