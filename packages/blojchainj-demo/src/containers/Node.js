@@ -42,7 +42,9 @@ class Node extends Component {
     return (
       <div className="node">
         <h1>{node.meta.id}</h1>
-        <h2>{node.meta.serverHost}:{node.meta.serverPort}</h2>
+        <h2>
+          <a href={`http://${node.meta.serverHost}:${node.meta.serverPort}/explorer`} target="_new">{node.meta.serverHost}:{node.meta.serverPort}</a>
+        </h2>
 
         <div className="bloj-list">
           {error && (

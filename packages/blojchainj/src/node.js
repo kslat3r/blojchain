@@ -11,12 +11,12 @@ class Node {
     this.id = uniqid();
     this.seeds = [process.env.SEED] || seeds;
 
-    this.start();
-  }
-
-  start() {
     logger.info(`NODE creating instance ${this.id}`);
 
+    this.connect();
+  }
+
+  connect() {
     this.connection = new Swim({
       local: {
         host: `${this.opts.host}:${this.opts.port}`,
@@ -43,7 +43,13 @@ class Node {
     });
   }
 
-  stop() {
+  reconnect() {
+    logger.info(`NODE recreating instance ${this.id}`);
+
+    this.connect();
+  }
+
+  disconnect() {
     this.connection.leave();
   }
 
@@ -51,8 +57,8 @@ class Node {
     logger.error(`NODE error`, err);
 
     if (err instanceof SwimError.JoinFailedError) {
-      this.stop();
-      this.start();
+      this.disconnect();
+      this.reconnect();
     }
   }
 
