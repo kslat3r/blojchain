@@ -1,15 +1,15 @@
 version: "2"
 
 services:
-  a.blojchainj.nll:
+  a.blojchain.nll:
     build: ./
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
-      - SEED=b.blojchainj.nll:55356
-      - NODE_HOST=a.blojchainj.nll
-      - SERVER_HOST=a.blojchainj.nll
+      - SEED=b.blojchain.nll:55356
+      - NODE_HOST=a.blojchain.nll
+      - SERVER_HOST=a.blojchain.nll
       - SERVER_PORT=3001
       - DB_NAME=chain1
       - LOG_LEVEL=debug
@@ -17,15 +17,15 @@ services:
       - "3001:3001"
     command: npm run dev
 
-  b.blojchainj.nll:
+  b.blojchain.nll:
     build: ./
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
-      - SEED=a.blojchainj.nll:55356
-      - NODE_HOST=b.blojchainj.nll
-      - SERVER_HOST=b.blojchainj.nll
+      - SEED=a.blojchain.nll:55356
+      - NODE_HOST=b.blojchain.nll
+      - SERVER_HOST=b.blojchain.nll
       - SERVER_PORT=3002
       - DB_NAME=chain2
       - LOG_LEVEL=debug
@@ -33,15 +33,15 @@ services:
       - "3002:3002"
     command: npm run dev
 
-  c.blojchainj.nll:
+  c.blojchain.nll:
     build: ./
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
-      - SEED=a.blojchainj.nll:55356
-      - NODE_HOST=c.blojchainj.nll
-      - SERVER_HOST=c.blojchainj.nll
+      - SEED=a.blojchain.nll:55356
+      - NODE_HOST=c.blojchain.nll
+      - SERVER_HOST=c.blojchain.nll
       - SERVER_PORT=3003
       - DB_NAME=chain3
       - LOG_LEVEL=debug
@@ -49,15 +49,15 @@ services:
       - "3003:3003"
     command: npm run dev
 
-  d.blojchainj.nll:
+  d.blojchain.nll:
     build: ./
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
-      - SEED=a.blojchainj.nll:55356
-      - NODE_HOST=d.blojchainj.nll
-      - SERVER_HOST=d.blojchainj.nll
+      - SEED=a.blojchain.nll:55356
+      - NODE_HOST=d.blojchain.nll
+      - SERVER_HOST=d.blojchain.nll
       - SERVER_PORT=3004
       - DB_NAME=chain4
       - LOG_LEVEL=debug
@@ -65,15 +65,15 @@ services:
       - "3004:3004"
     command: npm run dev
 
-  e.blojchainj.nll:
+  e.blojchain.nll:
     build: ./
     volumes:
       - /usr/src/app/node_modules
       - ./:/usr/src/app
     environment:
-      - SEED=a.blojchainj.nll:55356
-      - NODE_HOST=e.blojchainj.nll
-      - SERVER_HOST=e.blojchainj.nll
+      - SEED=a.blojchain.nll:55356
+      - NODE_HOST=e.blojchain.nll
+      - SERVER_HOST=e.blojchain.nll
       - SERVER_PORT=3005
       - DB_NAME=chain5
       - LOG_LEVEL=debug

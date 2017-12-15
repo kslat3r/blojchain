@@ -1,22 +1,22 @@
 version: "2"
 
 services:
-  a.blojchainj.nll:
+  a.blojchain.nll:
     environment:
-      - SERVER_HOST=a.blojchainj.com
+      - SERVER_HOST=a.blojchain.com
 
-  b.blojchainj.nll:
+  b.blojchain.nll:
     environment:
-      - SERVER_HOST=b.blojchainj.com
+      - SERVER_HOST=b.blojchain.com
 
-  c.blojchainj.nll:
+  c.blojchain.nll:
     environment:
-      - SERVER_HOST=c.blojchainj.com
+      - SERVER_HOST=c.blojchain.com
 
-  d.blojchainj.nll:
+  d.blojchain.nll:
     environment:
-      - SERVER_HOST=d.blojchainj.com
+      - SERVER_HOST=d.blojchain.com
 
-  e.blojchainj.nll:
+  e.blojchain.nll:
     environment:
-      - SERVER_HOST=e.blojchainj.com
+      - SERVER_HOST=e.blojchain.com
