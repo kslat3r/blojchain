@@ -17,10 +17,10 @@ describe('chainVerifier', function() {
   });
 
   it('should return true if the chain is valid for a subsection', () => {
-    expect(chainVerifier(validChain, 3, 7)).to.equal(true);
+    expect(chainVerifier(validChain, 2, 4)).to.equal(true);
   });
 
   it('should return false if the chain is invalid for a subsection', () => {
-    expect(chainVerifier(invalidChain, 3, 7)).to.equal(false);
+    expect(chainVerifier(invalidChain, 2, 4)).to.equal(false);
   });
 });

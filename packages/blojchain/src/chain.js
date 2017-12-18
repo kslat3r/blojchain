@@ -1,7 +1,7 @@
 const db = require('./db');
 const dbConfig = require('../config/db.json')
 const chainConfig = require('../config/chain.json');
-const hasher = require('./hasher');
+const hash = require('./helpers/hash');
 
 const chain = {
   get: () => {
@@ -13,7 +13,7 @@ const chain = {
     const blojs = db.get(dbConfig.collection)
     .value();
 
-    return blojs[index] ? blojs[index] : null;
+    return blojs.find(bloj => bloj.index === index);
   },
 
   getLast: () => {
@@ -27,7 +27,7 @@ const chain = {
     const blojs = db.get(dbConfig.collection)
       .value();
 
-    return hasher(JSON.stringify(blojs));
+    return hash(JSON.stringify(blojs));
   },
 
   populate: (blojs) => {

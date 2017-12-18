@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
 const chain = require('../../chain');
-const hasher = require('../../hasher');
-const blojVerifier = require('../../verifiers/bloj');
+const node = require('../../node');
+const blojsRequests = require('../../requests/blojs');
 const miner = require('../../miner');
+const blojVerifier = require('../../verifiers/bloj');
 
 /**
  * @swagger
@@ -22,8 +23,8 @@ router.get('/', function(req, res) {
 
   res.send(chain.get());
 
-  const io = req.app.get('io');
-  io.emit('hello')
+  // const io = req.app.get('io');
+  // io.emit('hello')
 });
 
 /**
@@ -40,14 +41,14 @@ router.get('/', function(req, res) {
 router.get('/hash', function(req, res) {
   logger.info('EVENT blojs:get:hash');
 
-  res.send(hasher(JSON.stringify(chain.get())));
+  res.send(chain.getHash());
 });
 
 /**
  * @swagger
- * /blojs/verify:
+ * /blojs:
  *   post:
- *     description: Verify a bloj
+ *     description: Add a bloj
  *     produces:
  *       - application/json
  *     parameters:
@@ -60,30 +61,18 @@ router.get('/hash', function(req, res) {
  *       200:
  *         description: Bloj
  */
-router.post('/verify', function(req, res) {
-  logger.info('EVENT blojs:verify');
+router.post('/', async function(req, res) {
+  logger.info('EVENT blojs:create');
 
-  const bloj = req.body;
-  const lastBloj = chain.getLast();
+  const bloj = Object.assign({}, req.body, {
+    timestamp: new Date().getTime(),
+  });
 
-  // sanity check
+  const responses = await blojsRequests.mineByPeers(node.getPeers(), bloj);
 
-  if (bloj.index <= lastBloj.index) {
-    throw new Error('Bloj received does not increment last index');
-  }
+  logger.info('EVENT blojs:create', 'Bloj was sent to peers for mining');
 
-  if (lastBloj.hash !== bloj.prevHash) {
-    throw new Error('Bloj received does not match last bloj hash');
-  }
-
-  if (!blojVerifier(bloj)) {
-    throw new Error('Bloj could not be verified');
-  }
-
-  logger.info('EVENT bloj:add', 'Bloj added to chain', bloj);
-
-  chain.add(bloj);
-  res.send(bloj);
+  res.send(responses);
 });
 
 /**
@@ -107,30 +96,60 @@ router.post('/mine', function(req, res) {
   logger.info('EVENT blojs:mine');
 
   const bloj = req.body;
-  const lastBloj = chain.getLast();
+
+  miner.add(bloj.index, bloj);
+
+  logger.info('EVENT blojs:mine', `Added bloj to miner`, bloj);
+
+  res.send({
+    ack: true,
+    serverPort: process.env.SERVER_PORT,
+    serverHost: process.env.SERVER_HOST,
+  });
+});
+
+/**
+ * @swagger
+ * /blojs/verify:
+ *   post:
+ *     description: Verify a bloj
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *     responses:
+ *       200:
+ *         description: Bloj
+ */
+router.post('/verify', function(req, res) {
+  logger.info('EVENT blojs:verify');
+
+  const bloj = req.body;
+  const prevBloj = chain.getIndex(bloj.index - 1);
 
   // sanity check
 
-  if (bloj.index <= lastBloj.index) {
-    throw new Error('Bloj received does not increment last index');
+  if (!prevBloj) {
+    throw new Error('Could not find previous bloj for bloj received');
   }
 
-  if (lastBloj.hash !== bloj.prevHash) {
+  if (prevBloj.hash !== bloj.prevHash) {
     throw new Error('Bloj received does not match last bloj hash');
   }
 
-  let mined;
-
-  try {
-    mined = miner(bloj);
-  } catch (e) {
-    throw e;
+  if (!blojVerifier(bloj)) {
+    throw new Error('Bloj could not be verified');
   }
 
-  logger.info('EVENT bloj:mine', `Bloj was mined`, bloj);
+  logger.info('EVENT blojs:verify', `Bloj was verified`, bloj);
 
-  chain.add(mined);
-  res.send(mined);
+  res.send({
+    ack: true,
+  });
 });
 
 module.exports = router;

@@ -8,7 +8,8 @@ describe('verifier', () => {
       nonce: 4786,
       data: 'foo',
       prevHash: '0000000000000000000000000000000000000000000000000000000000000000',
-      hash: '000cc5e9884848c326f3fae612251c58a39217a724c23437a46ea45a1de05dfa',
+      hash: 'e47a1328654b7a4602134de98be9ba08e9969555b92f4252334c83cd082a3374',
+      timestamp: 10000,
     });
 
     expect(verified).to.be.true;

@@ -1,9 +1,9 @@
-const hasher = require('../hasher');
+const hash = require('../helpers/hash');
 
 module.exports = (bloj) => {
-  const hash = hasher(`${bloj.index}${bloj.nonce}${bloj.data}${bloj.prevHash}`);
+  const hashed = hash(`${bloj.index}${bloj.nonce}${bloj.data}${bloj.prevHash}${bloj.timestamp}`);
 
-  if (bloj.hash === hash) {
+  if (bloj.hash === hashed) {
     return true;
   }
 

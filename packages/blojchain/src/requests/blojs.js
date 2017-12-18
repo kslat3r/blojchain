@@ -7,6 +7,8 @@ class Blojs extends Requests {
       return await super.get(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs`);
     } catch (e) {
       logger.error('REQUESTS blojs:getFromPeer', e);
+
+      return e.error;
     }
   }
 
@@ -19,6 +21,8 @@ class Blojs extends Requests {
       return await super.get(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs/hash`);
     } catch (e) {
       logger.error('REQUESTS blojs:getHashFromPeer', e);
+
+      return e.error;
     }
   }
 
@@ -36,6 +40,8 @@ class Blojs extends Requests {
       return await super.post(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs/mine`, bloj);
     } catch (e) {
       logger.error('REQUESTS blojs:mineByPeer', e);
+
+      return e.error;
     }
   }
 
@@ -48,6 +54,8 @@ class Blojs extends Requests {
       return await super.post(`http://${peer.meta.serverHost}:${peer.meta.serverPort}/blojs/verify`, bloj);
     } catch (e) {
       logger.error('REQUESTS blojs:verifyByPeer', e);
+
+      return e.error;
     }
   }
 

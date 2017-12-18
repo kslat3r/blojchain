@@ -1,8 +1,8 @@
-const instance = require('../instance');
+const node = require('../node');
 
 module.exports = () => {
   setInterval(() => {
-    instance.getNode().disconnect();
-    instance.getNode().reconnect();
+    node.disconnect();
+    node.reconnect();
   }, 60*60*1000);
 }
