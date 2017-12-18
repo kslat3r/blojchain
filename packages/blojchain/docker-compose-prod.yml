@@ -3,20 +3,20 @@ version: "2"
 services:
   a.blojchain.nll:
     environment:
-      - SERVER_HOST=a.blojchain.com
+      - SERVER_HOST=a.blojcha.in
 
   b.blojchain.nll:
     environment:
-      - SERVER_HOST=b.blojchain.com
+      - SERVER_HOST=b.blojcha.in
 
   c.blojchain.nll:
     environment:
-      - SERVER_HOST=c.blojchain.com
+      - SERVER_HOST=c.blojcha.in
 
   d.blojchain.nll:
     environment:
-      - SERVER_HOST=d.blojchain.com
+      - SERVER_HOST=d.blojcha.in
 
   e.blojchain.nll:
     environment:
-      - SERVER_HOST=e.blojchain.com
+      - SERVER_HOST=e.blojcha.in
