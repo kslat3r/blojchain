@@ -70,7 +70,7 @@ router.post('/', async function(req, res) {
 
   const responses = await blojsRequests.mineByPeers(node.getPeers(), bloj);
 
-  logger.info('EVENT blojs:create', 'Bloj was sent to peers for mining');
+  logger.info('EVENT blojs:create', 'Bloj was sent to peers for mining', responses);
 
   res.send(responses);
 });
