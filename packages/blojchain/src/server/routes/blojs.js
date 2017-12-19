@@ -20,7 +20,7 @@ const blojVerifier = require('../../verifiers/bloj');
  *         description: Blojs
  */
 router.get('/', function(req, res) {
-  logger.info('EVENT blojs:get');
+  logger.debug('EVENT blojs:get');
 
   res.send(chain.selectAll());
 
@@ -40,7 +40,7 @@ router.get('/', function(req, res) {
  *         description: Hash
  */
 router.get('/hash', function(req, res) {
-  logger.info('EVENT blojs:get:hash');
+  logger.debug('EVENT blojs:get:hash');
 
   const hashed = hash(JSON.stringify(chain.selectAll()));
 
@@ -65,7 +65,7 @@ router.get('/hash', function(req, res) {
  *         description: Bloj
  */
 router.post('/', async function(req, res) {
-  logger.info('EVENT blojs:create');
+  logger.debug('EVENT blojs:create');
 
   const bloj = Object.assign({}, req.body, {
     timestamp: new Date().getTime(),
@@ -96,18 +96,16 @@ router.post('/', async function(req, res) {
  *         description: Bloj
  */
 router.post('/mine', function(req, res) {
-  logger.info('EVENT blojs:mine');
+  logger.debug('EVENT blojs:mine');
 
   const bloj = req.body;
 
-  miner.add(bloj.index, bloj);
+  miner.push(bloj);
 
   logger.info('EVENT blojs:mine', `Added bloj to miner`, bloj);
 
   res.send({
     ack: true,
-    serverPort: process.env.SERVER_PORT,
-    serverHost: process.env.SERVER_HOST,
   });
 });
 
@@ -129,24 +127,15 @@ router.post('/mine', function(req, res) {
  *         description: Bloj
  */
 router.post('/verify', function(req, res) {
-  logger.info('EVENT blojs:verify');
+  logger.debug('EVENT blojs:verify');
 
   const bloj = req.body;
-  const prevBloj = chain.selectBy({ index: bloj.index - 1 });
-
-  // sanity check
-
-  if (!prevBloj) {
-    throw new Error('Could not find previous bloj for bloj received');
-  }
-
-  if (prevBloj.hash !== bloj.prevHash) {
-    throw new Error('Bloj received does not match last bloj hash');
-  }
 
   if (!blojVerifier(bloj)) {
     throw new Error('Bloj could not be verified');
   }
+
+  miner.remove(bloj);
 
   logger.info('EVENT blojs:verify', `Bloj was verified`, bloj);
 

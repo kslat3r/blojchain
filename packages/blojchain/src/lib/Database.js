@@ -52,11 +52,6 @@ class Database {
       .write();
   }
 
-  overwrite(objs) {
-    return this.driver.set(this.collection, objs)
-      .write();
-  }
-
   removeAll() {
     return this.overwrite([]);
   }
@@ -64,6 +59,11 @@ class Database {
   removeBy(args) {
     return this.driver.get(this.collection)
       .remove(args)
+      .write();
+  }
+
+  reset(objs = []) {
+    return this.driver.set(this.collection, objs)
       .write();
   }
 }

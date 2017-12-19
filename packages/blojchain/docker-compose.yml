@@ -12,7 +12,7 @@ services:
       - SERVER_HOST=a.blojchain.nll
       - SERVER_PORT=3001
       - DB_NAME=chain1
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
     ports:
       - "3001:3001"
     command: npm run dev
@@ -28,7 +28,7 @@ services:
       - SERVER_HOST=b.blojchain.nll
       - SERVER_PORT=3002
       - DB_NAME=chain2
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
     ports:
       - "3002:3002"
     command: npm run dev
@@ -44,7 +44,7 @@ services:
       - SERVER_HOST=c.blojchain.nll
       - SERVER_PORT=3003
       - DB_NAME=chain3
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
     ports:
       - "3003:3003"
     command: npm run dev
@@ -60,7 +60,7 @@ services:
       - SERVER_HOST=d.blojchain.nll
       - SERVER_PORT=3004
       - DB_NAME=chain4
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
     ports:
       - "3004:3004"
     command: npm run dev
@@ -76,7 +76,7 @@ services:
       - SERVER_HOST=e.blojchain.nll
       - SERVER_PORT=3005
       - DB_NAME=chain5
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=info
     ports:
       - "3005:3005"
     command: npm run dev

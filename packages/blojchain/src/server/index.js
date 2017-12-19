@@ -46,10 +46,7 @@ class Server {
     });
 
     server.on('listening', () => {
-      const addr = server.address();
-      const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-
-      logger.info(`SERVER Listening on ${bind}`);
+      logger.info(`SERVER listening on ${this.opts.host}:${this.opts.port}`);
     });
   }
 }
