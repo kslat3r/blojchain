@@ -1,3 +1,4 @@
+require('./chain');
 require('./node');
 require('./server');
 require('./miner');

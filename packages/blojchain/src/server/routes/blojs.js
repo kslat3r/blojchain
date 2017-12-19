@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
 const chain = require('../../chain');
+const hash = require('../../helpers/hash');
 const node = require('../../node');
 const blojsRequests = require('../../requests/blojs');
 const miner = require('../../miner');
@@ -21,7 +22,7 @@ const blojVerifier = require('../../verifiers/bloj');
 router.get('/', function(req, res) {
   logger.info('EVENT blojs:get');
 
-  res.send(chain.get());
+  res.send(chain.selectAll());
 
   // const io = req.app.get('io');
   // io.emit('hello')
@@ -41,7 +42,9 @@ router.get('/', function(req, res) {
 router.get('/hash', function(req, res) {
   logger.info('EVENT blojs:get:hash');
 
-  res.send(chain.getHash());
+  const hashed = hash(JSON.stringify(chain.selectAll()));
+
+  res.send(hashed);
 });
 
 /**
@@ -129,7 +132,7 @@ router.post('/verify', function(req, res) {
   logger.info('EVENT blojs:verify');
 
   const bloj = req.body;
-  const prevBloj = chain.getIndex(bloj.index - 1);
+  const prevBloj = chain.selectBy({ index: bloj.index - 1 });
 
   // sanity check
 

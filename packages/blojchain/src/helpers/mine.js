@@ -1,7 +1,7 @@
-const config = require('../../config/miner.json');
+const minerConfig = require('../../config/miner.json');
 const hash = require('./hash');
 
-const pattern = '0'.repeat(config.difficulty);
+const pattern = '0'.repeat(minerConfig.difficulty);
 
 module.exports = (bloj) => {
   if (!bloj.index) {
@@ -25,7 +25,7 @@ module.exports = (bloj) => {
   while (!bloj.hash) {
     const hashed = hash(`${bloj.index}${bloj.nonce}${bloj.data}${bloj.prevHash}${bloj.timestamp}`);
 
-    if (hashed.substr(0, config.difficulty) === pattern) {
+    if (hashed.substr(0, minerConfig.difficulty) === pattern) {
       bloj.hash = hashed;
 
       break;

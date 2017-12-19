@@ -1,5 +1,4 @@
 const blojVerifier = require('./bloj');
-const mine = require('../helpers/mine');
 
 module.exports = (chain, start = 0, end = 0) => {
   end = end || chain.length;

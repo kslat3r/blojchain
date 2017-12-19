@@ -13,7 +13,7 @@ module.exports = (_currentChain, _peerChains) => {
     Object.keys(peerChain).forEach((index) => {
       const peerBloj = peerChain[index];
 
-      if (peerBloj.hash !== chainConfig.genesisBloj.hash) {
+      if (peerBloj.hash !== chainConfig.genesis.hash) {
         const previousBloj = currentChain[index - 1];
 
         if (previousBloj) {
