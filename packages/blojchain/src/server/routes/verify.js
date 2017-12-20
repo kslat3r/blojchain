@@ -4,6 +4,9 @@ const logger = require('../../logger');
 const miner = require('../../miner');
 const verifyBloj = require('../../helpers/verify-bloj');
 const chain = require('../../chain');
+const confirmRequests = require('../../requests/confirm');
+const node = require('../../node');
+const netConfig = require('../../../config/net');
 
 /**
  * @swagger
@@ -28,8 +31,12 @@ router.post('/verify', function(req, res) {
   const bloj = req.body;
 
   if (verifyBloj(bloj)) {
+    bloj.confirmations.push(`${netConfig.nodeHost}:${netConfig.nodePort}`);
+
     miner.remove(bloj);
     chain.create(bloj);
+
+    confirmRequests.byPeers(node.getPeers(), bloj);
 
     logger.info('EVENT verify',  'Verified bloj', bloj);
   } else {

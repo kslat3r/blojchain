@@ -6,6 +6,7 @@ const logger = require('./logger');
 const verifyRequests = require('./requests/verify');
 const node = require('./node');
 const chain = require('./chain');
+const netConfig = require('../config/net');
 
 class Miner extends TaskQueue {
   constructor() {
@@ -26,7 +27,7 @@ class Miner extends TaskQueue {
       bloj.index = lastBloj.index + 1;
       bloj.prevHash = lastBloj.hash;
       bloj.timestamp = new Date().getTime();
-      bloj.confirmations = 0;
+      bloj.confirmations = [];
     }
 
     // let's go
@@ -58,6 +59,9 @@ class Miner extends TaskQueue {
     // mining was successful
 
     if (mined.hash) {
+      // we have confirmed this once!
+
+      mined.confirmations.push(`${netConfig.nodeHost}:${netConfig.nodePort}`);
 
       // add to chain
 

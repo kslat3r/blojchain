@@ -37,7 +37,7 @@ class Node extends Component {
 
   render() {
     const node = this.props.node;
-    const blojs = this.props.blojs.toJS();
+    const blojs = this.props.blojs;
 
     const items = blojs[node.meta.id] ? blojs[node.meta.id].items : []; 
     const error = blojs[node.meta.id] ? blojs[node.meta.id].error : null;
@@ -76,7 +76,7 @@ class Node extends Component {
 }
 
 export default connect((state) => ({
-  blojs: state.blojs,
+  blojs: state.blojs.toJS(),
 }), {
   getBlojs,
   addBloj,

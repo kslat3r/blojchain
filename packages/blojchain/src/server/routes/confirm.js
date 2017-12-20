@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
+const chain = require('../../chain');
+const onUpdate = require('../../events/on-update');
 
 /**
  * @swagger
@@ -24,11 +26,24 @@ router.post('/confirm', function(req, res) {
 
   const bloj = req.body;
 
-  logger.info('EVENT confirm', `Added bloj to miner`, bloj);
+  const id = bloj.id;
+  const found = chain.selectBy({ id });
+  const confirmations = found.confirmations.concat(bloj.confirmations)
+    .filter((value, index, self) => {
+      return self.indexOf(value) === index;
+    });
+
+  const updated = chain.updateBy({ id }, { confirmations });
+
+  logger.info('EVENT confirm', `Bloj has been confirmed`, updated);
 
   res.send({
     ack: true,
   });
+
+  setTimeout(() => {
+    onUpdate(updated);
+  }, 5000);
 });
 
 module.exports = router;

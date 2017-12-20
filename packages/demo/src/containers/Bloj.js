@@ -1,12 +1,15 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createBloj } from '../actions/blojs';
+import io from 'socket.io-client';
+import deepEqual from 'deep-equal';
+import { createBloj, updateBloj } from '../actions/blojs';
 import './Bloj.css';
 
 class Bloj extends Component {
   static propTypes = {
     createBloj: PropTypes.func.isRequired,
+    updateBloj: PropTypes.func.isRequired,
 
     node: PropTypes.object.isRequired,
     bloj: PropTypes.object,
@@ -24,6 +27,24 @@ class Bloj extends Component {
       }, 
       socket: null,
     };
+  }
+
+  componentDidMount() {
+    const socket = io(`http://${this.props.node.meta.socketHost}:${this.props.node.meta.socketPort}`);
+    
+    if (this.state.bloj.id) {
+      socket.on(`${this.props.node.host}:${this.state.bloj.id}:update`, (bloj) => {
+        this.props.updateBloj(bloj, this.props.node);
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!deepEqual(this.state.bloj, nextProps.bloj)) {
+      this.setState({
+        bloj: nextProps.bloj,
+      });
+    }
   }
 
   onChange(key, value) {
@@ -123,8 +144,9 @@ class Bloj extends Component {
               <label>Confirmations</label>
               <input
                 type="text"
-                value={this.state.bloj.confirmations}
+                value={this.state.bloj.confirmations.length}
                 onChange={e => this.onChange('confirmations', e.target.value)}
+                readOnly
               />
             </div>
           )}
@@ -145,4 +167,5 @@ class Bloj extends Component {
 
 export default connect(() => ({}), {
   createBloj,
+  updateBloj,
 })(Bloj);

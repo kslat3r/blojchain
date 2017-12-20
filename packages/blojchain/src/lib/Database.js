@@ -60,6 +60,13 @@ class Database {
     return result;
   }
 
+  updateBy(args, obj) {
+    return this.driver.get(this.collection)
+      .find(args)
+      .assign(obj)
+      .write();
+  }
+
   removeAll() {
     return this.overwrite([]);
   }

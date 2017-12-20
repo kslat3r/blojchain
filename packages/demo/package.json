@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "deep-equal": "^1.0.1",
     "dotenv": "^4.0.0",
     "immutable": "^3.8.2",
     "prop-types": "^15.6.0",

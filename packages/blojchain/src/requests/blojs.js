@@ -13,7 +13,7 @@ class BlojsRequests extends Requests {
   }
 
   async fromPeers(peers) {
-    return await Promise.all(peers.map(async (peer) => await this.getFromPeer(peer)));
+    return await Promise.all(peers.map(async (peer) => await this.fromPeer(peer)));
   }
 
   async hashFromPeer(peer) {

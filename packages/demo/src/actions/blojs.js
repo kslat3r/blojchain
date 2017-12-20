@@ -10,6 +10,10 @@ export const BLOJS_ADD = 'BLOJS_ADD';
 export const BLOJS_ADD_SUCCEEDED = 'BLOJS_ADD_SUCCEEDED';
 export const BLOJS_ADD_FAILED = 'BLOJS_ADD_FAILED';
 
+export const BLOJS_UPDATE = 'BLOJS_UPDATE';
+export const BLOJS_UPDATE_SUCCEEDED = 'BLOJS_UPDATE_SUCCEEDED';
+export const BLOJS_UPDATE_FAILED = 'BLOJS_UPDATE_FAILED';
+
 export function getBlojs(node) {
   return {
     type: BLOJS_GET,
@@ -28,6 +32,14 @@ export function createBloj(bloj, node) {
 export function addBloj(bloj, node) {
   return {
     type: BLOJS_ADD,
+    bloj,
+    node,
+  };
+}
+
+export function updateBloj(bloj, node) {
+  return {
+    type: BLOJS_UPDATE,
     bloj,
     node,
   };
