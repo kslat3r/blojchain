@@ -13,6 +13,8 @@ class Database {
     this.name = opts.name;
     this.collection = opts.collection;
 
+    this.onCreate = opts.onCreate;
+
     this.connect();
     this.scaffold();
   }
@@ -47,9 +49,15 @@ class Database {
   }
 
   create(obj) {
-    return this.driver.get(this.collection)
+    const result = this.driver.get(this.collection)
       .push(obj)
       .write();
+
+    if (this.onCreate) {
+      this.onCreate(obj);
+    }
+
+    return result;
   }
 
   removeAll() {

@@ -10,5 +10,5 @@ export function* create(args) {
     node,
   ] = args;
 
-  return yield api.post(`http://${node.meta.serverHost}:${node.meta.serverPort}/blojs/mine`, bloj);
+  return yield api.post(`http://${node.meta.serverHost}:${node.meta.serverPort}/blojs`, bloj);
 }

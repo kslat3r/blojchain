@@ -25,7 +25,7 @@ module.exports = (bloj, maxRounds) => {
   bloj.nonce = bloj.nonce !== undefined ? bloj.nonce : 0;
 
   while (!bloj.hash && (maxRounds === undefined || rounds < maxRounds )) {
-    const hashed = hash(`${bloj.index}${bloj.nonce}${bloj.data}${bloj.prevHash}${bloj.timestamp}`);
+    const hashed = hash(`${bloj.index}${bloj.nonce}${JSON.stringify(bloj.data)}${bloj.prevHash}${bloj.timestamp}`);
 
     if (hashed.substr(0, minerConfig.difficulty) === pattern) {
       bloj.hash = hashed;

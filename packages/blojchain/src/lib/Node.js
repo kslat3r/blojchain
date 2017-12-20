@@ -24,6 +24,8 @@ class Node {
           id: this.id,
           serverHost: this.opts.serverHost,
           serverPort: this.opts.serverPort,
+          socketHost: this.opts.socketHost,
+          socketPort: this.opts.socketPort,
         },
       },
       interval: 1000,

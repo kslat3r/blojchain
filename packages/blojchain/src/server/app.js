@@ -10,7 +10,10 @@ const pageNotFoundMiddleware = require('./middleware/page-not-found');
 const errorMiddleware = require('./middleware/error');
 
 const blojsRoute = require('./routes/blojs');
+const confirmRoute = require('./routes/confirm');
+const mineRoute = require('./routes/mine');
 const peersRoute = require('./routes/peers');
+const verifyRoute = require('./routes/verify');
 
 const app = express();
 
@@ -21,8 +24,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/explorer', swaggerUIMiddleware, swaggerDocumentMiddleware);
-app.use('/blojs', blojsRoute);
-app.use('/peers', peersRoute);
+app.use(confirmRoute);
+app.use(mineRoute);
+app.use(blojsRoute);
+app.use(peersRoute);
+app.use(verifyRoute);
 
 app.use(pageNotFoundMiddleware);
 app.use(errorMiddleware);

@@ -4,19 +4,24 @@ services:
   a.blojchain.nll:
     environment:
       - SERVER_HOST=a.blojcha.in
+      - SOCKET_HOST=a.blojcha.in
 
   b.blojchain.nll:
     environment:
       - SERVER_HOST=b.blojcha.in
+      - SOCKET_HOST=b.blojcha.in
 
   c.blojchain.nll:
     environment:
       - SERVER_HOST=c.blojcha.in
+      - SOCKET_HOST=c.blojcha.in
 
   d.blojchain.nll:
     environment:
       - SERVER_HOST=d.blojcha.in
+      - SOCKET_HOST=d.blojcha.in
 
   e.blojchain.nll:
     environment:
       - SERVER_HOST=e.blojcha.in
+      - SOCKET_HOST=e.blojcha.in

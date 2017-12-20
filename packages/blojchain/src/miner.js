@@ -1,8 +1,11 @@
 const TaskQueue = require('./lib/TaskQueue');
+const uniqid = require('uniqid');
+const hash = require('./helpers/hash');
 const mine = require('./helpers/mine');
 const logger = require('./logger');
-const blojsRequests = require('./requests/blojs');
+const verifyRequests = require('./requests/verify');
 const node = require('./node');
+const chain = require('./chain');
 
 class Miner extends TaskQueue {
   constructor() {
@@ -14,11 +17,23 @@ class Miner extends TaskQueue {
   }
 
   process(bloj, done) {
+    // add bloj details if id is not present
+
+    if (!bloj.id) {
+      const lastBloj = chain.selectLast();
+
+      bloj.id = hash(uniqid());
+      bloj.index = lastBloj.index + 1;
+      bloj.prevHash = lastBloj.hash;
+      bloj.timestamp = new Date().getTime();
+      bloj.confirmations = 0;
+    }
+
+    // let's go
+
     let mined;
 
     try {
-      // mine!
-
       mined = mine(bloj, 50);
     } catch (e) {
       logger.error('MINER error', e);
@@ -26,9 +41,9 @@ class Miner extends TaskQueue {
       return done();
     }
 
-    if (!mined.hash) {
-      // mining wasn't successful this round
+    // mining wasn't successful this round
 
+    if (!mined.hash) {
       if (this.removed.indexOf(mined.index) !== -1) {
         // bloj was removed from processing pool by another miner
 
@@ -40,10 +55,17 @@ class Miner extends TaskQueue {
       }
     }
 
-    if (mined.hash) {
-      // mining was successful
+    // mining was successful
 
-      blojsRequests.verifyByPeers(node.getPeers(), mined);
+    if (mined.hash) {
+
+      // add to chain
+
+      chain.create(mined);
+
+      // tell peers
+
+      verifyRequests.byPeers(node.getPeers(), mined);
 
       logger.info('MINER Bloj was mined', mined);
     }
@@ -60,19 +82,15 @@ class Miner extends TaskQueue {
   }
 
   push(bloj) {
-    super.push(`${bloj.index || 0}-${bloj.nonce || 0}`, (done) => {
+    super.push(`${bloj.id}`, (done) => {
       this.process(bloj, done);
     });
   }
 
   remove(bloj) {
-    if (!bloj.index) {
-      throw new Error('Bloj to remove from mining queue must have an index');
-    }
+    super.remove(bloj.id);
 
-    super.remove(bloj.index);
-
-    this.removed.push(bloj.index);
+    this.removed.push(bloj.id);
   }
 }
 
