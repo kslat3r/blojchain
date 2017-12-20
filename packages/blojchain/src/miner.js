@@ -18,17 +18,15 @@ class Miner extends TaskQueue {
   }
 
   process(bloj, done) {
-    // add bloj details if id is not present
+    // add bloj details from last bloj
 
-    if (!bloj.id) {
-      const lastBloj = chain.selectLast();
+    const lastBloj = chain.selectLast();
 
-      bloj.id = hash(uniqid());
-      bloj.index = lastBloj.index + 1;
-      bloj.prevHash = lastBloj.hash;
-      bloj.timestamp = new Date().getTime();
-      bloj.confirmations = [];
-    }
+    bloj.id = bloj.id || hash(uniqid());
+    bloj.index = lastBloj.index + 1;
+    bloj.prevHash = lastBloj.hash;
+    bloj.timestamp = new Date().getTime();
+    bloj.confirmations = [];
 
     // let's go
 
