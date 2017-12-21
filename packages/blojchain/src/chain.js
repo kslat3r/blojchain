@@ -1,60 +1,14 @@
-const db = require('./db');
-const dbConfig = require('../config/db.json')
+const Database = require('./lib/Database');
+const onCreate = require('./events/on-create');
 const chainConfig = require('../config/chain.json');
-const hash = require('./helpers/hash');
 
-const chain = {
-  get: () => {
-    return db.get(dbConfig.collection)
-      .value();
-  },
+const chain = new Database(Object.assign({}, chainConfig.database, {
+  name: process.env.DB_NAME,
+  onCreate,
+}));
 
-  getIndex: (index) => {
-    const blojs = db.get(dbConfig.collection)
-    .value();
-
-    return blojs.find(bloj => bloj.index === index);
-  },
-
-  getLast: () => {
-    const blojs = db.get(dbConfig.collection)
-      .value();
-
-    return blojs[blojs.length - 1] ? blojs[blojs.length - 1] : null;
-  },
-
-  getHash: () => {
-    const blojs = db.get(dbConfig.collection)
-      .value();
-
-    return hash(JSON.stringify(blojs));
-  },
-
-  populate: (blojs) => {
-    db.set(dbConfig.collection, blojs)
-      .write();
-  },
-
-  add: (bloj) => {
-    db.get(dbConfig.collection)
-      .push(bloj)
-      .write();
-  },
-
-  remove: (bloj) => {
-    db.get(dbConfig.collection)
-      .remove({ index: bloj.index })
-      .write();
-  },
-
-  reset: () => {
-    db.set(dbConfig.collection, [])
-      .write();
-  },
-};
-
-if (chain.get().length === 0) {
-  chain.add(chainConfig.genesisBloj);
+if (!chain.selectAll().length) {
+  chain.create(chainConfig.genesis);
 }
 
 module.exports = chain;

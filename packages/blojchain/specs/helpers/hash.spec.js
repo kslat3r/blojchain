@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const hash = require('../../src/helpers/hash');
 
-describe('hasher', () => {
+describe('hash', () => {
   it('should create the correct hash', () => {
     const hashed = hash('foobar');
 

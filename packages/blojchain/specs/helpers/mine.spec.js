@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const mine = require('../../src/helpers/mine');
 
-describe('miner', () => {
+describe('mine', () => {
   it('should mine the correct nonce/hash', () => {
     const mined = mine({
       index: 1,

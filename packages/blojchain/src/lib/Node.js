@@ -11,7 +11,7 @@ class Node {
     this.id = uniqid();
     this.seeds = [process.env.SEED] || seeds;
 
-    logger.info(`NODE creating instance ${this.id}`);
+    logger.debug(`NODE creating instance ${this.id}`);
 
     this.connect();
   }
@@ -24,6 +24,8 @@ class Node {
           id: this.id,
           serverHost: this.opts.serverHost,
           serverPort: this.opts.serverPort,
+          socketHost: this.opts.socketHost,
+          socketPort: this.opts.socketPort,
         },
       },
       interval: 1000,
@@ -37,6 +39,8 @@ class Node {
     });
 
     this.connection.on(Swim.EventType.Ready, () => {
+      logger.info(`NODE listening on ${this.opts.host}:${this.opts.port}`)
+
       if (this.opts.onReady) {
         this.opts.onReady(this.getPeers());
       }
@@ -44,7 +48,7 @@ class Node {
   }
 
   reconnect() {
-    logger.info(`NODE recreating instance ${this.id}`);
+    logger.debug(`NODE recreating instance ${this.id}`);
 
     this.connect();
   }

@@ -1,5 +1,4 @@
-const blojVerifier = require('./bloj');
-const mine = require('../helpers/mine');
+const verifyBloj = require('./verify-bloj');
 
 module.exports = (chain, start = 0, end = 0) => {
   end = end || chain.length;
@@ -9,7 +8,7 @@ module.exports = (chain, start = 0, end = 0) => {
     .slice(start, end);
 
   for (let i = 1; i < chain.length; i++) {
-    if (!blojVerifier(chain[i])) {
+    if (!verifyBloj(chain[i])) {
       return false;
     }
   }

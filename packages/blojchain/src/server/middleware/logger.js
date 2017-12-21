@@ -4,7 +4,7 @@ const winston = require('winston');
 module.exports = expressWinston.logger({
   transports: [
     new winston.transports.Console({
-      level: process.env.LOG_LEVEL || 'error',
+      level: process.env.LOG_LEVEL || 'info',
       prettyPrint: true,
       colorize: true,
       timestamp: true,
@@ -12,4 +12,5 @@ module.exports = expressWinston.logger({
   ],
   meta: false,
   msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}}",
+  level: 'debug',
 });

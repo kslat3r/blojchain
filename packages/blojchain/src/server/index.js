@@ -1,6 +1,5 @@
 const app = require('../server/app');
 const http = require('http');
-const socketIo = require('socket.io');
 const logger = require('../logger');
 
 class Server {
@@ -16,9 +15,6 @@ class Server {
 
     const server = http.createServer(app);
     server.listen(port);
-
-    const io = socketIo(server);
-    app.set('io', io);
 
     server.on('error', (error) => {
       if (error.syscall !== 'listen') {
@@ -46,10 +42,7 @@ class Server {
     });
 
     server.on('listening', () => {
-      const addr = server.address();
-      const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-
-      logger.info(`SERVER Listening on ${bind}`);
+      logger.info(`SERVER listening on ${this.opts.host}:${this.opts.port}`);
     });
   }
 }

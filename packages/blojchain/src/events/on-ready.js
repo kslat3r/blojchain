@@ -1,16 +1,14 @@
 const logger = require('../logger');
 const chain = require('../chain');
+const hash = require('../helpers/hash');
 const blojsRequests = require('../requests/blojs');
 const combineCurrentChainAndPeerChains = require('../helpers/combine-current-chain-and-peer-chains');
 
 module.exports = async (peers) => {
-  logger.info('EVENT onReady');
+  logger.debug('EVENT onReady');
 
-  const currentHash = chain.getHash();
-  const peerHashes = await blojsRequests.getHashesFromPeers(peers);
-
-  logger.info(currentHash);
-  logger.info(peerHashes);
+  const currentHash = hash(JSON.stringify(chain.selectAll()));
+  const peerHashes = await blojsRequests.hashesFromPeers(peers);
 
   const mismatchedPeers = peerHashes.filter(peerHash => peerHash.hash !== currentHash)
     .map((peerHash) => {
@@ -18,17 +16,17 @@ module.exports = async (peers) => {
     });
 
   if (mismatchedPeers.length) {
-    logger.info('EVENT onReady mismatched peers', mismatchedPeers);
+    logger.debug('EVENT onReady mismatched peers', mismatchedPeers);
 
-    const currentChain = chain.get();
-    const peerChains = await blojsRequests.getFromPeers(mismatchedPeers);
+    const currentChain = chain.selectAll();
+    const peerChains = await blojsRequests.fromPeers(mismatchedPeers);
 
-    logger.info('EVENT onReady mismatched peer chains', peerChains);
+    logger.debug('EVENT onReady mismatched peer chains', peerChains);
 
     const combinedChain = combineCurrentChainAndPeerChains(currentChain, peerChains);
 
     logger.info('EVENT onReady setting combined chain', combinedChain);
 
-    chain.populate(combinedChain);
+    chain.reset(combinedChain);
   }
 };

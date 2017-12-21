@@ -14,8 +14,8 @@ const node = require('../../node');
  *       200:
  *         description: Peers
  */
-router.get('/', function(req, res) {
-  logger.info('EVENT peers:getAll');
+router.get('/peers', function(req, res) {
+  logger.debug('EVENT peers:get');
 
   res.send(node.getPeers({ includeSelf: true }));
 });

@@ -1,7 +1,14 @@
 {
-  "genesisBloj": {
+  "database": {
+    "dir": "data/",
+    "name": "blojchain",
+    "collection": "blojs"
+  },
+  "genesis": {
     "hash": "0000000000000000000000000000000000000000000000000000000000000000",
     "index": 1,
-    "data": "Genesis bloj"
+    "data": {
+      "type": "Genesis bloj"
+    }
   }
 }

@@ -1,26 +1,26 @@
 const expect = require('chai').expect;
-const chainVerifier = require('../../src/verifiers/chain');
+const verifyChain = require('../../src/helpers/verify-chain');
 const validChain = require('../stubs/valid-chain.json');
 const invalidChain = require('../stubs/invalid-chain.json')
 
-describe('chainVerifier', function() {
+describe('verifyChain', function() {
   it('is a function', () => {
-    expect(typeof chainVerifier).to.equal('function');
+    expect(typeof verifyChain).to.equal('function');
   });
 
   it('should return true if the chain is valid', () => {
-    expect(chainVerifier(validChain)).to.equal(true);
+    expect(verifyChain(validChain)).to.equal(true);
   });
 
   it('should return false if the chain is invalid', () => {
-    expect(chainVerifier(invalidChain)).to.equal(false);
+    expect(verifyChain(invalidChain)).to.equal(false);
   });
 
   it('should return true if the chain is valid for a subsection', () => {
-    expect(chainVerifier(validChain, 2, 4)).to.equal(true);
+    expect(verifyChain(validChain, 2, 4)).to.equal(true);
   });
 
   it('should return false if the chain is invalid for a subsection', () => {
-    expect(chainVerifier(invalidChain, 2, 4)).to.equal(false);
+    expect(verifyChain(invalidChain, 2, 4)).to.equal(false);
   });
 });

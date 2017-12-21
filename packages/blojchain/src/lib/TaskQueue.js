@@ -4,35 +4,70 @@ const logger = require('../logger');
 class TaskQueue {
   constructor(opts) {
     this.name = opts.name || uniqid();
-    this.worker = opts.worker || (obj => console.log(obj));
     this.items = [];
+    this.processing = false;
   }
 
-  add(id, obj) {
-    logger.info(`TASKQUEUE ${this.name}`, `Adding ID ${id} to queue`, obj);
+  unshift(id = uniqid(), fn) {
+    logger.debug(`TASKQUEUE ${this.name}`, `Unshifting task ${id} to queue`);
+
+    this.items.unshift({
+      id,
+      fn,
+    });
+
+    return this;
+  }
+
+  push(id = uniqid(), fn) {
+    logger.debug(`TASKQUEUE ${this.name}`, `Pushing task ${id} to queue`);
 
     this.items.push({
       id,
-      obj,
+      fn,
     });
+
+    return this;
   }
 
   remove(id) {
-    logger.info(`TASKQUEUE ${this.name}`, `Removing ID ${id} from queue`);
+    logger.debug(`TASKQUEUE ${this.name}`, `Removing task ${id} from queue`);
 
     const index = this.items.findIndex(item => item.id === id);
 
     this.items.splice(index, 1);
-  }
 
-  retrive() {
-    return this.tasks;
+    return this;
   }
 
   reset() {
-    logger.info(`TASKQUEUE ${this.name}`, `Resetting queue`);
+    logger.debug(`TASKQUEUE ${this.name}`, `Resetting queue`);
 
-    this.taks = [];
+    this.items = [];
+
+    return this;
+  }
+
+  start() {
+    setInterval(() => {
+      if (!this.processing) {
+        const item = this.items.shift();
+
+        if (item) {
+          this.processing = true;
+
+          logger.debug(`TASKQUEUE ${this.name}`, `Processing task ${item.id}`);
+
+          item.fn(() => {
+            logger.debug(`TASKQUEUE ${this.name}`, `Processed task ${item.id}`);
+
+            this.processing = false;
+          });
+        }
+      }
+    }, 10);
+
+    return this;
   }
 }
 
