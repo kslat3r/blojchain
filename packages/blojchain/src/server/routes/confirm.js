@@ -35,7 +35,8 @@ router.post('/confirm', function(req, res) {
 
   const updated = chain.updateBy({ id }, { confirmations });
 
-  logger.info('EVENT confirm', `Bloj has been confirmed`, updated);
+  logger.info('EVENT confirm', 'Confirmed bloj');
+  logger.debug(updated);
 
   res.send({
     ack: true,

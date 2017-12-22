@@ -2,6 +2,7 @@ import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getNodes } from '../actions/nodes';
+import { getLogs } from '../actions/logs';
 import Error from '../components/Error';
 import Loading from '../components/Loading';
 import Node from '../containers/Node';
@@ -16,6 +17,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.getNodes();
+    this.props.getLogs();
   }
 
   render() {
@@ -42,6 +44,8 @@ class App extends Component {
 
 export default connect((state) => ({
   nodes: state.nodes,
+  logs: state.logs,
 }), {
   getNodes,
+  getLogs,
 })(App);

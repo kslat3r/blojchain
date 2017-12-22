@@ -1,12 +1,3 @@
-const winston = require('winston');
+const Logger = require('./lib/Logger');
 
-module.exports = new winston.Logger({
-  transports: [
-    new winston.transports.Console({
-      level: process.env.LOG_LEVEL || 'info',
-      prettyPrint: true,
-      colorize: true,
-      timestamp: true,
-    }),
-  ],
-});
+module.exports = new Logger();

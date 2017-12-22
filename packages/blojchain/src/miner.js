@@ -69,7 +69,8 @@ class Miner extends TaskQueue {
 
       verifyRequests.byPeers(node.getPeers(), mined);
 
-      logger.info('MINER Bloj was mined', mined);
+      logger.info('MINER', 'Mined bloj');
+      logger.debug(mined);
     }
 
     setTimeout(() => {

@@ -25,7 +25,8 @@ module.exports = async (peers) => {
 
     const combinedChain = combineCurrentChainAndPeerChains(currentChain, peerChains);
 
-    logger.info('EVENT onReady setting combined chain', combinedChain);
+    logger.info('EVENT onReady setting combined chain');
+    logger.debug(combinedChain);
 
     chain.reset(combinedChain);
   }

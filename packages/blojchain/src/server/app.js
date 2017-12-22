@@ -11,6 +11,7 @@ const errorMiddleware = require('./middleware/error');
 
 const blojsRoute = require('./routes/blojs');
 const confirmRoute = require('./routes/confirm');
+const logsRoute = require('./routes/logs');
 const mineRoute = require('./routes/mine');
 const peersRoute = require('./routes/peers');
 const verifyRoute = require('./routes/verify');
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.use('/explorer', swaggerUIMiddleware, swaggerDocumentMiddleware);
 app.use(confirmRoute);
+app.use(logsRoute);
 app.use(mineRoute);
 app.use(blojsRoute);
 app.use(peersRoute);

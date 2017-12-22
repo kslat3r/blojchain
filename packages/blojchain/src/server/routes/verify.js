@@ -38,7 +38,8 @@ router.post('/verify', function(req, res) {
 
     confirmRequests.byPeers(node.getPeers(), bloj);
 
-    logger.info('EVENT verify',  'Verified bloj', bloj);
+    logger.info('EVENT verify',  'Verified bloj');
+    logger.debug(bloj);
   } else {
     logger.error('EVENT verify', 'Could not verify bloj', bloj);
   }

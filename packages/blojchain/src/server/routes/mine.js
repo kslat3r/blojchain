@@ -27,7 +27,8 @@ router.post('/mine', function(req, res) {
 
   miner.push(bloj);
 
-  logger.info('EVENT blojs:mine', `Added bloj to miner`, bloj);
+  logger.info('EVENT mine', 'Added bloj to miner');
+  logger.debug(bloj);
 
   res.send({
     ack: true,

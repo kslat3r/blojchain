@@ -71,7 +71,8 @@ router.post('/blojs', async function(req, res) {
 
   const responses = await mineRequests.byPeers(node.getPeers(), bloj);
 
-  logger.info('EVENT blojs:create', 'Bloj was sent to peers for mining', responses);
+  logger.info('EVENT blojs:create', 'Bloj was sent to peers for mining');
+  logger.debug(responses);
 
   res.send(responses);
 });
