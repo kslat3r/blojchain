@@ -21,4 +21,5 @@
 
 .log .error {
   color: red;
+  position: relative;
 }
