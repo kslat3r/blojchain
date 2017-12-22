@@ -18,13 +18,14 @@ class Logger {
   }
 
   debug(...args) {
-    const obj = {
-      type: 'debug',
-      args,
-    };
+    // const obj = {
+    //   type: 'debug',
+    //   args,
+    //   timestamp: new Date().getTime(),
+    // };
 
-    onLog(obj);
-    this.logs.push(obj);
+    // onLog(obj);
+    // this.logs.push(obj);
 
     this.lib.debug.apply(this, args);
   }
@@ -33,6 +34,7 @@ class Logger {
     const obj = {
       type: 'info',
       args,
+      timestamp: new Date().getTime(),
     };
 
     onLog(obj);
@@ -45,6 +47,7 @@ class Logger {
     const obj = {
       type: 'error',
       args,
+      timestamp: new Date().getTime(),
     };
 
     onLog(obj);

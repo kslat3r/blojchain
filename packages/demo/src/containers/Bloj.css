@@ -1,6 +1,6 @@
 .bloj {
-  color: #1a78c2;
-  border: 1px solid #1a78c2;
+  color: #333;
+  border: 1px solid #ccc;
   width: 30%;
   min-width: 30%;
   padding: 1%;
@@ -30,7 +30,7 @@
   float: left;
   padding: 1%;
   margin-bottom: 10px;
-  border: 1px solid #1a78c2;
+  border: 1px solid #333;
   border-radius: 5px;
 }
 

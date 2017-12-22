@@ -2,10 +2,11 @@ import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getNodes } from '../actions/nodes';
-import { getLogs } from '../actions/logs';
+import getRandomColour from '../helpers/get-random-colour';
 import Error from '../components/Error';
 import Loading from '../components/Loading';
 import Node from '../containers/Node';
+import Logger from '../components/Logger';
 import './App.css';
 
 class App extends Component {
@@ -13,17 +14,19 @@ class App extends Component {
     getNodes: PropTypes.func.isRequired,
 
     nodes: PropTypes.object.isRequired,
+    logs: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
     this.props.getNodes();
-    this.props.getLogs();
   }
 
   render() {
     const nodes = this.props.nodes.toJS();
     const error = nodes.error;
     const items = nodes.items;
+
+    const logs = this.props.logs.toJS().items;
 
     if (error) {
       return <Error />
@@ -33,12 +36,24 @@ class App extends Component {
       return <Loading />
     }
 
-    return items.map((node, i) => (
-      <Node
-        key={i}
-        node={node}
-      />
-    ));
+    return (
+      <div>
+        {items.map((node, i) => {
+          node.colour = getRandomColour();
+
+          return (
+            <Node
+              key={i}
+              node={node}
+            />
+          );
+        })}
+
+        <Logger
+          logs={logs}
+        />
+      </div>
+    );
   }
 }
 
@@ -47,5 +62,4 @@ export default connect((state) => ({
   logs: state.logs,
 }), {
   getNodes,
-  getLogs,
 })(App);

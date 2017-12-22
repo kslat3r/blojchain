@@ -1,10 +1,11 @@
 .node {
-  background-color: #fff;
   width: 98%;
   margin-bottom: 20px;
   border-radius: 10px;
   padding: 1%;
-  color: #1a78c2;
+  color: #333;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
 
 .node h1,
