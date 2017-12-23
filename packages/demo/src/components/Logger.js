@@ -19,7 +19,7 @@ class Logger extends Component {
   }
 
   componentDidUpdate() {
-    this.elem.scrollTop = this.elem.scrollHeight;
+    this.scroll.scrollTop = this.scroll.scrollHeight;
   }
 
   toggle(e) {
@@ -32,12 +32,12 @@ class Logger extends Component {
 
   render() {
     return (
-      <div className={`logger ${this.state.open && 'open'}`} ref={(elem) => { this.elem = elem; }}>
+      <div className={`logger ${this.state.open && 'open'}`}>
         <a href="#" onClick={this.toggle}>
           {!this.state.open ? 'Maximise' : 'Minimise'}
         </a>
 
-        <div className="scroll">
+        <div className="scroll" ref={(elem) => { this.scroll = elem; }}>
           {this.props.logs.map((log, i) => {
             return (
               <Log
