@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import './Log.css';
 
-const Log =  (props) => (
+const Log = (props) => (
   <div className="log">
     <span className="host" style={{color: props.log.node.colour}}>
       {props.log.node.host}

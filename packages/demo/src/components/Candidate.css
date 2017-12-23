@@ -1,0 +1,39 @@
+.candidate {
+  color: #333;
+  border: 1px solid #ccc;
+  width: 30%;
+  min-width: 30%;
+  padding: 1%;
+  margin-right: 2%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.candidate > div:after {
+  content: '';
+  float: left;
+  width: 100%;
+  clear: both;
+}
+
+.candidate label {
+  width: 33%;
+  float: left;
+  margin-right: 1%;
+  font-size: 80%;
+  margin-top: 4px;
+}
+
+.candidate input,
+.candidate textarea {
+  width: 62%;
+  float: left;
+  padding: 1%;
+  margin-bottom: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.candidate textarea {
+  height: 100px;
+}

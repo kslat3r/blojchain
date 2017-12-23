@@ -7,6 +7,9 @@ const verifyRequests = require('./requests/verify');
 const node = require('./node');
 const chain = require('./chain');
 const netConfig = require('../config/net');
+const onMinerPush = require('./events/on-miner-push');
+const onMined = require('./events/on-mined');
+const onMinerRemove = require('./events/on-miner-remove');
 
 class Miner extends TaskQueue {
   constructor() {
@@ -14,6 +17,7 @@ class Miner extends TaskQueue {
       name: 'miner',
     });
 
+    this.candidates = [];
     this.removed = [];
   }
 
@@ -71,6 +75,14 @@ class Miner extends TaskQueue {
 
       logger.info('MINER', 'Mined bloj');
       logger.debug(mined);
+
+      // send event
+
+      onMined(mined);
+
+      // remove from candidates
+
+      this.removeCandidate(mined);
     }
 
     setTimeout(() => {
@@ -79,21 +91,36 @@ class Miner extends TaskQueue {
   }
 
   unshift(bloj) {
-    super.unshift(`${bloj.index || 0}-${bloj.nonce || 0}`, (done) => {
+    super.unshift(bloj.id, (done) => {
       this.process(bloj, done);
     });
   }
 
   push(bloj) {
-    super.push(`${bloj.id}`, (done) => {
+    super.push(bloj.id, (done) => {
       this.process(bloj, done);
     });
+
+    this.candidates.push(bloj);
+
+    onMinerPush(bloj);
   }
 
   remove(bloj) {
     super.remove(bloj.id);
 
+    this.removeCandidate(bloj);
     this.removed.push(bloj.id);
+
+    onMinerRemove(bloj);
+  }
+
+  getCandidates() {
+    return this.candidates;
+  }
+
+  removeCandidate(bloj) {
+    this.candidates.splice(this.candidates.findIndex(c => c.id === bloj.id), 1);
   }
 }
 

@@ -9,12 +9,12 @@ class Logger extends Component {
   }
 
   componentDidUpdate() {
-    this.elem.scrollTop = this.elem.scrollHeight;    
+    this.elem.scrollTop = this.elem.scrollHeight;
   }
 
   render() {
     return (
-      <div className="logger" ref={(c) => { this.elem = c; }}>
+      <div className="logger" ref={(elem) => { this.elem = elem; }}>
         {this.props.logs.map((log, i) => {
           return (
             <Log

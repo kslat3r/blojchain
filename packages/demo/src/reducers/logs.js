@@ -9,8 +9,6 @@ const initialState = Immutable.Map({
 export default function(state = initialState, action) {
   switch (action.type) {
     case LOGS_GET_SUCCEEDED: {
-      console.log(action.data);
-
       const currentState = state.toJS();
 
       const logs = action.data

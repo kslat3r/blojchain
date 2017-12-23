@@ -18,7 +18,8 @@
   margin-left: 100px;
   margin-right: 100px;
   padding: 10px;
-  background-color: #c2641a;
+  background-color: red;
+  color: #fff;
 }
 
 .error > div > h1 {

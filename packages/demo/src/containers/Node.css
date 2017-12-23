@@ -6,6 +6,7 @@
   color: #333;
   border: 1px solid #ccc;
   background-color: #fff;
+  position: relative;
 }
 
 .node h1,
@@ -15,7 +16,8 @@
   font-size: 90%;
 }
 
-.node .bloj-list {
+.node .bloj-list,
+.node .candidate-list {
   overflow-x: scroll;
   display: flex;
   justify-content: flex-start;
