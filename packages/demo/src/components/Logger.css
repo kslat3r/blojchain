@@ -1,12 +1,32 @@
 .logger {
-  height: 300px;
+  height: 70px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #000;
+}
+
+.logger a {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  color: #fff;
+  font-size: 90%;
+}
+
+.logger .scroll {
   font-family: Monospace;
   overflow-y: scroll;
   padding: 10px;
   word-wrap: break-word;
+  height: 50px;
+}
+
+.logger.open {
+  height: 320px;
+}
+
+.logger.open .scroll {
+  height: 300px;
 }
