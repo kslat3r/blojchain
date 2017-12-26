@@ -1,3 +1,7 @@
+.candidate-list {
+  margin-top: 20px;
+}
+
 .candidate {
   color: #333;
   border: 1px solid #ccc;

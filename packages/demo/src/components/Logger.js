@@ -27,6 +27,15 @@ class Logger extends Component {
 
     this.setState({
       open: !this.state.open,
+    }, () => {
+      const body = document.getElementsByTagName('body')[0];
+      const className = 'logger-open';
+
+      if (this.state.open) {
+        body.classList.add(className);
+      } else {
+        body.classList.remove(className);
+      }
     });
   }
 

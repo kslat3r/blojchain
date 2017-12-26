@@ -13,6 +13,7 @@ class Bloj extends Component {
 
     node: PropTypes.object.isRequired,
     bloj: PropTypes.object,
+    condensed: PropTypes.bool,
   };
 
   constructor(props) {
@@ -75,7 +76,7 @@ class Bloj extends Component {
         <form
           onSubmit={this.onSubmit}
         >
-          {this.state.bloj.index && (
+          {!this.props.condensed && this.state.bloj.index && (
             <div>
               <label>Index</label>
               <input 
@@ -86,7 +87,7 @@ class Bloj extends Component {
             </div>
           )}
 
-          {this.state.bloj.nonce && (
+          {!this.props.condensed && this.state.bloj.nonce && (
             <div>
               <label>Nonce</label>
               <input
@@ -97,16 +98,18 @@ class Bloj extends Component {
             </div>
           )}
 
-          <div>
-            <label>Data</label>
-            <textarea
-              type="text"
-              value={this.state.bloj.hash ? JSON.stringify(this.state.bloj.data) : this.state.bloj.data}
-              onChange={e => this.onChange('data', e.target.value)}
-            />
-          </div>
+          {!this.props.condensed && (
+            <div>
+              <label>Data</label>
+              <textarea
+                type="text"
+                value={this.state.bloj.hash ? JSON.stringify(this.state.bloj.data) : this.state.bloj.data}
+                onChange={e => this.onChange('data', e.target.value)}
+              />
+            </div>
+          )}
 
-          {this.state.bloj.prevHash && (
+          {!this.props.condensed && this.state.bloj.prevHash && (
             <div>
               <label>Previous hash</label>
               <input
@@ -117,7 +120,7 @@ class Bloj extends Component {
             </div>
           )}
 
-          {this.state.bloj.timestamp && (
+          {!this.props.condensed && this.state.bloj.timestamp && (
             <div>
               <label>Timestamp</label>
               <input
@@ -139,7 +142,7 @@ class Bloj extends Component {
             </div>
           )}
 
-          {this.state.bloj.confirmations !== undefined && (
+          {!this.props.condensed && this.state.bloj.confirmations !== undefined && (
             <div>
               <label>Confirmations</label>
               <input

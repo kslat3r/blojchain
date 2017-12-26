@@ -29,8 +29,11 @@ class Node extends Component {
   constructor(props) {
     super(props);
 
+    this.toggle = this.toggle.bind(this);
+
     this.state = {
       socket: null,
+      maximised: false,
     };
   }
 
@@ -62,6 +65,14 @@ class Node extends Component {
     this.blojList.scrollLeft = this.blojList.scrollWidth;
   }
 
+  toggle(e) {
+    e.preventDefault();
+
+    this.setState({
+      maximised: !this.state.maximised,
+    });
+  }
+
   render() {
     const node = this.props.node;
     const blojs = this.props.blojs;
@@ -88,18 +99,25 @@ class Node extends Component {
           <a href={`http://${node.meta.serverHost}:${node.meta.serverPort}/explorer`} target="_new">{node.host}</a>
         </h2>
 
+        <a href="#" onClick={this.toggle}>
+          {this.state.maximised ? 'Minimise' : 'Maximise'}
+        </a>
+
         <div className="bloj-list" ref={(elem) => { this.blojList = elem; }}>
           {blojItems.map((item, i) => (
             <Bloj
               key={i}
               node={node}
               bloj={item}
+              condensed={!this.state.maximised}
             />
           ))}
 
-          <Bloj
-            node={node}
-          />
+          {this.state.maximised && (
+            <Bloj
+              node={node}
+            />
+          )}
         </div>
 
         <div className="candidate-list">
@@ -107,6 +125,7 @@ class Node extends Component {
             <Candidate
               key={i}
               candidate={item}
+              condensed={!this.state.candidateListOpen}
             />
           ))}
         </div>
