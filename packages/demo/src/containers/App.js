@@ -17,8 +17,24 @@ class App extends Component {
     logs: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+
+    this.state = {
+      maximised: false,
+    };
+  }
+
   componentDidMount() {
     this.props.getNodes();
+  }
+
+  toggle() {
+    this.setState({
+      maximised: !this.state.maximised,
+    });
   }
 
   render() {
@@ -29,15 +45,19 @@ class App extends Component {
     const logs = this.props.logs.toJS().items;
 
     if (error) {
-      return <Error />
+      return <Error message={error.message} />
     }
 
-    if (!items.length) {
+    if (!error && !items.length) {
       return <Loading />
     }
 
     return (
-      <div>
+      <div className="app">
+        <a className="toggle" href="#toggle" onClick={this.toggle}>
+          {this.state.maximised ? 'Minimise all blojchains' : 'Maximise all blojchains'}
+        </a>
+
         {items.map((node, i) => {
           node.colour = getRandomColour();
 
@@ -45,6 +65,7 @@ class App extends Component {
             <Node
               key={i}
               node={node}
+              maximised={this.state.maximised}
             />
           );
         })}

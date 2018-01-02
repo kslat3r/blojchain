@@ -19,7 +19,7 @@ const makeRequest = (method, uri, query = {}, data = {}) => {
       return response;
     })
     .catch((err) => {
-      throw err;
+      throw new Error(err.error.message);
     });
 };
 

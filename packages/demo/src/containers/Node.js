@@ -24,6 +24,7 @@ class Node extends Component {
     blojs: PropTypes.object.isRequired,
     node: PropTypes.object.isRequired,
     candidates: PropTypes.object.isRequired,
+    maximised: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -33,8 +34,16 @@ class Node extends Component {
 
     this.state = {
       socket: null,
-      maximised: false,
+      maximised: props.maximised,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.maximised !== nextProps.maximised) {
+      this.setState({
+        maximised: nextProps.maximised,
+      });
+    }
   }
 
   componentDidMount() {
@@ -86,11 +95,15 @@ class Node extends Component {
 
     return (
       <div className="node">
-        {(blojsError || candidatesError) && (
-          <Error />
+        {blojsError && (
+          <Error message={blojsError.message} />
         )}
 
-        {!blojItems.length && (
+        {candidatesError && (
+          <Error message={candidatesError.message} />
+        )}
+
+        {!blojsError && !candidatesError && !blojItems.length && (
           <Loading />
         )}
 
@@ -99,8 +112,8 @@ class Node extends Component {
           <a href={`http://${node.meta.serverHost}:${node.meta.serverPort}/explorer`} target="_new">{node.host}</a>
         </h2>
 
-        <a href="#" onClick={this.toggle}>
-          {this.state.maximised ? 'Minimise' : 'Maximise'}
+        <a className="toggle" href="#toggle" onClick={this.toggle}>
+          {this.state.maximised ? 'Minimise blojchain' : 'Maximise blojchain'}
         </a>
 
         <div className="bloj-list" ref={(elem) => { this.blojList = elem; }}>
@@ -120,15 +133,17 @@ class Node extends Component {
           )}
         </div>
 
-        <div className="candidate-list">
-          {candidateItems.map((item, i) => (
-            <Candidate
-              key={i}
-              candidate={item}
-              condensed={!this.state.candidateListOpen}
-            />
-          ))}
-        </div>
+        {candidateItems.length > 0 ? (
+          <div className="candidate-list">
+            {candidateItems.map((item, i) => (
+              <Candidate
+                key={i}
+                candidate={item}
+                condensed={!this.state.candidateListOpen}
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
     );
   }

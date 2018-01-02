@@ -2,38 +2,58 @@
   {
     "hash": "0000000000000000000000000000000000000000000000000000000000000000",
     "index": 1,
-    "data": "Genesis bloj"
+    "data": {
+      "type": "Genesis bloj"
+    }
   },
   {
-    "data": "Genesis bloj",
-    "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "data": {
+      "data": "{\"hello\":\"world\"}"
+    },
+    "id": "788799da48945157317c9965c0e23d01fcffb86448fc8dc348a532e5cf04892d",
     "index": 2,
-    "nonce": 129076,
-    "hash": "0000c7211951323fa7c340a1be1b7ec0ac4ceb55311f4e723faa6002e471fc56",
-    "timestamp": 10000
+    "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": 1513794848533,
+    "confirmations": 0,
+    "nonce": 4048,
+    "hash": "00007734aac44ecb87e316c2538a039e5b06428ada383291310137e2a26bff1d"
   },
   {
-    "data": "Third bloj",
-    "prevHash": "00009ff68f9a24dfd4511352223b30c831bd027a349ec3c9dffa8e7bb7e76b2a",
+    "data": {
+      "data": {
+        "hello": "world"
+      }
+    },
+    "id": "58ba0e34452a876102c94ad0a410b26885da75925a7f88c689881391688482fa",
     "index": 3,
-    "nonce": 60876,
-    "hash": "0000cc0145362c2494e2a977c29009d77ca4d8c4e56ed8961992433a6881a0ae",
-    "timestamp": 10000
+    "prevHash": "00007734aac44ecb87e316c2538a039e5b06428ada383291310137e2a26bff1d",
+    "timestamp": 1513795077184,
+    "confirmations": 0,
+    "nonce": 20620,
+    "hash": "00007e6b61385a1f0dcfd647e962000d25cf546eb6bdf1b1b8e4d4da9e9d061f"
   },
   {
-    "data": "Fourth bloj",
-    "prevHash": "0000595c0d854b93aae542cf561a04f90e690cd5990f4f169400dae40f29d490",
+    "data": {
+      "hello": "world"
+    },
+    "id": "9fd039f8b5c70796dde22560ce381697754a152c01e123fae0ca86e8869728ee",
     "index": 4,
-    "nonce": 292861,
-    "hash": "0000f8a878c3f3c4222f1aadf0ef0c801a39c99b81e7253aeb7d3d482c23c084",
-    "timestamp": 10000
+    "prevHash": "00007e6b61385a1f0dcfd647e962000d25cf546eb6bdf1b1b8e4d4da9e9d061f",
+    "timestamp": 1513795239516,
+    "confirmations": 0,
+    "nonce": 24435,
+    "hash": "00008c52ea402a5e97b7c0030661a70bfb691c0aa4c7e74ceeffcf8c2323ea09"
   },
   {
-    "data": "Fifth bloj",
-    "prevHash": "00003d19bf587a4a60a9b75fa622bd7f4ff4bc889201f51f3ab4cdae3e923a3e",
+    "data": {
+      "hello": "world"
+    },
+    "id": "46d7f5c9399d4652fce4f941344e6cf485bcd74ebe31323b6029008b16b1fc7b",
     "index": 5,
-    "nonce": 21338,
-    "hash": "0000d65d60b9e154ee10038debb60f98dc3e2f52ace4b9320b09a2fcb83e5f44",
-    "timestamp": 10000
+    "prevHash": "00008c52ea402a5e97b7c0030661a70bfb691c0aa4c7e74ceeffcf8c2323ea09",
+    "timestamp": 1513795602348,
+    "confirmations": 0,
+    "nonce": 4426,
+    "hash": "00008dad6462b17903b147ec96364b94c7d5dd375e78c417ad038c794be659fa"
   }
 ]

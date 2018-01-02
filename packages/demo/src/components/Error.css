@@ -1,24 +1,26 @@
 .error {
   position: absolute;
-  top: 0;
+  top: 0px;
   right: 0;
   bottom: 0;
-  left: 0;
+  left: 0px;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1;
 }
 
 .error > div {
   position: relative;
   top: 50%;
   bottom: 50%;
-  margin-top: -50px;
+  margin-top: -20px;
   text-align: center;
   border-radius: 10px;
   margin-left: 100px;
   margin-right: 100px;
   padding: 10px;
-  background-color: red;
+  background-color: #BD1C14;
   color: #fff;
 }
 

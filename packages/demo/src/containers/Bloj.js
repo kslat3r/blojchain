@@ -133,11 +133,14 @@ class Bloj extends Component {
           
           {this.state.bloj.hash && (
             <div>
-              <label>Hash</label>
+              {!this.props.condensed && (
+                <label>Hash</label>
+              )}
               <input
                 type="text"
                 value={this.state.bloj.hash}
                 onChange={e => this.onChange('hash', e.target.value)}
+                className={this.props.condensed ? 'condensed' : ''}
               />
             </div>
           )}

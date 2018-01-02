@@ -1,0 +1,19 @@
+{
+  "name": "bloj-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Ed Kelly",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.6.1"
+  },
+  "dependencies": {
+    "faker": "^4.1.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}

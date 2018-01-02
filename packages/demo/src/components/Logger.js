@@ -42,8 +42,8 @@ class Logger extends Component {
   render() {
     return (
       <div className={`logger ${this.state.open && 'open'}`}>
-        <a href="#" onClick={this.toggle}>
-          {!this.state.open ? 'Maximise' : 'Minimise'}
+        <a href="#toggle" onClick={this.toggle}>
+          {!this.state.open ? 'Maximise logging' : 'Minimise logging'}
         </a>
 
         <div className="scroll" ref={(elem) => { this.scroll = elem; }}>

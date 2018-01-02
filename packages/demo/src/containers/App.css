@@ -10,3 +10,19 @@ body {
 body.logger-open {
   padding-bottom: 300px;
 }
+
+a {
+  color: #4d43bd;
+}
+
+.app {
+  padding-top: 20px;
+}
+
+.app > .toggle {
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 80%;
+}

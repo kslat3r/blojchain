@@ -5,8 +5,6 @@ module.exports = (err, req, res, next) => { // eslint-disable-line no-unused-var
 
   res.status(err.status || 500);
   res.send({
-    error: {
-      message: err.message,
-    },
+    message: err.message,
   });
 };

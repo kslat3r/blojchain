@@ -5,6 +5,7 @@
   left: 0;
   right: 0;
   background-color: #000;
+  z-index: 2;
 }
 
 .logger a {
@@ -12,7 +13,7 @@
   right: 30px;
   top: 10px;
   color: #fff;
-  font-size: 90%;
+  font-size: 80%;
 }
 
 .logger .scroll {

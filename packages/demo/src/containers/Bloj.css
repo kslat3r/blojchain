@@ -51,3 +51,8 @@
   border-radius: 5px;
   border: 0;
 }
+
+.bloj input.condensed {
+  width: 98%;
+  margin-bottom: 0;
+}

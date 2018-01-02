@@ -5,10 +5,10 @@ describe('verifyBloj', () => {
   it('should verify a blojs is correct', () => {
     const verified = verifyBloj({
       index: 1,
-      nonce: 4786,
+      nonce: 19197,
       data: 'foo',
       prevHash: '0000000000000000000000000000000000000000000000000000000000000000',
-      hash: 'e47a1328654b7a4602134de98be9ba08e9969555b92f4252334c83cd082a3374',
+      hash: '00003b720beba79a980027249214f6a7ecde5732e91c0bdce5881ecf8226ed1f',
       timestamp: 10000,
     });
 
