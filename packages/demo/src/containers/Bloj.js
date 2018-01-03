@@ -36,8 +36,12 @@ class Bloj extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (!deepEqual(this.props.bloj, nextProps.bloj)) {
+      return true;
+    }
+
+    if (!deepEqual(this.state.bloj, nextState.bloj)) {
       return true;
     }
 
