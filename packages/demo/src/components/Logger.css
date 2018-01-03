@@ -1,19 +1,18 @@
 .logger {
-  height: 70px;
+  height: 100px;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: #000;
   z-index: 2;
+  font-size: 1.2rem;
 }
 
 .logger a {
   position: absolute;
   right: 30px;
   top: 10px;
-  color: #fff;
-  font-size: 80%;
 }
 
 .logger .scroll {
@@ -21,11 +20,11 @@
   overflow-y: scroll;
   padding: 10px;
   word-wrap: break-word;
-  height: 50px;
+  height: 100px;
 }
 
 .logger.open {
-  height: 320px;
+  height: 300px;
 }
 
 .logger.open .scroll {

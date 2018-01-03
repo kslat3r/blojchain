@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const uniqid = require('uniqid');
 const logger = require('../../logger');
 const chain = require('../../chain');
 const hash = require('../../helpers/hash');
@@ -21,9 +22,6 @@ router.get('/blojs', function(req, res) {
   logger.debug('EVENT blojs:get');
 
   res.send(chain.selectAll());
-
-  // const io = req.app.get('io');
-  // io.emit('hello')
 });
 
 /**
@@ -66,6 +64,7 @@ router.post('/blojs', async function(req, res) {
   logger.debug('EVENT blojs:create');
 
   const bloj = {
+    id: hash(uniqid()),
     data: req.body,
   };
 

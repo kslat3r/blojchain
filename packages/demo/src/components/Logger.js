@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Log from './Log';
+import { Button } from 'reactstrap';
 import './Logger.css';
 
 class Logger extends Component {
@@ -43,7 +44,9 @@ class Logger extends Component {
     return (
       <div className={`logger ${this.state.open && 'open'}`}>
         <a href="#toggle" onClick={this.toggle}>
-          {!this.state.open ? 'Maximise logging' : 'Minimise logging'}
+          <Button color="secondary">
+            {this.state.open ? 'Minimise' : 'Maximise'}
+          </Button>
         </a>
 
         <div className="scroll" ref={(elem) => { this.scroll = elem; }}>

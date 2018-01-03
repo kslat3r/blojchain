@@ -2,6 +2,8 @@ const config = require('./config.json');
 const request = require('request-promise');
 const faker = require('faker');
 
+let i = 0;
+
 const generateBloj = async () => {
   let peers;
 
@@ -19,15 +21,18 @@ const generateBloj = async () => {
     const randomPeer = peers[Math.floor(Math.random() * peers.length)];
     const randomPeerHost = randomPeer.meta.serverHost;
     const randomPeerPort = randomPeer.meta.serverPort;
+    const uri = `http://${randomPeerHost}:${randomPeerPort}/blojs`;
 
     let response;
 
     try {
       response = await request({
         method: 'POST',
-        uri: `http://${randomPeerHost}:${randomPeerPort}/blojs`,
+        uri,
         body: {
-          [faker.name.firstName()]: faker.lorem.sentences(10),
+          i,
+          uri,
+          data: `${faker.name.firstName()}-${faker.hacker.noun()}`,
         },
         json: true,
       });
@@ -39,6 +44,8 @@ const generateBloj = async () => {
       console.log(`${randomPeerHost}:${randomPeerPort}/blojs`, response);
     }
   }
+
+  i++;
 };
 
 setInterval(generateBloj, config.requestIntervalMs);

@@ -1,10 +1,10 @@
 import React from 'react';
-import './Loading.css';
+import { Alert } from 'reactstrap';
 
-const Loading =  () => (
-  <div className="loading">
-    <div>Loading...</div>
-  </div>
+const Loading = () => (
+  <Alert color="primary">
+    Loading...
+  </Alert>
 );
 
 export default Loading;

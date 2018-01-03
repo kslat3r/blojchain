@@ -7,6 +7,8 @@ import Error from '../components/Error';
 import Loading from '../components/Loading';
 import Node from '../containers/Node';
 import Logger from '../components/Logger';
+import { Container, ListGroup, ListGroupItem } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 class App extends Component {
@@ -17,24 +19,8 @@ class App extends Component {
     logs: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-
-    this.state = {
-      maximised: false,
-    };
-  }
-
   componentDidMount() {
     this.props.getNodes();
-  }
-
-  toggle() {
-    this.setState({
-      maximised: !this.state.maximised,
-    });
   }
 
   render() {
@@ -53,27 +39,25 @@ class App extends Component {
     }
 
     return (
-      <div className="app">
-        <a className="toggle" href="#toggle" onClick={this.toggle}>
-          {this.state.maximised ? 'Minimise all blojchains' : 'Maximise all blojchains'}
-        </a>
+      <Container className="app">
+        <ListGroup>
+          {items.map((node, i) => {
+            node.colour = getRandomColour();
 
-        {items.map((node, i) => {
-          node.colour = getRandomColour();
-
-          return (
-            <Node
-              key={i}
-              node={node}
-              maximised={this.state.maximised}
-            />
-          );
-        })}
+            return (
+              <ListGroupItem key={i}>
+                <Node
+                  node={node}
+                />
+              </ListGroupItem>
+            );
+          })}
+        </ListGroup>
 
         <Logger
           logs={logs}
         />
-      </div>
+      </Container>
     );
   }
 }

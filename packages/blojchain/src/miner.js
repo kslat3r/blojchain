@@ -1,6 +1,4 @@
 const TaskQueue = require('./lib/TaskQueue');
-const uniqid = require('uniqid');
-const hash = require('./helpers/hash');
 const mine = require('./helpers/mine');
 const logger = require('./logger');
 const verifyRequests = require('./requests/verify');
@@ -8,7 +6,6 @@ const node = require('./node');
 const chain = require('./chain');
 const netConfig = require('../config/net');
 const onMinerPush = require('./events/on-miner-push');
-const onMined = require('./events/on-mined');
 const onMinerRemove = require('./events/on-miner-remove');
 
 class Miner extends TaskQueue {
@@ -17,7 +14,7 @@ class Miner extends TaskQueue {
       name: 'miner',
     });
 
-    this.candidates = [];
+    this.queue = [];
     this.removed = [];
   }
 
@@ -26,8 +23,7 @@ class Miner extends TaskQueue {
 
     const lastBloj = chain.selectLast();
 
-    bloj.id = bloj.id || hash(uniqid());
-    bloj.index = lastBloj.index + 1;
+    bloj.height = lastBloj.height + 1;
     bloj.prevHash = lastBloj.hash;
     bloj.timestamp = new Date().getTime();
     bloj.confirmations = [];
@@ -47,10 +43,10 @@ class Miner extends TaskQueue {
     // mining wasn't successful this round
 
     if (!mined.hash) {
-      if (this.removed.indexOf(mined.index) !== -1) {
+      if (this.removed.indexOf(mined.height) !== -1) {
         // bloj was removed from processing pool by another miner
 
-        this.removed.splice(this.removed.indexOf(mined.index), 1);
+        this.removed.splice(this.removed.indexOf(mined.height), 1);
       } else {
         // bloj is still to be mined
 
@@ -76,18 +72,12 @@ class Miner extends TaskQueue {
       logger.info('MINER', 'Mined bloj');
       logger.debug(mined);
 
-      // send event
+      // remove from queue
 
-      onMined(mined);
-
-      // remove from candidates
-
-      this.removeCandidate(mined);
+      this.remove(mined);
     }
 
-    setTimeout(() => {
-      done();
-    }, Math.floor(Math.random() * 50) + 1); // random entropy
+    done();
   }
 
   unshift(bloj) {
@@ -101,26 +91,20 @@ class Miner extends TaskQueue {
       this.process(bloj, done);
     });
 
-    this.candidates.push(bloj);
+    this.queue.push(bloj);
 
     onMinerPush(bloj);
   }
 
   remove(bloj) {
-    super.remove(bloj.id);
-
-    this.removeCandidate(bloj);
+    this.queue.splice(this.queue.findIndex(item => item.id === bloj.id), 1);
     this.removed.push(bloj.id);
 
     onMinerRemove(bloj);
   }
 
-  getCandidates() {
-    return this.candidates;
-  }
-
-  removeCandidate(bloj) {
-    this.candidates.splice(this.candidates.findIndex(c => c.id === bloj.id), 1);
+  getQueue() {
+    return this.queue;
   }
 }
 

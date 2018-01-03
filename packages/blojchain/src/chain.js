@@ -1,10 +1,10 @@
 const Database = require('./lib/Database');
-const onCreate = require('./events/on-create');
+const onBlojCreate = require('./events/on-bloj-create');
 const chainConfig = require('../config/chain.json');
 
 const chain = new Database(Object.assign({}, chainConfig.database, {
   name: process.env.DB_NAME,
-  onCreate,
+  onCreate: onBlojCreate,
 }));
 
 if (!chain.selectAll().length) {

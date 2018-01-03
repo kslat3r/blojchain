@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
-const chain = require('../../chain');
-const onUpdate = require('../../events/on-update');
+const confirmer = require('../../confirmer');
 
 /**
  * @swagger
@@ -26,25 +25,14 @@ router.post('/confirm', function(req, res) {
 
   const bloj = req.body;
 
-  const id = bloj.id;
-  const found = chain.selectBy({ id });
-  const confirmations = found.confirmations.concat(bloj.confirmations)
-    .filter((value, index, self) => {
-      return self.indexOf(value) === index;
-    });
+  confirmer.push(bloj);
 
-  const updated = chain.updateBy({ id }, { confirmations });
-
-  logger.info('EVENT confirm', 'Confirmed bloj');
-  logger.debug(updated);
+  logger.info('EVENT confirm', 'Added bloj to confirmer');
+  logger.debug(bloj);
 
   res.send({
     ack: true,
   });
-
-  setTimeout(() => {
-    onUpdate(updated);
-  }, 5000);
 });
 
 module.exports = router;

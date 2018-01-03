@@ -4,14 +4,14 @@ const mine = require('../../src/helpers/mine');
 describe('mine', () => {
   it('should mine the correct nonce/hash', () => {
     const mined = mine({
-      index: 1,
+      height: 1,
       data: 'foo',
       prevHash: '0000000000000000000000000000000000000000000000000000000000000000',
       timestamp: 10000,
     });
 
     expect(mined).to.deep.equal({
-      index: 1,
+      height: 1,
       nonce: 19197,
       data: 'foo',
       prevHash: '0000000000000000000000000000000000000000000000000000000000000000',

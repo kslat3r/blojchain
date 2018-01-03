@@ -1,30 +1,3 @@
-.node {
-  width: 98%;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  padding: 1%;
-  color: #333;
-  background-color: #fff;
-  position: relative;
-}
-
-.node h1,
-.node h2 {
-  margin: 0;
-  margin-bottom: 10px;
-  font-size: 90%;
-}
-
-.node .bloj-list,
-.node .candidate-list {
-  overflow-x: auto;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.node .toggle {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 80%;
+.node .title {
+  margin-bottom: 15px;
 }

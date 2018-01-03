@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 
-const Error = (props) => (
-  <Alert color="danger">
-    {props.message || 'There has been an error'}
+const Loading = (props) => (
+  <Alert color="secondary">
+    {props.message || 'No data found'}
   </Alert>
 );
 
-Error.propTypes = {
+Loading.propTypes = {
   message: PropTypes.string,
 }
 
-export default Error;
+export default Loading;

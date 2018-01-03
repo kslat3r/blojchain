@@ -23,3 +23,7 @@
   color: red;
   position: relative;
 }
+
+.log:last-child {
+  margin-bottom: 0;
+}

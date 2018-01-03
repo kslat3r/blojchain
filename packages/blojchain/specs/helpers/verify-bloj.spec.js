@@ -4,7 +4,7 @@ const verifyBloj = require('../../src/helpers/verify-bloj');
 describe('verifyBloj', () => {
   it('should verify a blojs is correct', () => {
     const verified = verifyBloj({
-      index: 1,
+      height: 1,
       nonce: 19197,
       data: 'foo',
       prevHash: '0000000000000000000000000000000000000000000000000000000000000000',

@@ -1,19 +1,17 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import io from 'socket.io-client';
 import deepEqual from 'deep-equal';
-import { createBloj, updateBloj } from '../actions/blojs';
+import { createBloj } from '../actions/blojs';
+import { Col, Card, CardBody, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import './Bloj.css';
 
 class Bloj extends Component {
   static propTypes = {
     createBloj: PropTypes.func.isRequired,
-    updateBloj: PropTypes.func.isRequired,
 
-    node: PropTypes.object.isRequired,
+    node: PropTypes.object,
     bloj: PropTypes.object,
-    condensed: PropTypes.bool,
   };
 
   constructor(props) {
@@ -30,22 +28,20 @@ class Bloj extends Component {
     };
   }
 
-  componentDidMount() {
-    const socket = io(`http://${this.props.node.meta.socketHost}:${this.props.node.meta.socketPort}`);
-    
-    if (this.state.bloj.id) {
-      socket.on(`${this.props.node.host}:${this.state.bloj.id}:update`, (bloj) => {
-        this.props.updateBloj(bloj, this.props.node);
-      });
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!deepEqual(this.state.bloj, nextProps.bloj)) {
       this.setState({
         bloj: nextProps.bloj,
       });
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (!deepEqual(this.props.bloj, nextProps.bloj)) {
+      return true;
+    }
+
+    return false;
   }
 
   onChange(key, value) {
@@ -70,108 +66,93 @@ class Bloj extends Component {
 
   render() {
     return (
-      <div 
-        className="bloj"
-      >
-        <form
-          onSubmit={this.onSubmit}
-        >
-          {!this.props.condensed && this.state.bloj.index && (
-            <div>
-              <label>Index</label>
-              <input 
-                type="text" 
-                value={this.state.bloj.index} 
-                onChange={e => this.onChange('index', e.target.value)}
-              />
-            </div>
-          )}
+      <Card>
+        <CardBody>
+          <Form className="bloj" onSubmit={this.onSubmit}>
+            {this.state.bloj.id && (
+              <FormGroup row>
+                <Label for="id" sm={4}>ID</Label>
+                <Col sm={8}>
+                  <Input type="text" name="id" value={this.state.bloj.id} onChange={e => this.onChange('id', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
 
-          {!this.props.condensed && this.state.bloj.nonce && (
-            <div>
-              <label>Nonce</label>
-              <input
-                type="text"
-                value={this.state.bloj.nonce}
-                onChange={e => this.onChange('nonce', e.target.value)}
-              />
-            </div>
-          )}
+            {this.state.bloj.height && (
+              <FormGroup row>
+                <Label for="height" sm={4}>Height</Label>
+                <Col sm={8}>
+                  <Input type="text" name="height" value={this.state.bloj.height} onChange={e => this.onChange('height', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
 
-          {!this.props.condensed && (
-            <div>
-              <label>Data</label>
-              <textarea
-                type="text"
-                value={this.state.bloj.hash ? JSON.stringify(this.state.bloj.data) : this.state.bloj.data}
-                onChange={e => this.onChange('data', e.target.value)}
-              />
-            </div>
-          )}
+            {this.state.bloj.nonce && (
+              <FormGroup row>
+                <Label for="nonce" sm={4}>Nonce</Label>
+                <Col sm={8}>
+                  <Input type="text" name="nonce" value={this.state.bloj.nonce} onChange={e => this.onChange('nonce', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
 
-          {!this.props.condensed && this.state.bloj.prevHash && (
-            <div>
-              <label>Previous hash</label>
-              <input
-                type="text"
-                value={this.state.bloj.prevHash}
-                onChange={e => this.onChange('prevHash', e.target.value)}
-              />
-            </div>
-          )}
+            <FormGroup row>
+              <Label for="data" sm={4}>Data</Label>
+              <Col sm={8}>
+                <Input type="textarea" name="data" value={this.state.bloj.id ? JSON.stringify(this.state.bloj.data) : this.state.bloj.data} onChange={e => this.onChange('data', e.target.value)} />
+              </Col>
+            </FormGroup>
 
-          {!this.props.condensed && this.state.bloj.timestamp && (
-            <div>
-              <label>Timestamp</label>
-              <input
-                type="text"
-                value={this.state.bloj.timestamp}
-                onChange={e => this.onChange('timestamp', e.target.value)}
-              />
-            </div>
-          )}
-          
-          {this.state.bloj.hash && (
-            <div>
-              {!this.props.condensed && (
-                <label>Hash</label>
-              )}
-              <input
-                type="text"
-                value={this.state.bloj.hash}
-                onChange={e => this.onChange('hash', e.target.value)}
-                className={this.props.condensed ? 'condensed' : ''}
-              />
-            </div>
-          )}
+            {this.state.bloj.prevHash && (
+              <FormGroup row>
+                <Label for="prevHash" sm={4}>Previous hash</Label>
+                <Col sm={8}>
+                  <Input type="text" name="prevHash" value={this.state.bloj.prevHash} onChange={e => this.onChange('prevHash', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
 
-          {!this.props.condensed && this.state.bloj.confirmations !== undefined && (
-            <div>
-              <label>Confirmations</label>
-              <input
-                type="text"
-                value={this.state.bloj.confirmations.length}
-                onChange={e => this.onChange('confirmations', e.target.value)}
-                readOnly
-              />
-            </div>
-          )}
-          
-          {!this.state.bloj.hash && (
-            <div>
-              <input
-                type="submit"
-                value="Create"
-              />
-            </div>
-          )}
-        </form>
-      </div>
+            {this.state.bloj.timestamp && (
+              <FormGroup row>
+                <Label for="timestamp" sm={4}>Timestamp</Label>
+                <Col sm={8}>
+                  <Input type="text" name="timestamp" value={this.state.bloj.timestamp} onChange={e => this.onChange('timestamp', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
+
+            {this.state.bloj.hash && (
+              <FormGroup row>
+                <Label for="hash" sm={4}>Hash</Label>
+                <Col sm={8}>
+                  <Input type="text" name="hash" value={this.state.bloj.hash} onChange={e => this.onChange('hash', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
+
+            {this.state.bloj.confirmations !== undefined && (
+              <FormGroup row>
+                <Label for="confirmations" sm={4}>Confirmations</Label>
+                <Col sm={8}>
+                  <Input type="text" name="confirmations" value={this.state.bloj.confirmations.length} onChange={e => this.onChange('confirmations', e.target.value)} />
+                </Col>
+              </FormGroup>
+            )}
+
+            {!this.state.bloj.id && (
+              <FormGroup check row>
+                <Col sm={{ size: 8, offset: 4 }}>
+                  <Button color="success">Create</Button>
+                </Col>
+              </FormGroup>  
+            )}
+          </Form>
+        </CardBody>
+      </Card>
     );
   }
 }
 
 export default connect(() => ({}), {
   createBloj,
-  updateBloj,
 })(Bloj);

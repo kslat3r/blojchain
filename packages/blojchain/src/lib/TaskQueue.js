@@ -33,9 +33,7 @@ class TaskQueue {
   remove(id) {
     logger.debug(`TASKQUEUE ${this.name}`, `Removing task ${id} from queue`);
 
-    const index = this.items.findIndex(item => item.id === id);
-
-    this.items.splice(index, 1);
+    this.items.splice(this.items.findIndex(item => item.id === id), 1);
 
     return this;
   }

@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const logger = require('../../logger');
-const miner = require('../../miner');
-const verifyBloj = require('../../helpers/verify-bloj');
-const chain = require('../../chain');
-const confirmRequests = require('../../requests/confirm');
-const node = require('../../node');
-const netConfig = require('../../../config/net');
+const verifier = require('../../verifier');
 
 /**
  * @swagger
@@ -30,19 +25,10 @@ router.post('/verify', function(req, res) {
 
   const bloj = req.body;
 
-  if (verifyBloj(bloj)) {
-    bloj.confirmations.push(`${netConfig.nodeHost}:${netConfig.nodePort}`);
+  verifier.push(bloj);
 
-    miner.remove(bloj);
-    chain.create(bloj);
-
-    confirmRequests.byPeers(node.getPeers(), bloj);
-
-    logger.info('EVENT verify',  'Verified bloj');
-    logger.debug(bloj);
-  } else {
-    logger.error('EVENT verify', 'Could not verify bloj', bloj);
-  }
+  logger.info('EVENT verifiy', 'Added bloj to verifier');
+  logger.debug(bloj);
 
   res.send({
     ack: true,
