@@ -1,0 +1,47 @@
+{
+  "name": "blojchain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/boot.js",
+    "test": "mocha --recursive specs/",
+    "dev": "nodemon src/boot.js -i data/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kslat3r/blojchain.git"
+  },
+  "author": "Ed Kelly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kslat3r/blojchain/issues"
+  },
+  "homepage": "https://github.com/kslat3r/blojchain#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.6.1",
+    "lerna": "^3.22.1",
+    "mocha": "^8.2.1",
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.17.1",
+    "express-winston": "^2.4.0",
+    "gossipmonger": "^0.1.10",
+    "lowdb": "^1.0.0",
+    "recursive-readdir-sync": "^1.0.6",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "socket.io": "^2.0.4",
+    "swagger-jsdoc": "^1.9.7",
+    "swagger-ui-express": "^2.0.9",
+    "swim": "^0.5.0",
+    "uniqid": "^4.1.1",
+    "winston": "^2.3.1"
+  }
+}

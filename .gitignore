@@ -59,6 +59,6 @@ typings/
 
 .DS_Store
 
-data/*.json
+*/data/*.json
 *.code-workspace
 
