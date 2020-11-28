@@ -26,6 +26,14 @@ jobs:
             docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
             docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
       - run:
+          name: Install Helm
+          command: |
+            if which helm > /dev/null; then
+              exit 0
+            fi
+            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+            helm version
+      - run:
           name: Deploy to Kubernetes
           command: |
             envsubst < app/node/helm/blojchain-node/templates/deployment.yaml > app/node/helm/blojchain-node/templates/deployment.yaml
