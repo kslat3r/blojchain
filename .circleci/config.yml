@@ -38,6 +38,7 @@ jobs:
           command: |
             cd app/node/helm
             envsubst < blojchain-node/templates/deployment.yaml > blojchain-node/templates/deployment.yaml
+            cat blojchain-node/templates/deployment.yaml
             ./install.sh
 workflows:
   version: 2
