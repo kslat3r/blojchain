@@ -28,9 +28,8 @@ jobs:
       - run:
           name: Deploy to Kubernetes
           command: |
-            envsubst < manifest/deployment.yml > /tmp/app.yml
-            kubectl apply -f /tmp/app.yml
-            kubectl rollout status -w deployment/blojchain-node
+            envsubst < app/node/helm/blojchain-node/deployment.yaml > app/node/helm/blojchain-node/deployment.yaml
+            ./app/node/helm/install.sh
 workflows:
   version: 2
   release:
