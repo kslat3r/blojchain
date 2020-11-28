@@ -9,7 +9,7 @@ class Node {
     this.opts = opts;
 
     this.id = uniqid();
-    this.seeds = [process.env.SEED] || seeds;
+    this.seeds = process.env.SEED ? [process.env.SEED] : seeds;
 
     logger.debug(`NODE creating instance ${this.id}`);
 
