@@ -1,6 +1,0 @@
-{
-  "registry.terraform.io/hashicorp/google": {
-    "hash": "h1:r9DGN02xsR8k9hFqt37Yt7GjwVx34SJXqanR2igjm9Y=",
-    "version": "3.49.0"
-  }
-}
