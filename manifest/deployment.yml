@@ -11,7 +11,7 @@ spec:
     app: blojchain-app
   type: LoadBalancer
 ---
-apiVersion: extensions/v1beta1
+apiVersion: v1
 kind: Deployment
 metadata:
   name: blojchain-app
@@ -32,4 +32,3 @@ spec:
       - name: blojchain-app
         image: gcr.io/blojchain-297012/blojchain-app:${CIRCLE_SHA1}
         imagePullPolicy: Always
----
