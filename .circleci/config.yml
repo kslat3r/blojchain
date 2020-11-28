@@ -24,7 +24,7 @@ jobs:
           name: Push Docker image
           command: |
             docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
-            docker push gcr.io/blojchain-297012/blojchain-app:${CIRCLE_SHA1}
+            docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
       - run:
           name: Deploy to Kubernetes
           command: |
