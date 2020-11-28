@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}
-        image: gcr.io/blojchain-297012/blojchain-node:{{ .Values.image_version }}
+        image: gcr.io/blojchain-297012/blojchain-node:{{ .Values.image.tag }}
         imagePullPolicy: Always
         env:
           - name: SEED
