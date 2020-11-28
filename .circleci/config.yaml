@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Setup deps
+          command: apt-get install -qq -y gettext
+      - run:
+          name: Setup Google Cloud SDK
+          command: |
+            echo $GOOGLE_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project blojchain-297012
+            gcloud --quiet config set compute/zone europe-west2-a
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+            gcloud --quiet container clusters get-credentials blojchain-cluster
+      - run:
+          name: Create Docker image
+          command: docker build -t blojchain-app:${CIRCLE_SHA1} .
+      - run:
+          name: Push Docker image
+          command: |
+            docker tag blojchain-app:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-app:${CIRCLE_SHA1}
+            docker push gcr.io/blojchain-297012/blojchain-app:${CIRCLE_SHA1}
+      - run:
+          name: Deploy to Kubernetes
+          command: |
+            envsubst < manifest/deployment.yml > /tmp/app.yml
+            kubectl apply -f /tmp/app.yml
+            kubectl rollout status -w deployment/blojchain-app
+workflows:
+  version: 2
+  release:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master

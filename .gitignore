@@ -62,3 +62,6 @@ typings/
 */data/*.json
 *.code-workspace
 
+tf/creds.json
+tf/.terraform
+tf/terraform.tfstate*

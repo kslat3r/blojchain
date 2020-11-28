@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blojchain-app
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: blojchain-app
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blojchain-app
+  namespace: default
+  labels:
+    app: blojchain-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blojchain-app
+  template:
+    metadata:
+      labels:
+        app: blojchain-app
+    spec:
+      containers:
+      - name: blojchain-app
+        image: gcr.io/blojchain-297012/blojchain-app:${CIRCLE_SHA1}
+        imagePullPolicy: Always
+---
