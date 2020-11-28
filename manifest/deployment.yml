@@ -11,7 +11,7 @@ spec:
     app: blojchain-app
   type: LoadBalancer
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blojchain-app
