@@ -7,9 +7,6 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Setup deps
-          command: apt-get install -qq -y gettext
-      - run:
           name: Setup Google Cloud SDK
           command: |
             echo $GOOGLE_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
@@ -37,8 +34,6 @@ jobs:
           name: Deploy to Kubernetes
           command: |
             cd app/node/helm
-            envsubst < blojchain-node/templates/deployment.yaml > blojchain-node/templates/deployment.yaml
-            cat blojchain-node/templates/deployment.yaml
             ./install.sh
 workflows:
   version: 2
