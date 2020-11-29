@@ -4,4 +4,7 @@ server:
 node:
     host: blojchain-node-c-swim
 
+socket:
+    host: blojchain-node-c
+
 seed: blojchain-node-a-swim:55356

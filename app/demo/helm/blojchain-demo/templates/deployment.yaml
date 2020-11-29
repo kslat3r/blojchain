@@ -17,14 +17,11 @@ spec:
     spec:
       containers:
       - name: {{ .Release.Name }}
-        image: gcr.io/blojchain-297012/blojchain-node:{{ .Values.image.tag }}
+        image: gcr.io/blojchain-297012/blojchain-demo:{{ .Values.image.tag }}
         imagePullPolicy: Always
         env:
-        - name: SEED
-          value: {{ .Values.seed }}
-        - name: SERVER_HOST
-          value: {{ .Values.server.host }}
-        - name: NODE_HOST
-          value: {{ .Values.node.host }}
-        - name: SOCKET_HOST
-          value: {{ .Values.socket.host }}
+        - name: REACT_APP_SEED_HOST
+          value: {{ .Values.seed.host }}
+        - name: REACT_APP_SEED_PORT
+          value: {{ .Values.seed.port }}
+        

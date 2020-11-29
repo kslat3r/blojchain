@@ -15,13 +15,21 @@ jobs:
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
             gcloud --quiet container clusters get-credentials blojchain-cluster
       - run:
-          name: Create Docker image
+          name: Create Node Docker image
           command: docker build -t blojchain-node:${CIRCLE_SHA1} ./app/node
       - run:
-          name: Push Docker image
+          name: Push Node Docker image
           command: |
             docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
             docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
+      - run:
+          name: Create Demo Docker image
+          command: docker build -t blojchain-demo:${CIRCLE_SHA1} ./app/demo
+      - run:
+          name: Push Demo Docker image
+          command: |
+            docker tag blojchain-demo:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
+            docker push gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
       - run:
           name: Install Helm
           command: |
@@ -31,9 +39,14 @@ jobs:
             curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
             helm version
       - run:
-          name: Deploy to Kubernetes
+          name: Deploy Node to Kubernetes
           command: |
             cd app/node/helm
+            ./install.sh
+      - run:
+          name: Deploy Demo to Kubernetes
+          command: |
+            cd app/node/demo
             ./install.sh
 workflows:
   version: 2

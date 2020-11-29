@@ -1,0 +1,6 @@
+image:
+    tag: 1.0.0
+
+seed:
+    host: 35.189.75.125
+    port: 3000
