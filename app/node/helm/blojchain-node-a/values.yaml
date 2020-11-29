@@ -1,10 +1,10 @@
 server:
-    host: blojchain-node-a
+    host: 35.189.75.125
 
 node:
     host: blojchain-node-a-swim
 
 socket:
-    host: blojchain-node-a
+    host: 35.189.75.125
 
 seed: blojchain-node-c-swim:55356

@@ -19,9 +19,3 @@ spec:
       - name: {{ .Release.Name }}
         image: gcr.io/blojchain-297012/blojchain-demo:{{ .Values.image.tag }}
         imagePullPolicy: Always
-        env:
-        - name: REACT_APP_SEED_HOST
-          value: {{ quote .Values.seed.host }}
-        - name: REACT_APP_SEED_PORT
-          value: {{ quote .Values.seed.port }}
-        
