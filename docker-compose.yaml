@@ -1,0 +1,65 @@
+version: "2"
+
+services:
+  # demo.blojchain.nll:
+  #   build: ./app/demo
+  #   volumes:
+  #     - ./app/demo:/usr/src/app
+
+  a.blojchain.nll:
+    build: ./app/node
+    volumes:
+      - ./app/node:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - SEED=b.blojchain.nll:55356
+      - NODE_HOST=a.blojchain.nll
+      - SERVER_HOST=a.blojchain.nll
+      - SERVER_PORT=3001
+      - SOCKET_HOST=a.blojchain.nll
+      - SOCKET_PORT=4001
+      - DB_NAME=chain1
+      - LOG_LEVEL=info
+    ports:
+      - "3001:3001"
+      - "4001:4001"
+    command: npm run dev
+
+  b.blojchain.nll:
+    build: ./app/node
+    volumes:
+      - ./app/node:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - SEED=a.blojchain.nll:55356
+      - NODE_HOST=b.blojchain.nll
+      - SERVER_HOST=b.blojchain.nll
+      - SERVER_PORT=3002
+      - SOCKET_HOST=b.blojchain.nll
+      - SOCKET_PORT=4002
+      - DB_NAME=chain2
+      - LOG_LEVEL=info
+    ports:
+      - "3002:3002"
+      - "4002:4002"
+    command: npm run dev
+
+  c.blojchain.nll:
+    build: ./app/node
+    volumes:
+      - ./app/node:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - SEED=a.blojchain.nll:55356
+      - NODE_HOST=c.blojchain.nll
+      - SERVER_HOST=c.blojchain.nll
+      - SERVER_PORT=3003
+      - SOCKET_HOST=c.blojchain.nll
+      - SOCKET_PORT=4003
+      - DB_NAME=chain3
+      - LOG_LEVEL=info
+    ports:
+      - "3003:3003"
+      - "4003:4003"
+    command: npm run dev
+

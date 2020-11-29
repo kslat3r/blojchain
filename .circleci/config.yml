@@ -16,39 +16,72 @@ jobs:
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
             gcloud --quiet container clusters get-credentials blojchain-cluster
       - run:
+          name: Determine what to build
+          command: |
+            git diff --name-only --diff-filter=ADMR @~..@ | grep -q node
+            retVal=$?
+
+            if [ $retVal -eq 0 ]; then
+              export DEPLOY_NODE=true
+            fi
+
+            git diff --name-only --diff-filter=ADMR @~..@ | grep -q demo
+            retVal=$?
+
+            if [ $retVal -eq 0 ]; then
+              export DEPLOY_DEMO=true
+            fi
+      - run:
           name: Create Node Docker image
-          command: docker build -t blojchain-node:${CIRCLE_SHA1} ./app/node
+          command: |
+            if [ $DEPLOY_NODE -eq "true" ]
+              docker build -t blojchain-node:${CIRCLE_SHA1} ./app/node
+            fi
       - run:
           name: Push Node Docker image
           command: |
-            docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
-            docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
+            if [ $DEPLOY_NODE -eq "true" ]
+              docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
+              docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
+            fi
       - run:
           name: Create Demo Docker image
-          command: docker build -t blojchain-demo:${CIRCLE_SHA1} ./app/demo
+          command: |
+            if [ $DEPLOY_DEMO -eq "true" ]
+              docker build -t blojchain-demo:${CIRCLE_SHA1} ./app/demo
+            fi
       - run:
           name: Push Demo Docker image
           command: |
-            docker tag blojchain-demo:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
-            docker push gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
+            if [ $DEPLOY_DEMO -eq "true" ]
+              docker tag blojchain-demo:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
+              docker push gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
+            fi
       - run:
           name: Install Helm
           command: |
-            if which helm > /dev/null; then
-              exit 0
+            if [ $DEPLOY_NODE -eq "true" ] || [ $DEPLOY_DEMO -eq "true" ]
+              if which helm > /dev/null; then
+                exit 0
+              fi
+              
+              curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+              helm version
             fi
-            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-            helm version
       - run:
           name: Deploy Node to Kubernetes
           command: |
-            cd app/node/helm
-            ./install.sh
+            if [ $DEPLOY_NODE -eq "true" ]
+              cd app/node/helm
+              ./install.sh
+            fi
       - run:
           name: Deploy Demo to Kubernetes
           command: |
-            cd app/demo/helm
-            ./install.sh
+            if [ $DEPLOY_DEMO -eq "true" ]
+              cd app/demo/helm
+              ./install.sh
+            fi
 workflows:
   version: 2
   release:
