@@ -4,6 +4,7 @@ COPY . /usr/src/app/
 
 RUN set -ex; \
   npm install --production; \
+  mkdir /usr/src/app/build; \
   npm run build
 
 FROM nginx:alpine
