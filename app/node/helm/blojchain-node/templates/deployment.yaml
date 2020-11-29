@@ -22,3 +22,7 @@ spec:
         env:
         - name: SEED
           value: {{ .Values.seed }}
+        - name: SERVER_HOST
+          value: {{ .Values.server.host }}
+        - name: NODE_HOST
+          value: {{ .Values.node.host }}

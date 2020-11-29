@@ -1,3 +1,11 @@
-seed: blojchain-node-d
 image:
     tag: 1.0.0
+
+server:
+    host: localhost
+
+node:
+    host: localhost
+
+seed: blojchain-node-d
+

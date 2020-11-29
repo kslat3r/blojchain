@@ -1,1 +1,7 @@
+server:
+    host: blojchain-node-b
+
+node:
+    host: blojchain-node-b-swim
+
 seed: blojchain-node-c-swim:55356
