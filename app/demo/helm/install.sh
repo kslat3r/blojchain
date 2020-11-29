@@ -1,4 +1,4 @@
 #!/bin/bash
 
-helm upgrade --install blojchain-demo --set image.tag=$CIRCLE_SHA1 blojchain-demo
+helm upgrade --install blojchain-demo -f blojchain-demo/values.yaml --set image.tag=$CIRCLE_SHA1 blojchain-demo
 
