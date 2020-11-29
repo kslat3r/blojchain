@@ -18,49 +18,50 @@ jobs:
       - run:
           name: Determine what to build
           command: |
-            git diff --name-only --diff-filter=ADMR @~..@ | grep -q node
-            retVal=$?
-
-            if [ $retVal -eq 0 ]; then
-              export DEPLOY_NODE=true
+            COMMIT_RANGE=$(echo $CIRCLE_COMPARE_URL | sed 's:^.*/compare/::g')
+            echo "Commit range: " $COMMIT_RANGE
+            
+            git diff $COMMIT_RANGE --name-status
+            
+            if [[ $(git diff $COMMIT_RANGE --name-status | grep "app/node") != "" ]]; then
+              echo "setting build circleci node"
+              touch /tmp/build-circleci.node
             fi
 
-            git diff --name-only --diff-filter=ADMR @~..@ | grep -q demo
-            retVal=$?
-
-            if [ $retVal -eq 0 ]; then
-              export DEPLOY_DEMO=true
+            if [[ $(git diff $COMMIT_RANGE --name-status | grep "app/demo") != "" ]]; then
+              echo "setting build circleci demo"
+              touch /tmp/build-circleci.demo
             fi
       - run:
           name: Create Node Docker image
           command: |
-            if [ $DEPLOY_NODE -eq "true" ]
+            if [ -f "/tmp/build-circleci.node" ]; then
               docker build -t blojchain-node:${CIRCLE_SHA1} ./app/node
             fi
       - run:
           name: Push Node Docker image
           command: |
-            if [ $DEPLOY_NODE -eq "true" ]
+            if [ -f "/tmp/build-circleci.node" ]; then
               docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
               docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
             fi
       - run:
           name: Create Demo Docker image
           command: |
-            if [ $DEPLOY_DEMO -eq "true" ]
+            if [ -f "/tmp/build-circleci.demo" ]; then
               docker build -t blojchain-demo:${CIRCLE_SHA1} ./app/demo
             fi
       - run:
           name: Push Demo Docker image
           command: |
-            if [ $DEPLOY_DEMO -eq "true" ]
+            if [ -f "/tmp/build-circleci.demo" ]; then
               docker tag blojchain-demo:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
               docker push gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
             fi
       - run:
           name: Install Helm
           command: |
-            if [ $DEPLOY_NODE -eq "true" ] || [ $DEPLOY_DEMO -eq "true" ]
+            if [ -f "/tmp/build-circleci.node" ] || [ -f "/tmp/build-circleci.demo" ]; then
               if which helm > /dev/null; then
                 exit 0
               fi
@@ -71,14 +72,14 @@ jobs:
       - run:
           name: Deploy Node to Kubernetes
           command: |
-            if [ $DEPLOY_NODE -eq "true" ]
+            if [ -f "/tmp/build-circleci.node" ]; then
               cd app/node/helm
               ./install.sh
             fi
       - run:
           name: Deploy Demo to Kubernetes
           command: |
-            if [ $DEPLOY_DEMO -eq "true" ]
+            if [ -f "/tmp/build-circleci.demo" ]; then
               cd app/demo/helm
               ./install.sh
             fi
