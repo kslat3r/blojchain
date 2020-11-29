@@ -20,5 +20,5 @@ spec:
         image: gcr.io/blojchain-297012/blojchain-node:{{ .Values.image.tag }}
         imagePullPolicy: Always
         env:
-          - name: SEED
-            value: {{ .Values.seed }}
+        - name: SEED
+          value: {{ .Values.seed }}
