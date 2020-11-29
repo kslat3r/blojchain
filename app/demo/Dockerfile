@@ -1,15 +1,12 @@
-FROM node:15.0.1
-
-# Create app directory
-RUN mkdir -p /usr/src/app
+FROM node:alpine
 WORKDIR /usr/src/app
+COPY . /usr/src/app/
 
-# Bundle app source
-COPY . /usr/src/app
+RUN set -ex; \
+  yarn install --frozen-lockfile --production; \
+  yarn cache clean; \
+  yarn run build
 
-# Install app dependencies
-RUN npm install
-
-# Run
-EXPOSE 3000
-CMD [ "npm", "start" ]
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=0 /usr/src/app/build/ /usr/share/nginx/html
