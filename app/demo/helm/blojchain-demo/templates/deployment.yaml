@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: REACT_APP_SEED_HOST
-          value: {{ .Values.seed.host }}
+          value: {{ quote .Values.seed.host }}
         - name: REACT_APP_SEED_PORT
-          value: {{ .Values.seed.port }}
+          value: {{ quote .Values.seed.port }}
         
