@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
   - name: app
-    port: 3000
+    port: 80
     protocol: TCP
-    targetPort: 3000
+    targetPort: 80
   type: LoadBalancer
