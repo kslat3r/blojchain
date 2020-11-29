@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Deploy Demo to Kubernetes
           command: |
-            cd app/node/demo
+            cd app/demo/helm
             ./install.sh
 workflows:
   version: 2
