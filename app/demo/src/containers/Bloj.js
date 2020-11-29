@@ -28,7 +28,7 @@ class Bloj extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!deepEqual(this.state.bloj, nextProps.bloj)) {
       this.setState({
         bloj: nextProps.bloj,
