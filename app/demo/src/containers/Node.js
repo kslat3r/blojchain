@@ -53,6 +53,7 @@ class Node extends Component {
     this.props.getLogs(this.props.node);
 
     const socket = io(`http://${this.props.node.meta.socketHost}:${this.props.node.meta.socketPort}`);
+    const delay = process.env.REACT_APP_DELAY ? parseInt(process.env.REACT_APP_DELAY, 10) : 0;
     
     socket.on(`${this.props.node.host}:bloj:create`, (bloj) => {
       this.props.addBloj(bloj, this.props.node);
@@ -67,7 +68,9 @@ class Node extends Component {
     });
 
     socket.on(`${this.props.node.host}:miner:remove`, (bloj) => {
-      this.props.removeBlojFromMiningQueue(bloj, this.props.node);
+      setTimeout(() => {
+        this.props.removeBlojFromMiningQueue(bloj, this.props.node);
+      }, delay);
     });
 
     socket.on(`${this.props.node.host}:verifier:push`, (bloj) => {
@@ -75,7 +78,9 @@ class Node extends Component {
     });
 
     socket.on(`${this.props.node.host}:verifier:remove`, (bloj) => {
-      this.props.removeBlojFromVerificationQueue(bloj, this.props.node);
+      setTimeout(() => {
+        this.props.removeBlojFromVerificationQueue(bloj, this.props.node);
+      }, delay);
     });
 
     socket.on(`${this.props.node.host}:confirmer:push`, (bloj) => {
@@ -83,7 +88,9 @@ class Node extends Component {
     });
 
     socket.on(`${this.props.node.host}:confirmer:remove`, (bloj) => {
-      this.props.removeBlojFromConfirmationQueue(bloj, this.props.node);
+      setTimeout(() => {
+        this.props.removeBlojFromConfirmationQueue(bloj, this.props.node);
+      }, delay);
     });
 
     socket.on(`${this.props.node.host}:log`, (log) => {
