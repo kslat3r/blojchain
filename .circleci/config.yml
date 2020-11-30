@@ -105,7 +105,7 @@ workflows:
           name: node-deploy
           package_name: node
           requires:
-            - build
+            - node-build
   
   demo:
     when: << pipeline.parameters.demo >>
@@ -117,5 +117,5 @@ workflows:
           name: demo-deploy
           package_name: demo
           requires:
-            - build
+            - demo-build
   
