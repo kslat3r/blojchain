@@ -1,8 +1,38 @@
-version: 2
-jobs:
-  deploy:
+version: 2.1
+
+parameters:
+  trigger:
+    type: boolean
+    default: true
+  node:
+    type: boolean
+    default: false
+  demo:
+    type: boolean
+    default: false
+
+executors:
+  cloud_sdk:
     docker:
       - image: google/cloud-sdk
+
+jobs:
+  trigger-workflows:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: Set token
+          command: echo "export CIRCLE_USER_TOKEN=${CIRCLE_TOKEN}" >> $BASH_ENV
+      - run:
+          name: Trigger workflows
+          command: chmod +x .circleci/monorepo.sh && .circleci/monorepo.sh
+
+  build:
+    parameters:
+      package_name: string
+    executor: cloud_sdk
     steps:
       - checkout
       - setup_remote_docker:
@@ -14,80 +44,73 @@ jobs:
             gcloud --quiet config set project blojchain-297012
             gcloud --quiet config set compute/zone europe-west2-a
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
-            gcloud --quiet container clusters get-credentials blojchain-cluster
       - run:
-          name: Determine what to build
+          name: Create Docker image
           command: |
-            COMMIT_RANGE=$(echo $CIRCLE_COMPARE_URL | sed 's:^.*/compare/::g')
-            echo "Commit range: " $COMMIT_RANGE
-            
-            git diff $COMMIT_RANGE --name-status
-            
-            if [[ $(git diff $COMMIT_RANGE --name-status | grep "app/node") != "" ]]; then
-              echo "setting build circleci node"
-              touch /tmp/build-circleci.node
-            fi
+            docker build -t blojchain-<< parameters.package_name >>:${CIRCLE_SHA1} ./app/<< parameters.package_name >>
+      - run:
+          name: Push Docker image
+          command: |
+            docker tag blojchain-<< parameters.package_name >>:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-<< parameters.package_name >>:${CIRCLE_SHA1}
+            docker push gcr.io/blojchain-297012/blojchain-<< parameters.package_name >>:${CIRCLE_SHA1}
 
-            if [[ $(git diff $COMMIT_RANGE --name-status | grep "app/demo") != "" ]]; then
-              echo "setting build circleci demo"
-              touch /tmp/build-circleci.demo
-            fi
+  deploy:
+    parameters:
+      package_name: string
+    executor: cloud_sdk
+    steps:
+      - checkout
       - run:
-          name: Create Node Docker image
+          name: Setup Google Cloud SDK
           command: |
-            if [ -f "/tmp/build-circleci.node" ]; then
-              docker build -t blojchain-node:${CIRCLE_SHA1} ./app/node
-            fi
-      - run:
-          name: Push Node Docker image
-          command: |
-            if [ -f "/tmp/build-circleci.node" ]; then
-              docker tag blojchain-node:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
-              docker push gcr.io/blojchain-297012/blojchain-node:${CIRCLE_SHA1}
-            fi
-      - run:
-          name: Create Demo Docker image
-          command: |
-            if [ -f "/tmp/build-circleci.demo" ]; then
-              docker build -t blojchain-demo:${CIRCLE_SHA1} ./app/demo
-            fi
-      - run:
-          name: Push Demo Docker image
-          command: |
-            if [ -f "/tmp/build-circleci.demo" ]; then
-              docker tag blojchain-demo:${CIRCLE_SHA1} gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
-              docker push gcr.io/blojchain-297012/blojchain-demo:${CIRCLE_SHA1}
-            fi
+            echo $GOOGLE_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project blojchain-297012
+            gcloud --quiet config set compute/zone europe-west2-a
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+            gcloud --quiet container clusters get-credentials blojchain-cluster
       - run:
           name: Install Helm
           command: |
-            if [ -f "/tmp/build-circleci.node" ] || [ -f "/tmp/build-circleci.demo" ]; then
-              if which helm > /dev/null; then
-                exit 0
-              fi
-              
-              curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-              helm version
+            if which helm > /dev/null; then
+              exit 0
             fi
+            
+            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+            helm version
       - run:
-          name: Deploy Node to Kubernetes
+          name: Deploy to Kubernetes
           command: |
-            if [ -f "/tmp/build-circleci.node" ]; then
-              cd app/node/helm
-              ./install.sh
-            fi
-      - run:
-          name: Deploy Demo to Kubernetes
-          command: |
-            if [ -f "/tmp/build-circleci.demo" ]; then
-              cd app/demo/helm
-              ./install.sh
-            fi
+            cd app/<< parameters.package_name >>/helm
+            ./install.sh
+
 workflows:
   version: 2
-  release:
+
+  ci:
+    when: << pipeline.parameters.trigger >>
     jobs:
-      - deploy:
-          filters:
+      - trigger-workflows:
+        filters:
             branches:
               only: master
+
+  node:
+    when: << pipeline.parameters.node >>
+    jobs:
+      - build:
+          name: node-build
+          package_name: node
+      - deploy:
+          name: node-deploy
+          package_name: node
+  
+  demo:
+    when: << pipeline.parameters.demo >>
+    jobs:
+      - build:
+          name: demo-build
+          package_name: demo
+      - deploy:
+          name: demo-deploy
+          package_name: demo
+  
