@@ -16,6 +16,17 @@ executors:
     docker:
       - image: google/cloud-sdk
 
+commands:
+  setup_cloud_sdk:
+    steps:
+      - run:
+          name: Setup Google Cloud SDK
+          command: |
+            echo $GOOGLE_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project blojchain-297012
+            gcloud --quiet config set compute/zone europe-west2-a
+            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+
 jobs:
   trigger-workflows:
     docker:
@@ -30,20 +41,15 @@ jobs:
           command: chmod +x .circleci/monorepo.sh && .circleci/monorepo.sh
 
   build:
-    parameters:
-      package_name: string
+    parameters:      
+      package_name:
+        type: string
     executor: cloud_sdk
     steps:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-      - run:
-          name: Setup Google Cloud SDK
-          command: |
-            echo $GOOGLE_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project blojchain-297012
-            gcloud --quiet config set compute/zone europe-west2-a
-            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+      - setup_cloud_sdk
       - run:
           name: Create Docker image
           command: |
@@ -56,18 +62,12 @@ jobs:
 
   deploy:
     parameters:
-      package_name: string
+      package_name:
+        type: string
     executor: cloud_sdk
     steps:
       - checkout
-      - run:
-          name: Setup Google Cloud SDK
-          command: |
-            echo $GOOGLE_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project blojchain-297012
-            gcloud --quiet config set compute/zone europe-west2-a
-            gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
-            gcloud --quiet container clusters get-credentials blojchain-cluster
+      - setup_cloud_sdk
       - run:
           name: Install Helm
           command: |
