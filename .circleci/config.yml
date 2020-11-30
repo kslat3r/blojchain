@@ -91,9 +91,9 @@ workflows:
     when: << pipeline.parameters.trigger >>
     jobs:
       - trigger-workflows:
-        filters:
-            branches:
-              only: master
+          filters:
+              branches:
+                only: master
 
   node:
     when: << pipeline.parameters.node >>
@@ -104,6 +104,8 @@ workflows:
       - deploy:
           name: node-deploy
           package_name: node
+          requires:
+            - build
   
   demo:
     when: << pipeline.parameters.demo >>
@@ -114,4 +116,6 @@ workflows:
       - deploy:
           name: demo-deploy
           package_name: demo
+          requires:
+            - build
   
