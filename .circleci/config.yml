@@ -26,6 +26,7 @@ commands:
             gcloud --quiet config set project blojchain-297012
             gcloud --quiet config set compute/zone europe-west2-a
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+            gcloud --quiet container clusters get-credentials blojchain-cluster
 
 jobs:
   trigger-workflows:
