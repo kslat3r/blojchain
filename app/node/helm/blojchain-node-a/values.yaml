@@ -8,4 +8,3 @@ socket:
     host: 35.189.75.125
 
 seed: blojchain-node-c-swim:55356
-delay: 3000
