@@ -9,7 +9,8 @@ import { getConfirmationQueue, addBlojToConfirmationQueue, removeBlojFromConfirm
 import { getLogs, addLog } from '../actions/logs';
 import { Row, Col, Button } from 'reactstrap';
 import Queue from '../components/Queue';
-import Bloj from '../containers/Bloj';
+import Bloj from '../components/Bloj';
+import Form from './Form';
 import './Node.css';
 
 class Node extends Component {
@@ -140,7 +141,7 @@ class Node extends Component {
             ))}
 
             <Col xs={12} md={6} lg={4}>
-              <Bloj
+              <Form
                 node={node}
               />
             </Col>

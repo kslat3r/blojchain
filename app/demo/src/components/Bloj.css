@@ -1,0 +1,8 @@
+.bloj button {
+  margin-left: -7px;
+  margin-right: -7px;
+}
+
+.bloj .form-control:disabled {
+  background-color: #fff;
+}
