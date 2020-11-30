@@ -19,7 +19,7 @@ class Verifier extends TaskQueue {
   }
 
   process(bloj, done) {
-    logger.info('EVENT verifier');
+    logger.debug('EVENT verifier');
 
     if (verifyBloj(bloj)) {
       bloj.confirmations.push(`${netConfig.nodeHost}:${netConfig.nodePort}`);
@@ -29,7 +29,7 @@ class Verifier extends TaskQueue {
 
       confirmRequests.byPeers(node.getPeers(), bloj);
 
-      logger.info('VERIFIER',  'Verified bloj');
+      logger.info('VERIFIER', 'Verified bloj');
       logger.debug(bloj);
     } else {
       logger.error('VERIFIER', 'Could not verify bloj', bloj);

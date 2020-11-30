@@ -4,7 +4,7 @@ import moment from 'moment';
 import './Log.css';
 
 const Log = (props) => (
-  <div className="log">
+  <div className="log" onClick={(e) => { props.onLogClick(e, props.log)}}>
     <span className="host" style={{color: props.log.node.colour}}>
       {props.log.node.host}
     </span>
@@ -31,6 +31,7 @@ const Log = (props) => (
 
 Log.propTypes = {
   log: PropTypes.object.isRequired,
+  onLogClick: PropTypes.func.isRequired
 };
 
 export default Log;

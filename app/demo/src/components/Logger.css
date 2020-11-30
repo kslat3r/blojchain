@@ -9,9 +9,15 @@
   font-size: 1.2rem;
 }
 
-.logger a {
+.logger a#toggle {
   position: absolute;
   right: 30px;
+  top: 10px;
+}
+
+.logger a#reset {
+  position: absolute;
+  right: 105px;
   top: 10px;
 }
 

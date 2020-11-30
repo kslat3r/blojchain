@@ -2,6 +2,7 @@
   clear: both;
   margin-bottom: 2px;
   color: #fff;
+  cursor: pointer
 }
 
 .log span {
@@ -21,6 +22,11 @@
 
 .log .error {
   color: red;
+  position: relative;
+}
+
+.log .debug {
+  color: blue;
   position: relative;
 }
 

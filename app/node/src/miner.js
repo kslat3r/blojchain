@@ -43,10 +43,10 @@ class Miner extends TaskQueue {
     // mining wasn't successful this round
 
     if (!mined.hash) {
-      if (this.removed.indexOf(mined.height) !== -1) {
+      if (this.removed.indexOf(mined.id) !== -1) {
         // bloj was removed from processing pool by another miner
 
-        this.removed.splice(this.removed.indexOf(mined.height), 1);
+        this.removed.splice(this.removed.indexOf(mined.id), 1);
       } else {
         // bloj is still to be mined
 

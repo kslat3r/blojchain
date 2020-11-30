@@ -12,10 +12,13 @@ class Logger extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
+    this.onToggle = this.onToggle.bind(this);
+    this.onReset = this.onReset.bind(this);
+    this.onLogClick = this.onLogClick.bind(this);
 
     this.state = {
       open: false,
+      selectedHost: null
     };
   }
 
@@ -23,7 +26,7 @@ class Logger extends Component {
     this.scroll.scrollTop = this.scroll.scrollHeight;
   }
 
-  toggle(e) {
+  onToggle(e) {
     e.preventDefault();
 
     this.setState({
@@ -40,21 +43,46 @@ class Logger extends Component {
     });
   }
 
+  onReset(e) {
+    e.preventDefault();
+
+    this.setState({ selectedHost: null });
+  }
+
+  onLogClick(e, log) {
+    e.preventDefault();
+
+    this.setState({ selectedHost: log.node.host });
+  }
+
   render() {
+    let logs = this.props.logs;
+
+    if (this.state.selectedHost) {
+      logs = logs.filter(log => log.node.host === this.state.selectedHost);
+    }
+
     return (
       <div className={`logger ${this.state.open && 'open'}`}>
-        <a href="#toggle" onClick={this.toggle}>
+        <a href="#toggle" onClick={this.onToggle} id="toggle">
           <Button color="secondary">
             {this.state.open ? 'Minimise' : 'Maximise'}
           </Button>
         </a>
 
+        <a href="#reset" onClick={this.onReset} id="reset">
+          <Button color="secondary">
+            Reset
+          </Button>
+        </a>
+
         <div className="scroll" ref={(elem) => { this.scroll = elem; }}>
-          {this.props.logs.map((log, i) => {
+          {logs.map((log, i) => {
             return (
               <Log
                 key={i}
                 log={log}
+                onLogClick={this.onLogClick}
               />
             )
           })}
