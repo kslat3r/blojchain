@@ -11,4 +11,3 @@ socket:
     host: localhost
 
 seed: blojchain-node-b
-delay: "3000"
