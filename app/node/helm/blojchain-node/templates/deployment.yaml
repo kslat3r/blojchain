@@ -21,9 +21,9 @@ spec:
         imagePullPolicy: Always
         env:
         - name: SEED
-          value: {{ quote .Values.seed }}
+          value: {{ .Values.seed }}
         - name: DELAY
-          value: {{ .Values.delay }}
+          value: {{ quote .Values.delay }}
         - name: SERVER_HOST
           value: {{ .Values.server.host }}
         - name: NODE_HOST
