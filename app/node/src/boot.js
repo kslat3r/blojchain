@@ -4,3 +4,4 @@ require('./node');
 require('./server');
 require('./miner');
 require('./events/on-interval')();
+console.log('test');
