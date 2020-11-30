@@ -20,6 +20,7 @@ services:
       - SOCKET_PORT=4001
       - DB_NAME=chain1
       - LOG_LEVEL=info
+      - DELAY=3000
     ports:
       - "3001:3001"
       - "4001:4001"
@@ -39,6 +40,7 @@ services:
       - SOCKET_PORT=4002
       - DB_NAME=chain2
       - LOG_LEVEL=info
+      - DELAY=3000
     ports:
       - "3002:3002"
       - "4002:4002"
@@ -58,6 +60,7 @@ services:
       - SOCKET_PORT=4003
       - DB_NAME=chain3
       - LOG_LEVEL=info
+      - DELAY=3000
     ports:
       - "3003:3003"
       - "4003:4003"

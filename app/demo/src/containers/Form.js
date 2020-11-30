@@ -20,29 +20,21 @@ class Form extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      bloj: {
-        data: '',
-      }
+      message: ''
     };
   }
 
-  onChange(key, value) {
-    const bloj = Object.assign({}, this.state.bloj, {
-      [key]: value
-    });
-
-    this.setState({ bloj });
+  onChange(message) {
+    this.setState({ message });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    this.props.createBloj(JSON.parse(this.state.bloj.data), this.props.node);
+    this.props.createBloj({ message: this.state.message }, this.props.node);
         
     this.setState({
-      bloj: {
-        data: '',
-      }
+      message: ''
     });
   }
 
@@ -51,12 +43,12 @@ class Form extends Component {
       <Card>
         <CardBody>
           <HTMLForm className="bloj" onSubmit={this.onSubmit}>
-            <FormGroup row>
-              <Label for="data" sm={4}>Data</Label>
-              <Col sm={8}>
-                <Input type="textarea" name="data" value={this.state.bloj.data} onChange={e => this.onChange('data', e.target.value)} />
-              </Col>
-            </FormGroup>
+          <FormGroup row>
+            <Label for="data" sm={4}>Message</Label>
+            <Col sm={8}>
+              <Input type="textarea" name="message" value={this.state.message} onChange={e => this.onChange(e.target.value)} />
+            </Col>
+          </FormGroup>
 
             <FormGroup check row>
               <Col sm={{ size: 8, offset: 4 }}>

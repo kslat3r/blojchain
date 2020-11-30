@@ -1,5 +1,6 @@
 const uniqid = require('uniqid');
 const logger = require('../logger');
+const netConfig = require('../../config/net');
 
 class TaskQueue {
   constructor(opts) {
@@ -20,12 +21,14 @@ class TaskQueue {
   }
 
   push(id = uniqid(), fn) {
-    logger.debug(`TASKQUEUE ${this.name}`, `Pushing task ${id} to queue`);
+    setTimeout(() => {
+      logger.debug(`TASKQUEUE ${this.name}`, `Pushing task ${id} to queue with ${netConfig.delay} delay`);
 
-    this.items.push({
-      id,
-      fn,
-    });
+      this.items.push({
+        id,
+        fn,
+      });
+    }, netConfig.delay);
 
     return this;
   }

@@ -22,6 +22,8 @@ spec:
         env:
         - name: SEED
           value: {{ .Values.seed }}
+        - name: DELAY
+          value: {{ .Values.delay }}
         - name: SERVER_HOST
           value: {{ .Values.server.host }}
         - name: NODE_HOST

@@ -5,4 +5,5 @@ module.exports = {
   nodePort: process.env.NODE_PORT ? process.env.NODE_PORT : 55356,
   socketHost: process.env.SOCKET_HOST ? process.env.SOCKET_HOST : '127.0.0.1',
   socketPort: process.env.SOCKET_PORT ? process.env.SOCKET_PORT : 4000,
+  delay: process.env.DELAY ? parseInt(process.env.DELAY) : 0
 };
