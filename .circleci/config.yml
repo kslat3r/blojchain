@@ -35,7 +35,7 @@ jobs:
       - checkout
       - run:
           name: Set token
-          command: echo "export CIRCLE_USER_TOKEN=${CIRCLE_TOKEN}" >> $BASH_ENV
+          command: export CIRCLE_USER_TOKEN=${CIRCLE_TOKEN}
       - run:
           name: Trigger workflows
           command: chmod +x .circleci/monorepo.sh && .circleci/monorepo.sh
