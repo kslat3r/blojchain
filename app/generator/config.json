@@ -1,4 +1,4 @@
 {
-  "requestIntervalMs": 10000,
+  "requestIntervalMs": 30000,
   "seed": "http://node-a.blojcha.in:3000"
 }
