@@ -1,10 +1,10 @@
 server:
-    host: 35.230.153.63
+    host: node-b.blojcha.in
 
 node:
     host: blojchain-node-b-swim
 
 socket:
-    host: 35.230.153.63
+    host: node-b.blojcha.in
 
 seed: blojchain-node-c-swim:55356
