@@ -1,0 +1,10 @@
+.blojtag {
+    margin-right: 10px;
+    min-width: 100px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.blojtag:last-child {
+    margin-right: 0;
+}

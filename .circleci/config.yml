@@ -10,6 +10,9 @@ parameters:
   demo:
     type: boolean
     default: false
+  generator:
+    type: boolean
+    default: false
 
 executors:
   cloud_sdk:
@@ -119,4 +122,16 @@ workflows:
           package_name: demo
           requires:
             - demo-build
+
+  generator:
+    when: << pipeline.parameters.generator >>
+    jobs:
+      - build:
+          name: generator-build
+          package_name: generator
+      - deploy:
+          name: generator-deploy
+          package_name: generator
+          requires:
+            - generator-build
   

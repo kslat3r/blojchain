@@ -37,3 +37,8 @@
 .queue .scroll > div:last-child {
   padding-right: 0px;
 }
+
+.queue .no-scroll {
+  margin-left: 0px;
+  margin-right: 0px;
+}

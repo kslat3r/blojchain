@@ -13,8 +13,9 @@ class Queue extends Component {
     open: PropTypes.bool,
     error: PropTypes.object,
     loading: PropTypes.bool,
+    scroll: PropTypes.bool.isRequired,
     children: PropTypes.array.isRequired,
-    forceScroll: PropTypes.bool,
+    forceScroll: PropTypes.bool
   }
 
   constructor(props) {
@@ -89,7 +90,7 @@ class Queue extends Component {
         ) : null}
 
         {this.state.open && !this.props.error && !this.props.loading && this.props.children.length ? (
-          <div className="row scroll" ref={(elem) => { this.scrollElem = elem; }}>
+          <div className={`row ${this.props.scroll && 'scroll'} ${!this.props.scroll && 'no-scroll'}`} ref={(elem) => { this.scrollElem = elem; }}>
             {this.props.children}
           </div>
         ) : null}

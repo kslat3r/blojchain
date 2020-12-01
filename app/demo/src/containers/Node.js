@@ -10,6 +10,7 @@ import { getLogs, addLog } from '../actions/logs';
 import { Row, Col, Button } from 'reactstrap';
 import Queue from '../components/Queue';
 import Bloj from '../components/Bloj';
+import BlojTag from '../components/BlojTag';
 import Form from './Form';
 import './Node.css';
 
@@ -136,6 +137,7 @@ class Node extends Component {
             open={true}
             error={blojsError}
             loading={blojsLoading}
+            scroll={true}
             forceScroll={true}
           >
             {blojItems.map((item, i) => (
@@ -160,14 +162,14 @@ class Node extends Component {
             title={`Mining queue (${miningQueueItems.length})`}
             open={true}
             error={miningQueueError}
+            scroll={false}
             loading={miningQueueLoading}
           >
             {miningQueueItems.map((item, i) => (
-              <Col key={i} xs={12}>
-                <Bloj
-                  bloj={item}
-                />
-              </Col>
+              <BlojTag
+                key={i}
+                bloj={item}
+              />
             ))}
           </Queue>
         </Col>
@@ -178,14 +180,13 @@ class Node extends Component {
             open={true}
             error={verificationQueueError}
             loading={verificationQueueLoading}
-            items={verificationQueueItems}
+            scroll={false}
           >
             {verificationQueueItems.map((item, i) => (
-              <Col key={i} xs={12}>
-                <Bloj
-                  bloj={item}
-                />
-              </Col>
+              <BlojTag
+                key={i}
+                bloj={item}
+              />
             ))}
           </Queue>
         </Col>
@@ -196,14 +197,13 @@ class Node extends Component {
             open={true}
             error={confirmationQueueError}
             loading={confirmationQueueLoading}
-            items={confirmationQueueItems}
+            scroll={false}
           >
             {confirmationQueueItems.map((item, i) => (
-              <Col key={i} xs={12}>
-                <Bloj
-                  bloj={item}
-                />
-              </Col>
+              <BlojTag
+                key={i}
+                bloj={item}
+              />
             ))}
           </Queue>
         </Col>
